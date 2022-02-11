@@ -1,14 +1,11 @@
 import type { NextPage } from "next";
-import { Box, Typography } from "@mui/material";
-import Layout from "../components/UI/Layout/Layout";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const Home: NextPage = () => {
   return (
-    <Layout>
-      <Box>
-        <Typography color="primary">Main content...</Typography>
-      </Box>
-    </Layout>
+    <Box>
+      <Typography>Main content...</Typography>
+    </Box>
   );
 };
 

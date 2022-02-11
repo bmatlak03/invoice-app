@@ -32,30 +32,25 @@ const Layout: React.FC = ({ children }) => {
       ...(mode === "light"
         ? {
             // palette values for light mode
+            main: "#7C5DFA",
             primary: {
               main: "#373B53",
-            },
-            main: "#7C5DFA",
-            text: {
-              primary: "#000",
-              secondary: "",
             },
             background: {
               default: "#F8F8FB",
               header: "#7C5DFA",
             },
+            divider: "#7E88C3",
           }
         : {
             // palette values for dark mode
-            primary: "",
-            divider: "",
-            background: {
-              default: "",
-              paper: "",
+            main: "#7C5DFA",
+            primary: {
+              main: "#373B53",
             },
-            text: {
-              primary: "#fff",
-              secondary: "",
+            divider: "#7E88C3",
+            background: {
+              default: "#141625",
             },
           }),
     },
