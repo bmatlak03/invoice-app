@@ -32,9 +32,12 @@ const Layout: React.FC = ({ children }) => {
       ...(mode === "light"
         ? {
             // palette values for light mode
-            main: "#7C5DFA",
+            // main: "#7C5DFA",
             primary: {
               main: "#373B53",
+            },
+            secondary: {
+              main: "#7C5DFA",
             },
             background: {
               default: "#F8F8FB",
@@ -44,9 +47,11 @@ const Layout: React.FC = ({ children }) => {
           }
         : {
             // palette values for dark mode
-            main: "#7C5DFA",
             primary: {
               main: "#373B53",
+            },
+            secondary: {
+              main: "#7C5DFA",
             },
             divider: "#7E88C3",
             background: {
@@ -55,7 +60,7 @@ const Layout: React.FC = ({ children }) => {
           }),
     },
     typography: {
-      fontFamily: ["Spartan", "sans-serif"].join(","),
+      fontFamily: "Spartan, sans-serif",
     },
   });
   const theme = useMemo(

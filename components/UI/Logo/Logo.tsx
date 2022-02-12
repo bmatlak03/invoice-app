@@ -13,7 +13,7 @@ const Logo: React.FC = () => {
         height: "100%",
         borderTopRightRadius: "15px",
         borderBottomRightRadius: "15px",
-        backgroundColor: theme.palette.main,
+        backgroundColor: theme.palette.secondary.main,
       }}
     >
       <Image src={LogoIMG} alt="logo" />

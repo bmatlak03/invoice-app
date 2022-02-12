@@ -15,8 +15,8 @@ const Header: React.FC<{
           justifyContent: "space-between",
           alignItems: "center",
           width: "100%",
-          paddingRight: 4,
           height: "60px",
+          paddingRight: 4,
           backgroundColor: theme.palette.primary.main,
         }}
       >

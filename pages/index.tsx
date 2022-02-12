@@ -1,12 +1,9 @@
 import type { NextPage } from "next";
-import { Box, Typography, useTheme } from "@mui/material";
-
+import DUMMY_INVOICES from "../data.json";
+import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 const Home: NextPage = () => {
-  return (
-    <Box>
-      <Typography>Main content...</Typography>
-    </Box>
-  );
+  console.log(DUMMY_INVOICES);
+  return <InvoicesAction />;
 };
 
 export default Home;
