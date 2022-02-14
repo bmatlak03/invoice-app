@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
+import FilterInoices from "../FilterInvoices/FilterInvoices";
 type Props = {};
 
 const InvoicesAction = ({}: Props) => {
@@ -19,7 +20,8 @@ const InvoicesAction = ({}: Props) => {
         </Typography>
         <Typography variant="body2">Invoices amount</Typography>
       </Box>
-      <Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <FilterInoices />
         <StyledButton type="add" click={() => console.log("btn click")}>
           New
         </StyledButton>

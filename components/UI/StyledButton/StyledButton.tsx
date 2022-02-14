@@ -20,13 +20,16 @@ const StyledButton: React.FC<Props> = ({ children, type, click }) => {
         <Add sx={{ color: theme.palette.secondary.main }} />
       </Box>
     ) : null;
-  const buttonStyles = {
+  const buttonStyles: {} = {
     backgroundColor: theme.palette.secondary.main,
     fontWeight: "bold",
     color: "white",
     borderRadius: "50px",
+    border: "none",
+    textTransform: "capitalize",
     width: "100px",
     "&:hover": {
+      border: "none",
       backgroundColor: type === "add" && "#9277FF",
     },
   };
