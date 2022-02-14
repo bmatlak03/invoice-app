@@ -17,7 +17,7 @@ const StyledButton: React.FC<Props> = ({ children, type, click }) => {
           borderRadius: "50px",
         }}
       >
-        <Add sx={{ color: theme.palette.secondary.main }} />
+        <Add color="secondary" />
       </Box>
     ) : null;
   const buttonStyles: {} = {
