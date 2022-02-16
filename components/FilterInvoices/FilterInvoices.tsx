@@ -12,15 +12,15 @@ type Props = {};
 
 const FilterInvoices: React.FC<Props> = ({}) => {
   const theme = useTheme();
-  const [selectValue, setSelectValue] = useState<string>("");
+  const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
 
   const changeStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     if (e.target.checked) {
-      setSelectValue(e.target.value);
+      setSelectedFilter(e.target.value);
     } else {
-      setSelectValue("");
+      setSelectedFilter("");
     }
   };
   const toggleFilterHandler = () => setFilterOpen(!filterOpen);
@@ -63,7 +63,7 @@ const FilterInvoices: React.FC<Props> = ({}) => {
               <Checkbox
                 size="small"
                 color="secondary"
-                checked={selectValue === "draft"}
+                checked={selectedFilter === "draft"}
               />
             }
             label="Draft"
@@ -74,7 +74,7 @@ const FilterInvoices: React.FC<Props> = ({}) => {
               <Checkbox
                 size="small"
                 color="secondary"
-                checked={selectValue === "pending"}
+                checked={selectedFilter === "pending"}
               />
             }
             label="Pending"
@@ -85,7 +85,7 @@ const FilterInvoices: React.FC<Props> = ({}) => {
               <Checkbox
                 size="small"
                 color="secondary"
-                checked={selectValue === "paid"}
+                checked={selectedFilter === "paid"}
               />
             }
             label="Paid"
