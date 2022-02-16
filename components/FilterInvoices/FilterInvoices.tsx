@@ -25,7 +25,11 @@ const FilterInvoices: React.FC<Props> = ({}) => {
   };
   const toggleFilterHandler = () => setFilterOpen(!filterOpen);
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box
+      sx={{
+        position: "relative",
+      }}
+    >
       <Button
         sx={{
           textTransform: "capitalize",
@@ -49,12 +53,14 @@ const FilterInvoices: React.FC<Props> = ({}) => {
         <FormControl
           onChange={changeStatusHandler}
           sx={{
+            zIndex: 1,
             position: "absolute",
-            padding: "5px 30px",
             top: "105%",
             left: "-25%",
-            boxShadow: "1px 6px 19px -4px black",
+            padding: "5px 30px",
+            bgcolor: theme.palette.background.default,
             borderRadius: "15px",
+            boxShadow: "1px 6px 19px -4px black",
           }}
         >
           <FormControlLabel

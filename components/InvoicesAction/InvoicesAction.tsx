@@ -11,7 +11,6 @@ const InvoicesAction = ({}: Props) => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: 2,
       }}
     >
       <Box>

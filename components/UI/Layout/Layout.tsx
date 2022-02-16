@@ -35,6 +35,7 @@ const Layout: React.FC = ({ children }) => {
             // main: "#7C5DFA",
             primary: {
               main: "#373B53",
+              light: "white",
             },
             secondary: {
               main: "#7C5DFA",
@@ -44,11 +45,15 @@ const Layout: React.FC = ({ children }) => {
               header: "#7C5DFA",
             },
             divider: "#7E88C3",
+            text: {
+              secondary: "#7E88C3",
+            },
           }
         : {
             // palette values for dark mode
             primary: {
               main: "#373B53",
+              light: "#1E2139",
             },
             secondary: {
               main: "#7C5DFA",
