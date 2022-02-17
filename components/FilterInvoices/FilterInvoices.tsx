@@ -8,13 +8,17 @@ import {
   Button,
   useTheme,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/index";
 type Props = {};
 
 const FilterInvoices: React.FC<Props> = ({}) => {
   const theme = useTheme();
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
-
+  const invoicesLength = useSelector(
+    (state: RootState) => state.invoices.invoices.length
+  );
   const changeStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     if (e.target.checked) {
@@ -46,6 +50,7 @@ const FilterInvoices: React.FC<Props> = ({}) => {
             }}
           />
         }
+        disabled={invoicesLength === 0}
       >
         Filter
       </Button>
