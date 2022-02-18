@@ -6,8 +6,11 @@ import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import { RootState } from "../store";
 import Invoice from "../components/Invoice/Invoice";
 import Image from "next/image";
+import NewInvoiceForm from "../components/NewInvoiceForm/NewInvoiceForm";
 const Home: NextPage = () => {
-  const invoices = useSelector((state: RootState) => state.invoices.invoices);
+  const { invoices, isFormOpen } = useSelector(
+    (state: RootState) => state.invoices
+  );
   console.log(invoices);
   const noInvoicesInfo = (
     <Box
@@ -54,9 +57,10 @@ const Home: NextPage = () => {
   );
   return (
     <>
-      <Box sx={{ padding: 2 }}>
+      <Box sx={{ padding: 2, position: "relative" }}>
         <InvoicesAction />
         <List>{invoices.length !== 0 ? renderedInvoices : noInvoicesInfo}</List>
+        {isFormOpen && <NewInvoiceForm />}
       </Box>
     </>
   );

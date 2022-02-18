@@ -2,10 +2,10 @@ import { Button, Box, useTheme } from "@mui/material";
 import { Add } from "@mui/icons-material";
 type Props = {
   type: string;
-  click: () => void;
+  onClick: any;
 };
 
-const StyledButton: React.FC<Props> = ({ children, type, click }) => {
+const StyledButton: React.FC<Props> = ({ children, type, onClick }) => {
   const theme = useTheme();
   const StartIcon =
     type === "add" ? (
@@ -35,7 +35,7 @@ const StyledButton: React.FC<Props> = ({ children, type, click }) => {
   };
   return (
     <Button
-      onClick={click}
+      onClick={onClick}
       variant="outlined"
       sx={buttonStyles}
       startIcon={StartIcon}

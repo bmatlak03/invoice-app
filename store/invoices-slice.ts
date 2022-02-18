@@ -236,7 +236,14 @@ const invoicesSlice = createSlice({
     ],
     isFormOpen: false,
   },
-  reducers: {},
+  reducers: {
+    openForm(state) {
+      state.isFormOpen = true;
+    },
+    closeForm(state) {
+      state.isFormOpen = false;
+    },
+  },
 });
 
 export const invoicesActions = invoicesSlice.actions;

@@ -4,9 +4,12 @@ import StyledButton from "../UI/StyledButton/StyledButton";
 import FilterInoices from "../FilterInvoices/FilterInvoices";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { invoicesActions } from "../../store/invoices-slice";
+import { useDispatch } from "react-redux";
 type Props = {};
 
 const InvoicesAction = ({}: Props) => {
+  const dispatch = useDispatch();
   const invoicesLength = useSelector(
     (state: RootState) => state.invoices.invoices.length
   );
@@ -28,7 +31,10 @@ const InvoicesAction = ({}: Props) => {
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <FilterInoices />
-        <StyledButton type="add" click={() => console.log("btn click")}>
+        <StyledButton
+          type="add"
+          onClick={() => dispatch(invoicesActions.openForm())}
+        >
           New
         </StyledButton>
       </Box>
