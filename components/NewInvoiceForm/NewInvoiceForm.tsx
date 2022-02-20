@@ -3,11 +3,30 @@ import { invoicesActions } from "../../store/invoices-slice";
 import { Box, Typography, useTheme, Button } from "@mui/material";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material";
 import Input from "../UI/Input/Input";
+import { useFormik } from "formik";
+// import * as yup from "yup";
 type Props = {};
 
 const NewInvoiceForm = ({}: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  const formik = useFormik({
+    initialValues: {
+      streetAddress: "",
+      city: "",
+      postCode: "",
+      country: "",
+      clientName: "",
+      clientEmail: "",
+      clientCity: "",
+      clientPostCode: "",
+      clientCountry: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
   const formStyles: {} = {
     position: "absolute",
     top: 0,
@@ -37,20 +56,9 @@ const NewInvoiceForm = ({}: Props) => {
       Go back
     </Button>
   );
-  const cityPostCode = (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: 5,
-      }}
-    >
-      <Input label="City" styles={{ width: "45%" }} fullWidth={false} />
-      <Input label="Post Code" styles={{ width: "45%" }} fullWidth={false} />
-    </Box>
-  );
+
   return (
-    <form action="" style={formStyles}>
+    <form onSubmit={formik.handleSubmit} style={formStyles}>
       {goBackBtn}
       <Typography mb={1} variant="h5" fontWeight="bold">
         New Invoice
@@ -58,16 +66,93 @@ const NewInvoiceForm = ({}: Props) => {
       <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
         Bill From
       </Typography>
-      <Input label="Street Address" fullWidth />
-      {cityPostCode}
-      <Input label="Country" fullWidth />
+      <Input
+        name="streetAddress"
+        label="Street Address"
+        fullWidth
+        value={formik.values.streetAddress}
+        change={formik.handleChange}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 5,
+        }}
+      >
+        <Input
+          name="city"
+          label="City"
+          styles={{ width: "45%" }}
+          fullWidth={false}
+          value={formik.values.city}
+          change={formik.handleChange}
+        />
+        <Input
+          name="postCode"
+          label="Post Code"
+          styles={{ width: "45%" }}
+          fullWidth={false}
+          value={formik.values.postCode}
+          change={formik.handleChange}
+        />
+      </Box>{" "}
+      <Input
+        name="country"
+        label="Country"
+        fullWidth
+        value={formik.values.country}
+        change={formik.handleChange}
+      />
       <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
         Bill To
       </Typography>
-      <Input label="Client's Name" fullWidth />
-      <Input label="Client's Email" fullWidth />
-      {cityPostCode}
-      <Input label="Country" fullWidth />
+      <Input
+        name="clientName"
+        label="Client's Name"
+        fullWidth
+        value={formik.values.clientName}
+        change={formik.handleChange}
+      />
+      <Input
+        name="clientEmail"
+        label="Client's Email"
+        fullWidth
+        value={formik.values.clientEmail}
+        change={formik.handleChange}
+      />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 5,
+        }}
+      >
+        <Input
+          name="clientCity"
+          label="City"
+          styles={{ width: "45%" }}
+          fullWidth={false}
+          value={formik.values.clientCity}
+          change={formik.handleChange}
+        />
+        <Input
+          name="clientPostCode"
+          label="Post Code"
+          styles={{ width: "45%" }}
+          fullWidth={false}
+          value={formik.values.clientPostCode}
+          change={formik.handleChange}
+        />
+      </Box>{" "}
+      <Input
+        name="clientCountry"
+        label="Country"
+        fullWidth
+        value={formik.values.clientCountry}
+        change={formik.handleChange}
+      />
+      <button>test</button>
     </form>
   );
 };

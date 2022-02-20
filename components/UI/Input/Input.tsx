@@ -3,18 +3,25 @@ type Props = {
   styles?: object;
   label: string;
   fullWidth?: boolean;
+  value: string;
+  change: any;
+  name?: string;
 };
 
-const Input = ({ label, styles, fullWidth }: Props) => {
+const Input = ({ label, styles, fullWidth, value, change, name }: Props) => {
   const defaultStyles = {
     marginBottom: 5,
   };
   return (
     <TextField
+      name={name}
       sx={styles ? styles : defaultStyles}
       variant="outlined"
       label={label}
       fullWidth={fullWidth}
+      color="secondary"
+      value={value}
+      onChange={change}
     />
   );
 };
