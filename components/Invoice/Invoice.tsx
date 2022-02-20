@@ -26,6 +26,11 @@ const Invoice: React.FC<Props> = ({
     width: "100%",
     marginTop: 2,
     backgroundColor: theme.palette.primary.light,
+    borderRadius: "10px",
+    border: "2px solid transparent",
+    "&:hover": {
+      border: `2px solid ${theme.palette.secondary.main}`,
+    },
   };
   return (
     <Card sx={cardStyles} onClick={() => console.log("invoice click")}>
@@ -43,7 +48,7 @@ const Invoice: React.FC<Props> = ({
               <Typography
                 component="span"
                 color="text.primary"
-                sx={{ fontWeight: "bold" }}
+                fontWeight={600}
               >
                 {id}
               </Typography>
@@ -53,7 +58,7 @@ const Invoice: React.FC<Props> = ({
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box>
               <Typography color="text.secondary">{paymentDue}</Typography>
-              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              <Typography variant="h5" fontWeight={600}>
                 ${total}
               </Typography>
             </Box>
