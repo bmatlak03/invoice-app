@@ -195,9 +195,7 @@ const NewInvoiceForm = ({}: Props) => {
           id="payment-terms"
           value={formik.values.paymentTerms}
           label="Payment Terms"
-          onChange={(value) =>
-            formik.setFieldValue("paymentTerms", value.target.value)
-          }
+          onChange={(e) => formik.setFieldValue("paymentTerms", e.target.value)}
           color="secondary"
         >
           <MenuItem value={1}>Net 1 Day</MenuItem>
