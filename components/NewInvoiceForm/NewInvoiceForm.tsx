@@ -1,10 +1,25 @@
 import { useDispatch } from "react-redux";
 import { invoicesActions } from "../../store/invoices-slice";
-import { Box, Typography, useTheme, Button } from "@mui/material";
-import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material";
+import {
+  Box,
+  Typography,
+  useTheme,
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import {
+  KeyboardArrowDown as KeyboardArrowDownIcon,
+  YouTube,
+} from "@mui/icons-material";
+import { DatePicker } from "@mui/lab";
+
 import Input from "../UI/Input/Input";
 import { useFormik } from "formik";
-// import * as yup from "yup";
+import * as yup from "yup";
 type Props = {};
 
 const NewInvoiceForm = ({}: Props) => {
@@ -22,9 +37,16 @@ const NewInvoiceForm = ({}: Props) => {
       clientCity: "",
       clientPostCode: "",
       clientCountry: "",
+      date: new Date(),
+      paymentTerms: 1,
+      projectDescription: "",
     },
+    validationSchema: yup.object().shape({
+      date: yup.date().nullable(),
+    }),
     onSubmit: (values) => {
       console.log(values);
+      dispatch(invoicesActions.createNewInvoice(values));
     },
   });
   const formStyles: {} = {
@@ -150,6 +172,45 @@ const NewInvoiceForm = ({}: Props) => {
         label="Country"
         fullWidth
         value={formik.values.clientCountry}
+        change={formik.handleChange}
+      />
+      <DatePicker
+        label="Date"
+        value={formik.values.date}
+        onChange={(value) => formik.setFieldValue("date", value)}
+        renderInput={(params) => (
+          <TextField
+            name="date"
+            sx={{ marginBottom: 4 }}
+            {...params}
+            color="secondary"
+            fullWidth
+          />
+        )}
+      />
+      <FormControl fullWidth sx={{ marginBottom: 4 }}>
+        <InputLabel id="payment-terms">Payment Terms</InputLabel>
+        <Select
+          labelId="payment-terms"
+          id="payment-terms"
+          value={formik.values.paymentTerms}
+          label="Payment Terms"
+          onChange={(value) =>
+            formik.setFieldValue("paymentTerms", value.target.value)
+          }
+          color="secondary"
+        >
+          <MenuItem value={1}>Net 1 Day</MenuItem>
+          <MenuItem value={7}>Net 7 Days</MenuItem>
+          <MenuItem value={14}>Net 14 Days</MenuItem>
+          <MenuItem value={30}>Net 30 Days</MenuItem>
+        </Select>
+      </FormControl>
+      <Input
+        name="projectDescription"
+        label="Project Description"
+        fullWidth
+        value={formik.values.projectDescription}
         change={formik.handleChange}
       />
       <button>test</button>

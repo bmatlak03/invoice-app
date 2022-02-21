@@ -243,6 +243,9 @@ const invoicesSlice = createSlice({
     closeForm(state) {
       state.isFormOpen = false;
     },
+    createNewInvoice(state, action) {
+      console.log(action);
+    },
   },
 });
 
