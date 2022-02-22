@@ -2,10 +2,18 @@ import { Button, Box, useTheme } from "@mui/material";
 import { Add } from "@mui/icons-material";
 type Props = {
   type: string;
-  onClick: any;
+  onClick?: any;
+  customStyles?: object;
+  role?: any;
 };
 
-const StyledButton: React.FC<Props> = ({ children, type, onClick }) => {
+const StyledButton: React.FC<Props> = ({
+  children,
+  type,
+  onClick,
+  customStyles,
+  role,
+}) => {
   const theme = useTheme();
   const StartIcon =
     type === "add" ? (
@@ -20,25 +28,36 @@ const StyledButton: React.FC<Props> = ({ children, type, onClick }) => {
         <Add color="secondary" />
       </Box>
     ) : null;
-  const buttonStyles: {} = {
-    backgroundColor: theme.palette.secondary.main,
+  let buttonStyles: {} = {
+    minWidth: "100px",
+    padding: 1,
+    backgroundColor:
+      type === "add"
+        ? theme.palette.secondary.main
+        : type === "discard"
+        ? theme.palette.primary.light
+        : type === "draft"
+        ? theme.palette.primary.dark
+        : theme.palette.secondary.main,
+    textTransform: "capitalize",
     fontWeight: "bold",
     color: "white",
-    borderRadius: "50px",
     border: "none",
-    textTransform: "capitalize",
-    width: "100px",
+    borderRadius: "50px",
     "&:hover": {
       border: "none",
       backgroundColor: type === "add" && "#9277FF",
     },
+    ...customStyles,
   };
+
   return (
     <Button
       onClick={onClick}
       variant="outlined"
       sx={buttonStyles}
       startIcon={StartIcon}
+      type={role ? role : "button"}
     >
       {children}
     </Button>
