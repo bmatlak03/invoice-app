@@ -7,9 +7,12 @@ const FormControls: React.FC<Props> = ({}) => {
     <Box
       sx={{
         display: "flex",
-        width: "100%",
         justifyContent: "space-between",
-        alignItems: "space-between",
+        alignItems: "center",
+        width: "100%",
+        height: "80px",
+        padding: "2%",
+        backgroundColor: "#1E2139",
       }}
     >
       <StyledButton type="discard" customStyles={{ height: "50px" }}>

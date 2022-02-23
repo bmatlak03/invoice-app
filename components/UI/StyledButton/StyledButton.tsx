@@ -35,7 +35,7 @@ const StyledButton: React.FC<Props> = ({
       type === "add"
         ? theme.palette.secondary.main
         : type === "discard"
-        ? theme.palette.primary.light
+        ? "#252945"
         : type === "draft"
         ? theme.palette.primary.dark
         : theme.palette.secondary.main,

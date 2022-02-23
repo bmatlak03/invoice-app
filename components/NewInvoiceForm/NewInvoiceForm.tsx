@@ -51,8 +51,8 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     top: 0,
     left: 0,
     width: "100%",
-    height: "100%",
-    padding: "4%",
+    minHeight: "100%",
+
     backgroundColor: theme.palette.background.default,
   };
   const goBackBtn = (
@@ -77,8 +77,8 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
   );
 
   return (
-    <>
-      <form onSubmit={formik.handleSubmit} style={formStyles}>
+    <form onSubmit={formik.handleSubmit} style={formStyles}>
+      <Box sx={{ padding: 2 }}>
         {goBackBtn}
         <Typography mb={1} variant="h5" fontWeight="bold">
           New Invoice
@@ -264,9 +264,9 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Item List
         </Typography>
-        <FormControls />
-      </form>
-    </>
+      </Box>
+      <FormControls />
+    </form>
   );
 };
 export default NewInvoiceForm;
