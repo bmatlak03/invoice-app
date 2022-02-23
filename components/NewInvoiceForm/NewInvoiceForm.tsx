@@ -86,13 +86,18 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill From
         </Typography>
-        <Input
-          name="streetAddress"
-          label="Street Address"
-          fullWidth
-          value={formik.values.streetAddress}
-          change={formik.handleChange}
-        />
+        {useMemo(
+          () => (
+            <Input
+              name="streetAddress"
+              label="Street Address"
+              fullWidth
+              value={formik.values.streetAddress}
+              change={formik.handleChange}
+            />
+          ),
+          [formik.values.streetAddress, formik.handleChange]
+        )}
         <Box
           sx={{
             display: "flex",
@@ -100,47 +105,72 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             marginBottom: 5,
           }}
         >
-          <Input
-            name="city"
-            label="City"
-            styles={{ width: "45%" }}
-            fullWidth={false}
-            value={formik.values.city}
-            change={formik.handleChange}
-          />
-          <Input
-            name="postCode"
-            label="Post Code"
-            styles={{ width: "45%" }}
-            fullWidth={false}
-            value={formik.values.postCode}
-            change={formik.handleChange}
-          />
+          {useMemo(
+            () => (
+              <Input
+                name="city"
+                label="City"
+                styles={{ width: "45%" }}
+                fullWidth={false}
+                value={formik.values.city}
+                change={formik.handleChange}
+              />
+            ),
+            [formik.values.city, formik.handleChange]
+          )}
+          {useMemo(
+            () => (
+              <Input
+                name="postCode"
+                label="Post Code"
+                styles={{ width: "45%" }}
+                fullWidth={false}
+                value={formik.values.postCode}
+                change={formik.handleChange}
+              />
+            ),
+            [formik.values.postCode, formik.handleChange]
+          )}
         </Box>{" "}
-        <Input
-          name="country"
-          label="Country"
-          fullWidth
-          value={formik.values.country}
-          change={formik.handleChange}
-        />
+        {useMemo(
+          () => (
+            <Input
+              name="country"
+              label="Country"
+              fullWidth
+              value={formik.values.country}
+              change={formik.handleChange}
+            />
+          ),
+          [formik.values.country, formik.handleChange]
+        )}
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill To
         </Typography>
-        <Input
-          name="clientName"
-          label="Client's Name"
-          fullWidth
-          value={formik.values.clientName}
-          change={formik.handleChange}
-        />
-        <Input
-          name="clientEmail"
-          label="Client's Email"
-          fullWidth
-          value={formik.values.clientEmail}
-          change={formik.handleChange}
-        />
+        {useMemo(
+          () => (
+            <Input
+              name="clientName"
+              label="Client's Name"
+              fullWidth
+              value={formik.values.clientName}
+              change={formik.handleChange}
+            />
+          ),
+          [formik.values.clientName, formik.handleChange]
+        )}
+        {useMemo(
+          () => (
+            <Input
+              name="clientEmail"
+              label="Client's Email"
+              fullWidth
+              value={formik.values.clientEmail}
+              change={formik.handleChange}
+            />
+          ),
+          [formik.values.clientEmail, formik.handleChange]
+        )}
         <Box
           sx={{
             display: "flex",
@@ -148,30 +178,45 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             marginBottom: 5,
           }}
         >
-          <Input
-            name="clientCity"
-            label="City"
-            styles={{ width: "45%" }}
-            fullWidth={false}
-            value={formik.values.clientCity}
-            change={formik.handleChange}
-          />
-          <Input
-            name="clientPostCode"
-            label="Post Code"
-            styles={{ width: "45%" }}
-            fullWidth={false}
-            value={formik.values.clientPostCode}
-            change={formik.handleChange}
-          />
+          {useMemo(
+            () => (
+              <Input
+                name="clientCity"
+                label="City"
+                styles={{ width: "45%" }}
+                fullWidth={false}
+                value={formik.values.clientCity}
+                change={formik.handleChange}
+              />
+            ),
+            [formik.values.clientCity, formik.handleChange]
+          )}
+          {useMemo(
+            () => (
+              <Input
+                name="clientPostCode"
+                label="Post Code"
+                styles={{ width: "45%" }}
+                fullWidth={false}
+                value={formik.values.clientPostCode}
+                change={formik.handleChange}
+              />
+            ),
+            [formik.values.clientPostCode, formik.handleChange]
+          )}
         </Box>{" "}
-        <Input
-          name="clientCountry"
-          label="Country"
-          fullWidth
-          value={formik.values.clientCountry}
-          change={formik.handleChange}
-        />
+        {useMemo(
+          () => (
+            <Input
+              name="clientCountry"
+              label="Country"
+              fullWidth
+              value={formik.values.clientCountry}
+              change={formik.handleChange}
+            />
+          ),
+          [formik.values.clientCountry, formik.handleChange]
+        )}
         <DatePicker
           label="Date"
           value={formik.values.date}
@@ -204,13 +249,21 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             <MenuItem value={30}>Net 30 Days</MenuItem>
           </Select>
         </FormControl>
-        <Input
-          name="projectDescription"
-          label="Project Description"
-          fullWidth
-          value={formik.values.projectDescription}
-          change={formik.handleChange}
-        />
+        {useMemo(
+          () => (
+            <Input
+              name="projectDescription"
+              label="Project Description"
+              fullWidth
+              value={formik.values.projectDescription}
+              change={formik.handleChange}
+            />
+          ),
+          [formik.values.projectDescription, formik.handleChange]
+        )}
+        <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
+          Item List
+        </Typography>
         <FormControls />
       </form>
     </>
