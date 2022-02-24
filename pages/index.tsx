@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { lazy } from "react";
 import { List, Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import EmptyInvoicesIMG from "../assets/illustration-empty.svg";
@@ -6,7 +7,6 @@ import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import { RootState } from "../store";
 import Invoice from "../components/Invoice/Invoice";
 import Image from "next/image";
-import NewInvoiceForm from "../components/NewInvoiceForm/NewInvoiceForm";
 const Home: NextPage = () => {
   const { invoices, isFormOpen } = useSelector(
     (state: RootState) => state.invoices
@@ -54,6 +54,9 @@ const Home: NextPage = () => {
         total={invoice.total}
       />
     )
+  );
+  const NewInvoiceForm = lazy(
+    () => import("../components/NewInvoiceForm/NewInvoiceForm")
   );
   return (
     <>
