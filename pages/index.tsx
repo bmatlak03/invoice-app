@@ -75,7 +75,7 @@ const Home: NextPage = () => {
                   textAlign: "center",
                 }}
               >
-                <CircularProgress />
+                <CircularProgress color="secondary" />
               </Box>
             }
           >

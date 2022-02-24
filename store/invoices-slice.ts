@@ -244,7 +244,32 @@ const invoicesSlice = createSlice({
       state.isFormOpen = false;
     },
     createNewInvoice(state, action) {
-      console.log(action);
+      const newInvoiceSchema: any = {
+        id: action.payload.date.getMilliseconds(),
+        createdAt: action.payload.date,
+        paymentDue: "2021-08-19",
+        description: action.payload.projectDescription,
+        paymentTerms: 1,
+        clientName: action.payload.clientName,
+        clientEmail: action.payload.clientEmail,
+        status: "pending",
+        senderAddress: {
+          street: action.payload.streetAddress,
+          city: action.payload.city,
+          postCode: action.payload.postCode,
+          country: action.payload.country,
+        },
+        clientAddress: {
+          street: action.payload.clientStreetAddress,
+          city: action.payload.clientCity,
+          postCode: action.payload.clientPostCode,
+          country: action.payload.clientCountry,
+        },
+        items: [{}],
+        total: 0,
+      };
+      state.invoices.push(newInvoiceSchema);
+      state.isFormOpen = false;
     },
   },
 });

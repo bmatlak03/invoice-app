@@ -32,6 +32,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
       clientName: "",
       clientEmail: "",
       clientCity: "",
+      clientStreetAddress: "",
       clientPostCode: "",
       clientCountry: "",
       date: new Date(),
@@ -170,6 +171,18 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             />
           ),
           [formik.values.clientEmail, formik.handleChange]
+        )}
+        {useMemo(
+          () => (
+            <Input
+              name="clientStreetAddress"
+              label="Street Address"
+              fullWidth
+              value={formik.values.clientStreetAddress}
+              change={formik.handleChange}
+            />
+          ),
+          [formik.values.clientStreetAddress, formik.handleChange]
         )}
         <Box
           sx={{
