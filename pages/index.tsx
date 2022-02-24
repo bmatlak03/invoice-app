@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import { lazy } from "react";
-import { List, Box, Typography } from "@mui/material";
+import { lazy, Suspense } from "react";
+import { List, Box, Typography, CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
 import EmptyInvoicesIMG from "../assets/illustration-empty.svg";
 import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
@@ -63,7 +63,25 @@ const Home: NextPage = () => {
       <Box sx={{ padding: 2, position: "relative" }}>
         <InvoicesAction />
         <List>{invoices.length !== 0 ? renderedInvoices : noInvoicesInfo}</List>
-        {isFormOpen && <NewInvoiceForm />}
+        {isFormOpen && (
+          <Suspense
+            fallback={
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            }
+          >
+            <NewInvoiceForm />
+          </Suspense>
+        )}
       </Box>
     </>
   );
