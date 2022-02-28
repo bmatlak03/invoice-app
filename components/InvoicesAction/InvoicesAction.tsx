@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
 import FilterInoices from "../FilterInvoices/FilterInvoices";
 import { useSelector } from "react-redux";
@@ -10,6 +10,8 @@ type Props = {};
 
 const InvoicesAction = ({}: Props) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const invoicesLength = useSelector(
     (state: RootState) => state.invoices.invoices.length
   );
@@ -35,7 +37,7 @@ const InvoicesAction = ({}: Props) => {
           type="add"
           onClick={() => dispatch(invoicesActions.openForm())}
         >
-          New
+          {matches ? "New Invoice" : "New"}
         </StyledButton>
       </Box>
     </Box>

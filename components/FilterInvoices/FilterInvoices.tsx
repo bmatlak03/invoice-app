@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
@@ -14,13 +15,13 @@ type Props = {};
 
 const FilterInvoices: React.FC<Props> = ({}) => {
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const invoicesLength = useSelector(
     (state: RootState) => state.invoices.invoices.length
   );
   const changeStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     if (e.target.checked) {
       setSelectedFilter(e.target.value);
     } else {
@@ -52,7 +53,7 @@ const FilterInvoices: React.FC<Props> = ({}) => {
         }
         disabled={invoicesLength === 0}
       >
-        Filter
+        {matches ? "Filter by status" : "Filter"}
       </Button>
       {filterOpen && (
         <FormControl
