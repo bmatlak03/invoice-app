@@ -25,7 +25,7 @@ const InvoiceStatus = ({ status }: Props) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: !matches ? "40%" : "20%",
+        width: !matches ? "40%" : "15%",
         minHeight: "50px",
         borderRadius: "5px",
         backgroundColor: bgColor,

@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -7,6 +6,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import InvoiceStatus from "../InvoiceStatus/InvoiceStatus";
 type Props = {
   id: string;
@@ -64,10 +64,20 @@ const Invoice: React.FC<Props> = ({
           >
             Due {paymentDue}
           </Typography>
-          <Typography variant="h5" fontWeight={600}>
+          <Typography
+            variant="h5"
+            fontWeight={600}
+            sx={{ width: matches ? "20%" : "auto", overflow: "hidden" }}
+          >
             ${total}
           </Typography>
           <InvoiceStatus status={status} />
+          {!!matches && (
+            <KeyboardArrowDownIcon
+              color="secondary"
+              sx={{ transform: "rotate(-90deg)" }}
+            />
+          )}
         </CardContent>
       </CardActionArea>
     </Card>
