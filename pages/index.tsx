@@ -62,7 +62,9 @@ const Home: NextPage = () => {
     <>
       <Box sx={{ padding: 2, position: "relative" }}>
         <InvoicesAction />
-        <List>{invoices.length !== 0 ? renderedInvoices : noInvoicesInfo}</List>
+        <List sx={{ height: "84vh", overflowY: "scroll" }}>
+          {invoices.length !== 0 ? renderedInvoices : noInvoicesInfo}
+        </List>
         {isFormOpen && (
           <Suspense
             fallback={

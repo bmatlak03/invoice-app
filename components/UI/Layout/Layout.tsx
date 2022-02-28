@@ -75,7 +75,7 @@ const Layout: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Header themeMode={themeMode} changeTheme={handleChangeTheme} />
-      <CssBaseline />
+      <CssBaseline enableColorScheme />
       <Container disableGutters={true}>
         <main>{children}</main>
       </Container>
