@@ -1,0 +1,13 @@
+.List::-webkit-scrollbar {
+  display: none;
+}
+
+.List ::-moz-scrollbar {
+  display: none;
+}
+
+.List {
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-color: transparent transparent;
+}

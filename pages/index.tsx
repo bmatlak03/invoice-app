@@ -7,6 +7,7 @@ import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import { RootState } from "../store";
 import Invoice from "../components/Invoice/Invoice";
 import Image from "next/image";
+import classes from "../css/scroll-disable.module.css";
 const Home: NextPage = () => {
   const { invoices, isFormOpen } = useSelector(
     (state: RootState) => state.invoices
@@ -62,7 +63,10 @@ const Home: NextPage = () => {
     <>
       <Box sx={{ padding: 2, position: "relative" }}>
         <InvoicesAction />
-        <List sx={{ height: "84vh", overflowY: "scroll" }}>
+        <List
+          sx={{ height: "84vh", overflowY: "scroll" }}
+          className={classes.List}
+        >
           {invoices.length !== 0 ? renderedInvoices : noInvoicesInfo}
         </List>
         {isFormOpen && (
