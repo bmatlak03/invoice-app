@@ -45,7 +45,11 @@ const Invoice: React.FC<Props> = ({
             flexWrap: "wrap",
           }}
         >
-          <Typography color="text.secondary" width={!matches ? "50%" : "auto"}>
+          <Typography
+            order={matches ? -1 : 0}
+            color="text.secondary"
+            width={!matches ? "50%" : "auto"}
+          >
             #
             <Typography component="span" color="text.primary" fontWeight={600}>
               {id}
@@ -53,7 +57,11 @@ const Invoice: React.FC<Props> = ({
           </Typography>
           <Typography color="text.secondary">{clientName}</Typography>
 
-          <Typography width={!matches ? "100%" : "auto"} color="text.secondary">
+          <Typography
+            order={matches ? -1 : 0}
+            width={!matches ? "100%" : "auto"}
+            color="text.secondary"
+          >
             Due {paymentDue}
           </Typography>
           <Typography variant="h5" fontWeight={600}>
