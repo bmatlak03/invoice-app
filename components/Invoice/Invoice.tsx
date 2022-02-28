@@ -5,6 +5,7 @@ import {
   CardContent,
   Typography,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import InvoiceStatus from "../InvoiceStatus/InvoiceStatus";
 type Props = {
@@ -22,6 +23,7 @@ const Invoice: React.FC<Props> = ({
   total,
 }) => {
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const cardStyles: {} = {
     width: "100%",
     marginTop: 2,
@@ -35,35 +37,29 @@ const Invoice: React.FC<Props> = ({
   return (
     <Card sx={cardStyles} onClick={() => console.log("invoice click")}>
       <CardActionArea>
-        <CardContent>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: 1,
-            }}
-          >
-            <Typography color="text.secondary">
-              #
-              <Typography
-                component="span"
-                color="text.primary"
-                fontWeight={600}
-              >
-                {id}
-              </Typography>
+        <CardContent
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <Typography color="text.secondary" width={!matches ? "50%" : "auto"}>
+            #
+            <Typography component="span" color="text.primary" fontWeight={600}>
+              {id}
             </Typography>
-            <Typography color="text.secondary">{clientName}</Typography>
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Box>
-              <Typography color="text.secondary">{paymentDue}</Typography>
-              <Typography variant="h5" fontWeight={600}>
-                ${total}
-              </Typography>
-            </Box>
-            <InvoiceStatus status={status} />
-          </Box>
+          </Typography>
+          <Typography color="text.secondary">{clientName}</Typography>
+
+          <Typography width={!matches ? "100%" : "auto"} color="text.secondary">
+            Due {paymentDue}
+          </Typography>
+          <Typography variant="h5" fontWeight={600}>
+            ${total}
+          </Typography>
+          <InvoiceStatus status={status} />
         </CardContent>
       </CardActionArea>
     </Card>

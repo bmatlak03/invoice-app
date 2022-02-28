@@ -1,9 +1,11 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 type Props = {
   status: string;
 };
 
 const InvoiceStatus = ({ status }: Props) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   let bgColor;
   let fontColor;
   if (status === "paid") {
@@ -23,7 +25,8 @@ const InvoiceStatus = ({ status }: Props) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "40%",
+        width: !matches ? "40%" : "20%",
+        minHeight: "50px",
         borderRadius: "5px",
         backgroundColor: bgColor,
       }}
