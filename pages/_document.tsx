@@ -11,7 +11,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body style={{ overflow: "hidden" }}>
+      <body>
         <Main />
         <NextScript />
       </body>

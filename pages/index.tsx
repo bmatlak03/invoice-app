@@ -64,7 +64,7 @@ const Home: NextPage = () => {
       <Box sx={{ padding: 2, position: "relative" }}>
         <InvoicesAction />
         <List
-          sx={{ height: "84vh", overflowY: "scroll" }}
+          sx={{ height: "80vh", overflowY: "scroll" }}
           className={classes.List}
         >
           {invoices.length !== 0 ? renderedInvoices : noInvoicesInfo}
