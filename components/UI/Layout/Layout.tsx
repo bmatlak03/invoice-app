@@ -4,6 +4,8 @@ import {
   Container,
   ThemeProvider,
   CssBaseline,
+  Box,
+  useMediaQuery,
 } from "@mui/material";
 import Header from "../../Header/Header";
 import { useState, useEffect, useMemo } from "react";
@@ -72,13 +74,21 @@ const Layout: React.FC = ({ children }) => {
     () => createTheme(getDesignTokens(themeMode)),
     [themeMode]
   );
+  const matches = useMediaQuery(theme.breakpoints.up("lg"));
   return (
     <ThemeProvider theme={theme}>
       <Header themeMode={themeMode} changeTheme={handleChangeTheme} />
       <CssBaseline enableColorScheme />
-      <Container disableGutters={true}>
-        <main>{children}</main>
-      </Container>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          position: "relative",
+        }}
+      >
+        <main style={{ width: matches ? "60%" : "95%" }}>{children}</main>
+      </Box>
     </ThemeProvider>
   );
 };

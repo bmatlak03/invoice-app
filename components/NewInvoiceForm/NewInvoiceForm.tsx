@@ -12,6 +12,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  useMediaQuery,
 } from "@mui/material";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material";
 import { DatePicker } from "@mui/lab";
@@ -23,6 +24,7 @@ type Props = {};
 const NewInvoiceForm: React.FC<Props> = ({}) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const formik = useFormik({
     initialValues: {
       streetAddress: "",
@@ -54,10 +56,16 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     position: "absolute",
     top: 0,
     left: 0,
-    width: "100%",
+    width: matches ? "500px" : "100%",
     height: "100%",
-
+    borderRadiusBottom: "10px",
     backgroundColor: theme.palette.background.default,
+  };
+  const boxAddressStyle = {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginBottom: 5,
   };
   const goBackBtn = (
     <Button
@@ -82,8 +90,8 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
 
   return (
     <form onSubmit={formik.handleSubmit} style={formStyles}>
-      <Box sx={{ padding: 2 }}>
-        {goBackBtn}
+      <Box sx={{ padding: matches ? 4 : 2 }}>
+        {!matches && goBackBtn}
         <Typography mb={1} variant="h5" fontWeight="bold">
           New Invoice
         </Typography>
@@ -102,52 +110,46 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           ),
           [formik.values.streetAddress, formik.handleChange]
         )}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: 5,
-          }}
-        >
+        <Box sx={boxAddressStyle}>
           {useMemo(
             () => (
               <Input
                 name="city"
                 label="City"
-                styles={{ width: "45%" }}
+                styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
                 fullWidth={false}
                 value={formik.values.city}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.city, formik.handleChange]
+            [formik.values.city, formik.handleChange, matches]
           )}
           {useMemo(
             () => (
               <Input
                 name="postCode"
                 label="Post Code"
-                styles={{ width: "45%" }}
+                styles={{ width: matches ? "30%" : "45%" }}
                 fullWidth={false}
                 value={formik.values.postCode}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.postCode, formik.handleChange]
+            [formik.values.postCode, formik.handleChange, matches]
+          )}
+          {useMemo(
+            () => (
+              <Input
+                styles={{ width: matches ? "30%" : "100%" }}
+                name="country"
+                label="Country"
+                value={formik.values.country}
+                change={formik.handleChange}
+              />
+            ),
+            [formik.values.country, formik.handleChange, matches]
           )}
         </Box>{" "}
-        {useMemo(
-          () => (
-            <Input
-              name="country"
-              label="Country"
-              fullWidth
-              value={formik.values.country}
-              change={formik.handleChange}
-            />
-          ),
-          [formik.values.country, formik.handleChange]
-        )}
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill To
         </Typography>
@@ -187,52 +189,46 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           ),
           [formik.values.clientStreetAddress, formik.handleChange]
         )}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: 5,
-          }}
-        >
+        <Box sx={boxAddressStyle}>
           {useMemo(
             () => (
               <Input
                 name="clientCity"
                 label="City"
-                styles={{ width: "45%" }}
+                styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
                 fullWidth={false}
                 value={formik.values.clientCity}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.clientCity, formik.handleChange]
+            [formik.values.clientCity, formik.handleChange, matches]
           )}
           {useMemo(
             () => (
               <Input
                 name="clientPostCode"
                 label="Post Code"
-                styles={{ width: "45%" }}
+                styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
                 fullWidth={false}
                 value={formik.values.clientPostCode}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.clientPostCode, formik.handleChange]
+            [formik.values.clientPostCode, formik.handleChange, matches]
+          )}
+          {useMemo(
+            () => (
+              <Input
+                name="clientCountry"
+                label="Country"
+                styles={{ width: matches ? "30%" : "100%" }}
+                value={formik.values.clientCountry}
+                change={formik.handleChange}
+              />
+            ),
+            [formik.values.clientCountry, formik.handleChange, matches]
           )}
         </Box>{" "}
-        {useMemo(
-          () => (
-            <Input
-              name="clientCountry"
-              label="Country"
-              fullWidth
-              value={formik.values.clientCountry}
-              change={formik.handleChange}
-            />
-          ),
-          [formik.values.clientCountry, formik.handleChange]
-        )}
         <DatePicker
           label="Date"
           value={formik.values.date}

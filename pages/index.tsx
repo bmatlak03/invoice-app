@@ -61,7 +61,7 @@ const Home: NextPage = () => {
   );
   return (
     <>
-      <Box sx={{ padding: 2, position: "relative" }}>
+      <Box sx={{ padding: 2, }}>
         <InvoicesAction />
         <List
           sx={{ height: "80vh", overflowY: "scroll" }}
