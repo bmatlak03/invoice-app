@@ -56,8 +56,8 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     position: "absolute",
     top: 0,
     left: 0,
+    zIndex: 5,
     width: matches ? "500px" : "100%",
-    height: "100%",
     borderRadiusBottom: "10px",
     backgroundColor: theme.palette.background.default,
   };
