@@ -18,28 +18,25 @@ const InvoiceStatus = ({ status }: Props) => {
     bgColor = "rgba(223, 227, 250, 0.1)";
     fontColor = "rgb(179, 183, 201)";
   }
-
+  const statusContainerStyles = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: !matches ? "40%" : "15%",
+    minHeight: "50px",
+    borderRadius: "5px",
+    backgroundColor: bgColor,
+  };
+  const dotStatusStyles = {
+    width: "10px",
+    height: "10px",
+    borderRadius: "50px",
+    backgroundColor: fontColor,
+    marginRight: 1,
+  };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: !matches ? "40%" : "15%",
-        minHeight: "50px",
-        borderRadius: "5px",
-        backgroundColor: bgColor,
-      }}
-    >
-      <Box
-        sx={{
-          width: "10px",
-          height: "10px",
-          borderRadius: "50px",
-          backgroundColor: fontColor,
-          marginRight: 1,
-        }}
-      />
+    <Box sx={statusContainerStyles}>
+      <Box sx={dotStatusStyles} />
       <Typography sx={{ color: fontColor, textTransform: "capitalize" }}>
         {status}
       </Typography>

@@ -12,7 +12,6 @@ const Input = ({ label, styles, fullWidth, value, change, name }: Props) => {
   const defaultStyles = {
     marginBottom: 5,
   };
-  console.log("rendering <Input /> ");
   return (
     <TextField
       name={name}

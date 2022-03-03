@@ -1,6 +1,6 @@
-import { Avatar, IconButton } from "@mui/material";
-import ProfilePicture from "../../assets/image-avatar.jpg";
 import Image from "next/image";
+import { Avatar } from "@mui/material";
+import ProfilePicture from "../../assets/image-avatar.jpg";
 const Account: React.FC = () => {
   return (
     <Avatar

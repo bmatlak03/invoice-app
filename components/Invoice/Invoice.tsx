@@ -6,7 +6,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
 import InvoiceStatus from "../InvoiceStatus/InvoiceStatus";
 type Props = {
   id: string;
@@ -34,17 +34,26 @@ const Invoice: React.FC<Props> = ({
       border: `2px solid ${theme.palette.secondary.main}`,
     },
   };
+  const cardContentStyles = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+  };
+  const totalPriceStyles = {
+    width: matches ? "20%" : "auto",
+    overflow: "hidden",
+  };
+  const arrowIcon = !!matches && (
+    <KeyboardArrowDownIcon
+      color="secondary"
+      sx={{ transform: "rotate(-90deg)" }}
+    />
+  );
   return (
     <Card sx={cardStyles} onClick={() => console.log("invoice click")}>
       <CardActionArea>
-        <CardContent
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
+        <CardContent sx={cardContentStyles}>
           <Typography
             order={matches ? -1 : 0}
             color="text.secondary"
@@ -64,20 +73,11 @@ const Invoice: React.FC<Props> = ({
           >
             Due {paymentDue}
           </Typography>
-          <Typography
-            variant="h5"
-            fontWeight={600}
-            sx={{ width: matches ? "20%" : "auto", overflow: "hidden" }}
-          >
+          <Typography variant="h5" fontWeight={600} sx={totalPriceStyles}>
             ${total}
           </Typography>
           <InvoiceStatus status={status} />
-          {!!matches && (
-            <KeyboardArrowDownIcon
-              color="secondary"
-              sx={{ transform: "rotate(-90deg)" }}
-            />
-          )}
+          {arrowIcon}
         </CardContent>
       </CardActionArea>
     </Card>

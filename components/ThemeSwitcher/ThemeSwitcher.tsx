@@ -6,14 +6,12 @@ const ThemeSwitcher: React.FC<{
   currentTheme: string | null;
   changeTheme: () => void;
 }> = ({ currentTheme, changeTheme }) => {
-  return (
-    <IconButton onClick={changeTheme}>
-      {currentTheme === "dark" ? (
-        <Image src={LightThemeBtn} alt="light theme" />
-      ) : (
-        <Image src={DarkThemeBtn} alt="dark theme" />
-      )}
-    </IconButton>
-  );
+  const themeIcon =
+    currentTheme === "dark" ? (
+      <Image src={LightThemeBtn} alt="light theme" />
+    ) : (
+      <Image src={DarkThemeBtn} alt="dark theme" />
+    );
+  return <IconButton onClick={changeTheme}>{themeIcon}</IconButton>;
 };
 export default ThemeSwitcher;

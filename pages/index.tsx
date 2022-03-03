@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import { lazy, Suspense } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   List,
   Box,
@@ -9,13 +11,11 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import EmptyInvoicesIMG from "../assets/illustration-empty.svg";
-import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import { RootState } from "../store";
-import Invoice from "../components/Invoice/Invoice";
-import Image from "next/image";
 import { invoicesActions } from "../store/invoices-slice";
+import Invoice from "../components/Invoice/Invoice";
+import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
+import EmptyInvoicesIMG from "../assets/illustration-empty.svg";
 import classes from "../css/scroll-disable.module.css";
 const NewInvoiceForm = lazy(
   () => import("../components/NewInvoiceForm/NewInvoiceForm")
@@ -88,16 +88,14 @@ const Home: NextPage = () => {
       <NewInvoiceForm />
     </Suspense>
   );
+  const invoicesListStyles = { height: "80vh", overflowY: "scroll" };
   const displayedInvoices =
     invoices.length !== 0 ? renderedInvoices : noInvoicesInfo;
   return (
     <>
-      <Box sx={{ padding: 2 }}>
+      <Box padding={2}>
         <InvoicesAction />
-        <List
-          sx={{ height: "80vh", overflowY: "scroll" }}
-          className={classes.List}
-        >
+        <List sx={invoicesListStyles} className={classes.List}>
           {displayedInvoices}
         </List>
         {newInvoiceFormComponent}

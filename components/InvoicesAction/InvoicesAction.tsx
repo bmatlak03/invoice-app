@@ -1,35 +1,33 @@
-import React from "react";
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import StyledButton from "../UI/StyledButton/StyledButton";
-import FilterInoices from "../FilterInvoices/FilterInvoices";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { invoicesActions } from "../../store/invoices-slice";
-import { useDispatch } from "react-redux";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import FilterInoices from "../FilterInvoices/FilterInvoices";
+import StyledButton from "../UI/StyledButton/StyledButton";
 type Props = {};
 
 const InvoicesAction = ({}: Props) => {
-  const dispatch = useDispatch();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const invoicesLength = useSelector(
     (state: RootState) => state.invoices.invoices.length
   );
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const buttonText = matches ? "New Invoice" : "New";
+  const invoicesAmount =
+    invoicesLength === 0 ? "No invoices" : `${invoicesLength} invoices`;
+  const invoicesActionsContainerStyles = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
+    <Box sx={invoicesActionsContainerStyles}>
       <Box>
-        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        <Typography variant="h5" fontWeight={700}>
           Invoices
         </Typography>
-        <Typography variant="body2">
-          {invoicesLength === 0 ? "No invoices" : `${invoicesLength} invoices`}
-        </Typography>
+        <Typography variant="body2">{invoicesAmount}</Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <FilterInoices />
@@ -37,7 +35,7 @@ const InvoicesAction = ({}: Props) => {
           type="add"
           onClick={() => dispatch(invoicesActions.openForm())}
         >
-          {matches ? "New Invoice" : "New"}
+          {buttonText}
         </StyledButton>
       </Box>
     </Box>

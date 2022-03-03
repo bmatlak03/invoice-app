@@ -1,14 +1,13 @@
+import { useState, useEffect, useMemo } from "react";
 import {
   PaletteMode,
   createTheme,
-  Container,
   ThemeProvider,
   CssBaseline,
   Box,
   useMediaQuery,
 } from "@mui/material";
 import Header from "../../Header/Header";
-import { useState, useEffect, useMemo } from "react";
 const Layout: React.FC = ({ children }) => {
   const [themeMode, setThemeMode] = useState<string | null>("light");
   useEffect(() => {
