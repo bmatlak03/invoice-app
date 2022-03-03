@@ -26,7 +26,7 @@ const Home: NextPage = () => {
   );
   const dispatch = useDispatch();
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("lg"));
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const noInvoicesInfo = (
     <Box
       sx={{
