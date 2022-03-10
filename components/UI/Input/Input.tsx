@@ -1,14 +1,19 @@
 import { TextField } from "@mui/material";
+import React from "react";
 type Props = {
   styles?: object;
   label: string;
   fullWidth?: boolean;
-  value: string;
-  change: any;
+  value: string | number;
+  change?: any;
   name?: string;
+  type?: string;
+  inputProps?: object;
 };
 
-const Input = ({ label, styles, fullWidth, value, change, name }: Props) => {
+const Input = (props: Props) => {
+  const { label, styles, fullWidth, value, change, name, type, inputProps } =
+    props;
   const defaultStyles = {
     marginBottom: 5,
   };
@@ -22,6 +27,8 @@ const Input = ({ label, styles, fullWidth, value, change, name }: Props) => {
       color="secondary"
       value={value}
       onChange={change}
+      type={type ? type : "string"}
+      inputProps={inputProps}
     />
   );
 };

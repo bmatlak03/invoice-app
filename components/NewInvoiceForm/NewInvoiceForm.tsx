@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { invoicesActions } from "../../store/invoices-slice";
 import { useFormik } from "formik";
@@ -14,14 +14,22 @@ import {
   Select,
   MenuItem,
   useMediaQuery,
+  IconButton,
 } from "@mui/material";
-import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material";
+import {
+  KeyboardArrowDown as KeyboardArrowDownIcon,
+  Delete as DeleteIcon,
+} from "@mui/icons-material";
 import { DatePicker } from "@mui/lab";
 import FormControls from "../FormControls/FormControls";
 import Input from "../UI/Input/Input";
+import StyledButton from "../UI/StyledButton/StyledButton";
 type Props = {};
 
 const NewInvoiceForm: React.FC<Props> = ({}) => {
+  const [items, setItems] = useState([
+    { name: "monitor", quantity: 1, total: 0, price: 0, id: 0 },
+  ]);
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -43,12 +51,64 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     },
     validationSchema: yup.object().shape({
       date: yup.date().nullable(),
+      items: yup.array(),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      dispatch(invoicesActions.createNewInvoice(values));
+      const itemsCopy = [...items];
+      itemsCopy.forEach((item) => (item.total = item.quantity * item.price));
+      const newInvoiceData = {
+        ...values,
+        items: itemsCopy,
+      };
+      console.log(newInvoiceData);
+      newInvoiceData.items.forEach((item) => {
+        if (item.total <= 0 || item.name === "") {
+          return alert("Item's input can't be empty");
+        } else dispatch(invoicesActions.createNewInvoice(newInvoiceData));
+      });
     },
   });
+  const addNewItem = () => {
+    setItems((prevState) => [
+      ...items,
+      {
+        id: prevState.length === 0 ? 0 : prevState[prevState.length - 1].id + 1,
+        name: "",
+        quantity: 1,
+        total: 0,
+        price: 0,
+      },
+    ]);
+  };
+  const changeItemName = (
+    id: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newItems = [...items];
+    newItems[id].name = e.target.value;
+    setItems(newItems);
+  };
+  const changeItemQty = (
+    id: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newItems = [...items];
+    newItems[id].quantity = +e.target.value;
+    setItems(newItems);
+  };
+  const changeItemPrice = (
+    id: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newItems = [...items];
+    newItems[id].price = +e.target.value;
+    setItems(newItems);
+  };
+  const deleteItemHandler = (id: number) => {
+    const itemsCopy = [...items];
+    const filteredItems = itemsCopy.filter((item) => item.id !== id);
+    setItems(filteredItems);
+  };
   const formStyles: {} = {
     display: "flex",
     flexDirection: "column",
@@ -61,7 +121,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     borderRadiusBottom: "10px",
     backgroundColor: theme.palette.background.default,
   };
-  const boxAddressStyle = {
+  const inputsContainterStyles = {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-between",
@@ -110,7 +170,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           ),
           [formik.values.streetAddress, formik.handleChange]
         )}
-        <Box sx={boxAddressStyle}>
+        <Box sx={inputsContainterStyles}>
           {useMemo(
             () => (
               <Input
@@ -189,7 +249,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           ),
           [formik.values.clientStreetAddress, formik.handleChange]
         )}
-        <Box sx={boxAddressStyle}>
+        <Box sx={inputsContainterStyles}>
           {useMemo(
             () => (
               <Input
@@ -229,38 +289,40 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             [formik.values.clientCountry, formik.handleChange, matches]
           )}
         </Box>{" "}
-        <DatePicker
-          label="Date"
-          value={formik.values.date}
-          onChange={(value) => formik.setFieldValue("date", value)}
-          renderInput={(params) => (
-            <TextField
-              name="date"
-              sx={{ marginBottom: 4 }}
-              {...params}
+        <Box sx={inputsContainterStyles}>
+          <DatePicker
+            label="Date"
+            value={formik.values.date}
+            onChange={(value) => formik.setFieldValue("date", value)}
+            renderInput={(params) => (
+              <TextField
+                name="date"
+                sx={{ marginBottom: 4, width: matches ? "45%" : "100%" }}
+                {...params}
+                color="secondary"
+                fullWidth={matches ? true : false}
+              />
+            )}
+          />
+          <FormControl fullWidth sx={{ width: matches ? "45%" : "100%" }}>
+            <InputLabel id="payment-terms">Payment Terms</InputLabel>
+            <Select
+              labelId="payment-terms"
+              id="payment-terms"
+              value={formik.values.paymentTerms}
+              label="Payment Terms"
+              onChange={(e) =>
+                formik.setFieldValue("paymentTerms", e.target.value)
+              }
               color="secondary"
-              fullWidth
-            />
-          )}
-        />
-        <FormControl fullWidth sx={{ marginBottom: 4 }}>
-          <InputLabel id="payment-terms">Payment Terms</InputLabel>
-          <Select
-            labelId="payment-terms"
-            id="payment-terms"
-            value={formik.values.paymentTerms}
-            label="Payment Terms"
-            onChange={(e) =>
-              formik.setFieldValue("paymentTerms", e.target.value)
-            }
-            color="secondary"
-          >
-            <MenuItem value={1}>Net 1 Day</MenuItem>
-            <MenuItem value={7}>Net 7 Days</MenuItem>
-            <MenuItem value={14}>Net 14 Days</MenuItem>
-            <MenuItem value={30}>Net 30 Days</MenuItem>
-          </Select>
-        </FormControl>
+            >
+              <MenuItem value={1}>Net 1 Day</MenuItem>
+              <MenuItem value={7}>Net 7 Days</MenuItem>
+              <MenuItem value={14}>Net 14 Days</MenuItem>
+              <MenuItem value={30}>Net 30 Days</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         {useMemo(
           () => (
             <Input
@@ -276,6 +338,65 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Item List
         </Typography>
+        {items.map((item) => (
+          <Box
+            key={item.id}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: 5,
+              alignItems: "center",
+            }}
+          >
+            <Input
+              label="Item Name"
+              value={item.name}
+              styles={{ marginRight: 1 }}
+              change={(e: React.ChangeEvent<HTMLInputElement>) =>
+                changeItemName(item.id, e)
+              }
+            />
+
+            <Input
+              type="number"
+              name="quantity"
+              label="Qty."
+              styles={{ width: "20%", marginRight: 1 }}
+              value={item.quantity}
+              change={(e: React.ChangeEvent<HTMLInputElement>) =>
+                changeItemQty(item.id, e)
+              }
+            />
+            <Input
+              type="number"
+              name="price"
+              styles={{ width: "30%", marginRight: 1 }}
+              label="Price"
+              value={item.price}
+              change={(e: React.ChangeEvent<HTMLInputElement>) =>
+                changeItemPrice(item.id, e)
+              }
+            />
+            <Input
+              label="Total"
+              styles={{ width: "30%" }}
+              value={item.total}
+              inputProps={{
+                readOnly: true,
+              }}
+            />
+            <IconButton onClick={() => deleteItemHandler(item.id)}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        ))}
+        <StyledButton
+          type="discard"
+          customStyles={{ width: "100%" }}
+          onClick={addNewItem}
+        >
+          + add new item
+        </StyledButton>
       </Box>
       <FormControls />
     </form>
