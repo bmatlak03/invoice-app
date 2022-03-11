@@ -9,11 +9,23 @@ type Props = {
   name?: string;
   type?: string;
   inputProps?: object;
+  error?: boolean | undefined;
+  helperText?: string | false | undefined;
 };
 
 const Input = (props: Props) => {
-  const { label, styles, fullWidth, value, change, name, type, inputProps } =
-    props;
+  const {
+    label,
+    styles,
+    fullWidth,
+    value,
+    change,
+    name,
+    type,
+    inputProps,
+    error,
+    helperText,
+  } = props;
   const defaultStyles = {
     marginBottom: 5,
   };
@@ -26,6 +38,8 @@ const Input = (props: Props) => {
       fullWidth={fullWidth}
       color="secondary"
       value={value}
+      error={error}
+      helperText={helperText}
       onChange={change}
       type={type ? type : "string"}
       inputProps={inputProps}

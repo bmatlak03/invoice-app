@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { invoicesActions } from "../../store/invoices-slice";
 import { useFormik } from "formik";
-import * as yup from "yup";
+import { defaultValues, validationSchema } from "./formikConfig";
 import {
   Box,
   Typography,
@@ -28,44 +28,31 @@ type Props = {};
 
 const NewInvoiceForm: React.FC<Props> = ({}) => {
   const [items, setItems] = useState([
-    { name: "monitor", quantity: 1, total: 0, price: 0, id: 0 },
+    { name: "", quantity: 1, total: 0, price: 0, id: 0 },
   ]);
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const formik = useFormik({
-    initialValues: {
-      streetAddress: "",
-      city: "",
-      postCode: "",
-      country: "",
-      clientName: "",
-      clientEmail: "",
-      clientCity: "",
-      clientStreetAddress: "",
-      clientPostCode: "",
-      clientCountry: "",
-      date: new Date(),
-      paymentTerms: 1,
-      projectDescription: "",
-    },
-    validationSchema: yup.object().shape({
-      date: yup.date().nullable(),
-      items: yup.array(),
-    }),
+    initialValues: defaultValues,
+    validationSchema: validationSchema,
     onSubmit: (values) => {
-      const itemsCopy = [...items];
-      itemsCopy.forEach((item) => (item.total = item.quantity * item.price));
-      const newInvoiceData = {
-        ...values,
-        items: itemsCopy,
-      };
-      console.log(newInvoiceData);
-      newInvoiceData.items.forEach((item) => {
-        if (item.total <= 0 || item.name === "") {
-          return alert("Item's input can't be empty");
-        } else dispatch(invoicesActions.createNewInvoice(newInvoiceData));
-      });
+      if (items.length === 0) {
+        return alert("You must add at least 1 item!");
+      } else {
+        const itemsCopy = [...items];
+        itemsCopy.forEach((item) => (item.total = item.quantity * item.price));
+        const newInvoiceData = {
+          ...values,
+          items: itemsCopy,
+        };
+        console.log(newInvoiceData);
+        newInvoiceData.items.forEach((item) => {
+          if (item.total <= 0 || item.name === "") {
+            return alert("Item's input can't be empty");
+          } else dispatch(invoicesActions.createNewInvoice(newInvoiceData));
+        });
+      }
     },
   });
   const addNewItem = () => {
@@ -164,11 +151,23 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
               name="streetAddress"
               label="Street Address"
               fullWidth
+              error={
+                formik.touched.streetAddress &&
+                Boolean(formik.errors.streetAddress)
+              }
+              helperText={
+                formik.touched.streetAddress && formik.errors.streetAddress
+              }
               value={formik.values.streetAddress}
               change={formik.handleChange}
             />
           ),
-          [formik.values.streetAddress, formik.handleChange]
+          [
+            formik.values.streetAddress,
+            formik.handleChange,
+            formik.touched.streetAddress,
+            formik.errors.streetAddress,
+          ]
         )}
         <Box sx={inputsContainterStyles}>
           {useMemo(
@@ -178,11 +177,19 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
                 label="City"
                 styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
                 fullWidth={false}
+                error={formik.touched.city && Boolean(formik.errors.city)}
+                helperText={formik.touched.city && formik.errors.city}
                 value={formik.values.city}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.city, formik.handleChange, matches]
+            [
+              formik.values.city,
+              formik.handleChange,
+              matches,
+              formik.errors.city,
+              formik.touched.city,
+            ]
           )}
           {useMemo(
             () => (
@@ -191,11 +198,21 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
                 label="Post Code"
                 styles={{ width: matches ? "30%" : "45%" }}
                 fullWidth={false}
+                error={
+                  formik.touched.postCode && Boolean(formik.errors.postCode)
+                }
+                helperText={formik.touched.postCode && formik.errors.postCode}
                 value={formik.values.postCode}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.postCode, formik.handleChange, matches]
+            [
+              formik.values.postCode,
+              formik.handleChange,
+              matches,
+              formik.touched.postCode,
+              formik.errors.postCode,
+            ]
           )}
           {useMemo(
             () => (
@@ -203,11 +220,19 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
                 styles={{ width: matches ? "30%" : "100%" }}
                 name="country"
                 label="Country"
+                error={formik.touched.country && Boolean(formik.errors.country)}
+                helperText={formik.touched.country && formik.errors.country}
                 value={formik.values.country}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.country, formik.handleChange, matches]
+            [
+              formik.values.country,
+              formik.handleChange,
+              matches,
+              formik.errors.country,
+              formik.touched.country,
+            ]
           )}
         </Box>{" "}
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
@@ -219,11 +244,20 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
               name="clientName"
               label="Client's Name"
               fullWidth
+              error={
+                formik.touched.clientName && Boolean(formik.errors.clientName)
+              }
+              helperText={formik.touched.clientName && formik.errors.clientName}
               value={formik.values.clientName}
               change={formik.handleChange}
             />
           ),
-          [formik.values.clientName, formik.handleChange]
+          [
+            formik.values.clientName,
+            formik.handleChange,
+            formik.touched.clientName,
+            formik.errors.clientName,
+          ]
         )}
         {useMemo(
           () => (
@@ -231,11 +265,22 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
               name="clientEmail"
               label="Client's Email"
               fullWidth
+              error={
+                formik.touched.clientEmail && Boolean(formik.errors.clientEmail)
+              }
+              helperText={
+                formik.touched.clientEmail && formik.errors.clientEmail
+              }
               value={formik.values.clientEmail}
               change={formik.handleChange}
             />
           ),
-          [formik.values.clientEmail, formik.handleChange]
+          [
+            formik.values.clientEmail,
+            formik.handleChange,
+            formik.touched.clientEmail,
+            formik.errors.clientEmail,
+          ]
         )}
         {useMemo(
           () => (
@@ -243,11 +288,24 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
               name="clientStreetAddress"
               label="Street Address"
               fullWidth
+              error={
+                formik.touched.clientStreetAddress &&
+                Boolean(formik.errors.clientStreetAddress)
+              }
+              helperText={
+                formik.touched.clientStreetAddress &&
+                formik.errors.clientStreetAddress
+              }
               value={formik.values.clientStreetAddress}
               change={formik.handleChange}
             />
           ),
-          [formik.values.clientStreetAddress, formik.handleChange]
+          [
+            formik.values.clientStreetAddress,
+            formik.handleChange,
+            formik.touched.clientStreetAddress,
+            formik.errors.clientStreetAddress,
+          ]
         )}
         <Box sx={inputsContainterStyles}>
           {useMemo(
@@ -257,11 +315,23 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
                 label="City"
                 styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
                 fullWidth={false}
+                error={
+                  formik.touched.clientCity && Boolean(formik.errors.clientCity)
+                }
+                helperText={
+                  formik.touched.clientCity && formik.errors.clientCity
+                }
                 value={formik.values.clientCity}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.clientCity, formik.handleChange, matches]
+            [
+              formik.values.clientCity,
+              formik.handleChange,
+              matches,
+              formik.touched.clientCity,
+              formik.errors.clientCity,
+            ]
           )}
           {useMemo(
             () => (
@@ -270,11 +340,24 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
                 label="Post Code"
                 styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
                 fullWidth={false}
+                error={
+                  formik.touched.clientPostCode &&
+                  Boolean(formik.errors.clientPostCode)
+                }
+                helperText={
+                  formik.touched.clientPostCode && formik.errors.clientPostCode
+                }
                 value={formik.values.clientPostCode}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.clientPostCode, formik.handleChange, matches]
+            [
+              formik.values.clientPostCode,
+              formik.handleChange,
+              matches,
+              formik.touched.clientPostCode,
+              formik.errors.clientPostCode,
+            ]
           )}
           {useMemo(
             () => (
@@ -282,11 +365,24 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
                 name="clientCountry"
                 label="Country"
                 styles={{ width: matches ? "30%" : "100%" }}
+                error={
+                  formik.touched.clientCountry &&
+                  Boolean(formik.errors.clientCountry)
+                }
+                helperText={
+                  formik.touched.clientCountry && formik.errors.clientCountry
+                }
                 value={formik.values.clientCountry}
                 change={formik.handleChange}
               />
             ),
-            [formik.values.clientCountry, formik.handleChange, matches]
+            [
+              formik.values.clientCountry,
+              formik.handleChange,
+              matches,
+              formik.touched.clientCountry,
+              formik.errors.clientCountry,
+            ]
           )}
         </Box>{" "}
         <Box sx={inputsContainterStyles}>
@@ -301,6 +397,8 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
                 {...params}
                 color="secondary"
                 fullWidth={matches ? true : false}
+                error={formik.touched.date && Boolean(formik.errors.date)}
+                helperText={formik.touched.date && formik.errors.date}
               />
             )}
           />
@@ -329,11 +427,24 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
               name="projectDescription"
               label="Project Description"
               fullWidth
+              error={
+                formik.touched.projectDescription &&
+                Boolean(formik.errors.projectDescription)
+              }
+              helperText={
+                formik.touched.projectDescription &&
+                formik.errors.projectDescription
+              }
               value={formik.values.projectDescription}
               change={formik.handleChange}
             />
           ),
-          [formik.values.projectDescription, formik.handleChange]
+          [
+            formik.values.projectDescription,
+            formik.handleChange,
+            formik.touched.projectDescription,
+            formik.errors.projectDescription,
+          ]
         )}
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Item List
