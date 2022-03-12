@@ -40,18 +40,23 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
       if (items.length === 0) {
         return alert("You must add at least 1 item!");
       } else {
+        let totalPrice = 0;
         const itemsCopy = [...items];
         itemsCopy.forEach((item) => (item.total = item.quantity * item.price));
+        itemsCopy.forEach((item) => (totalPrice += item.total));
         const newInvoiceData = {
           ...values,
           items: itemsCopy,
+          total: totalPrice,
         };
         console.log(newInvoiceData);
-        newInvoiceData.items.forEach((item) => {
-          if (item.total <= 0 || item.name === "") {
-            return alert("Item's input can't be empty");
-          } else dispatch(invoicesActions.createNewInvoice(newInvoiceData));
-        });
+        const isInputEmpty = newInvoiceData.items.some(
+          (item) => item.total <= 0 || item.name === ""
+        );
+
+        if (isInputEmpty) {
+          return alert("Item's input can't be empty");
+        } else dispatch(invoicesActions.createNewInvoice(newInvoiceData));
       }
     },
   });
@@ -491,7 +496,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             <Input
               label="Total"
               styles={{ width: "30%" }}
-              value={item.total}
+              value={item.quantity * item.price}
               inputProps={{
                 readOnly: true,
               }}
