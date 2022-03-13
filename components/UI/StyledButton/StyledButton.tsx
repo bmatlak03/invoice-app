@@ -7,13 +7,8 @@ type Props = {
   role?: any;
 };
 
-const StyledButton: React.FC<Props> = ({
-  children,
-  type,
-  onClick,
-  customStyles,
-  role,
-}) => {
+const StyledButton: React.FC<Props> = (props) => {
+  const { children, type, onClick, customStyles, role } = props;
   const theme = useTheme();
   const StartIcon =
     type === "add" ? (
@@ -28,17 +23,19 @@ const StyledButton: React.FC<Props> = ({
         <Add color="secondary" />
       </Box>
     ) : null;
+
+  const modifiedBackgroundColor =
+    type === "add"
+      ? theme.palette.secondary.main
+      : type === "discard"
+      ? "#252945"
+      : type === "draft"
+      ? theme.palette.primary.dark
+      : theme.palette.secondary.main;
   let buttonStyles: {} = {
     minWidth: "100px",
     padding: 1,
-    backgroundColor:
-      type === "add"
-        ? theme.palette.secondary.main
-        : type === "discard"
-        ? "#252945"
-        : type === "draft"
-        ? theme.palette.primary.dark
-        : theme.palette.secondary.main,
+    backgroundColor: modifiedBackgroundColor,
     textTransform: "capitalize",
     fontWeight: "bold",
     color: "white",
