@@ -110,6 +110,8 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     left: 0,
     zIndex: 5,
     width: matches ? "500px" : "100%",
+    height: "calc(100vh - 60px)",
+    overflowY: "scroll",
     borderRadiusBottom: "10px",
     backgroundColor: theme.palette.background.default,
   };
