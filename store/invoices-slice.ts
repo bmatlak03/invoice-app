@@ -114,49 +114,15 @@ const invoicesSlice = createSlice({
       state.isFormOpen = false;
     },
     createNewInvoice(state, action) {
-      const {
-        date,
-        projectDescription,
-        paymentTerms,
-        clientName,
-        clientEmail,
-        streetAddress,
-        city,
-        postCode,
-        country,
-        clientStreetAddress,
-        clientCity,
-        clientPostCode,
-        clientCountry,
-        items,
-        total,
-      } = action.payload;
-      console.log(action.payload);
+      const { date, paymentTerms } = action.payload;
       let paymentDueTransformed = new Date();
       paymentDueTransformed.setDate(date.getDate() + paymentTerms);
       const newInvoiceSchema: any = {
-        id: date.getMilliseconds(),
+        id: date.getMilliseconds(), // must be replaced
+        ...action.payload,
         createdAt: date,
         paymentDue: paymentDueTransformed.toDateString(),
-        description: projectDescription,
-        paymentTerms: paymentTerms,
-        clientName: clientName,
-        clientEmail: clientEmail,
         status: "pending",
-        senderAddress: {
-          street: streetAddress,
-          city: city,
-          postCode: postCode,
-          country: country,
-        },
-        clientAddress: {
-          street: clientStreetAddress,
-          city: clientCity,
-          postCode: clientPostCode,
-          country: clientCountry,
-        },
-        items: items,
-        total: total,
       };
       state.invoices.push(newInvoiceSchema);
       state.isFormOpen = false;
