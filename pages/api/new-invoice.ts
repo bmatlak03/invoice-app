@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const data = req.body;
 
     const client = await MongoClient.connect(
-      `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+      `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
     );
     const db = client.db();
 
@@ -21,7 +21,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     client.close();
 
-    res.status(201).json({ message: "invoice inserted!" });
+    res
+      .status(201)
+      .json({ message: "invoice inserted!", id: result.insertedId });
   }
 }
 

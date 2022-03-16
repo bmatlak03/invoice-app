@@ -1,6 +1,9 @@
 import type { NextPage } from "next";
+import { GetStaticProps } from "next";
 import Image from "next/image";
-import { lazy, Suspense } from "react";
+import { SliceState } from "../store/invoices-slice";
+import { MongoClient } from "mongodb";
+import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   List,
@@ -20,13 +23,37 @@ import classes from "../css/scroll-disable.module.css";
 const NewInvoiceForm = lazy(
   () => import("../components/NewInvoiceForm/NewInvoiceForm")
 );
-const Home: NextPage = () => {
+type FetchedInvoices = {
+  fetchedInvoices: {
+    id: string;
+    streetAddress: string;
+    city: string;
+    postCode: string;
+    clientName: string;
+    paymentDue: string;
+    status: string;
+    clientEmail: string;
+    clientCity: string;
+    clientStreetAddres: string;
+    clientPostCode: string;
+    date: string;
+    paymentTerms: number;
+    projectDescription: string;
+    items: [];
+    total: number;
+  };
+};
+const Home: NextPage<FetchedInvoices> = (props) => {
   const { invoices, isFormOpen } = useSelector(
     (state: RootState) => state.invoices
   );
+  const { fetchedInvoices } = props;
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  useEffect(() => {
+    dispatch(invoicesActions.insertFetchedInvoices(fetchedInvoices));
+  }, [dispatch, fetchedInvoices]);
   const noInvoicesInfo = (
     <Box
       sx={{
@@ -104,5 +131,34 @@ const Home: NextPage = () => {
     </>
   );
 };
+export const getStaticProps: GetStaticProps = async () => {
+  const client = await MongoClient.connect(
+    `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
+  );
+  const db = client.db();
 
+  const invoicesCollection = db.collection("invoices");
+
+  const invoices = await invoicesCollection.find().toArray();
+  client.close();
+  return {
+    props: {
+      fetchedInvoices: invoices.map((invoice) => ({
+        id: invoice._id.toString(),
+        createdAt: invoice.createdAt,
+        paymentDue: invoice.paymentDue,
+        description: invoice.description,
+        paymentTerms: invoice.paymentTerms,
+        clientName: invoice.clientName,
+        clientEmail: invoice.clientEmail,
+        status: invoice.status,
+        senderAddress: invoice.senderAddress,
+        clientAddress: invoice.clientAddress,
+        items: invoice.items,
+        total: invoice.total,
+      })),
+    },
+    revalidate: 1,
+  };
+};
 export default Home;

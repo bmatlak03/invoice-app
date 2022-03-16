@@ -57,7 +57,8 @@ const Invoice: React.FC<Props> = ({
           <Typography
             order={matches ? -1 : 0}
             color="text.secondary"
-            width={!matches ? "50%" : "auto"}
+            overflow="hidden"
+            width={!matches ? "40%" : "15%"}
           >
             #
             <Typography component="span" color="text.primary" fontWeight={600}>
