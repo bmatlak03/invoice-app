@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { GetStaticProps } from "next";
 import Image from "next/image";
-import { SliceState } from "../store/invoices-slice";
 import { MongoClient } from "mongodb";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +19,7 @@ import Invoice from "../components/Invoice/Invoice";
 import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import EmptyInvoicesIMG from "../assets/illustration-empty.svg";
 import classes from "../css/scroll-disable.module.css";
+import { uiActions } from "../store/ui-slice";
 const NewInvoiceForm = lazy(
   () => import("../components/NewInvoiceForm/NewInvoiceForm")
 );
@@ -44,9 +44,8 @@ type FetchedInvoices = {
   };
 };
 const Home: NextPage<FetchedInvoices> = (props) => {
-  const { invoices, isFormOpen } = useSelector(
-    (state: RootState) => state.invoices
-  );
+  const { invoices } = useSelector((state: RootState) => state.invoices);
+  const { isFormOpen } = useSelector((state: RootState) => state.ui);
   const { fetchedInvoices } = props;
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -93,7 +92,7 @@ const Home: NextPage<FetchedInvoices> = (props) => {
   const backdrop = !!matches && (
     <Backdrop
       open={isFormOpen}
-      onClick={() => dispatch(invoicesActions.closeForm())}
+      onClick={() => dispatch(uiActions.closeForm())}
     />
   );
   const newInvoiceFormComponent = isFormOpen && (

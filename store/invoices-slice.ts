@@ -18,25 +18,16 @@ export type SliceState = {
     items: [];
     total: number;
   }[];
-  isFormOpen: boolean;
 };
 const initialState: SliceState = {
   invoices: [],
-  isFormOpen: false,
 };
 const invoicesSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
-    openForm(state) {
-      state.isFormOpen = true;
-    },
-    closeForm(state) {
-      state.isFormOpen = false;
-    },
     createNewInvoice(state, action) {
       state.invoices.push(action.payload);
-      state.isFormOpen = false;
     },
     insertFetchedInvoices(state, action) {
       state.invoices = action.payload;

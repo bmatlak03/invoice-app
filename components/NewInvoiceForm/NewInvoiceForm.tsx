@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { invoicesActions } from "../../store/invoices-slice";
 import { sendInvoiceData } from "../../store/invoices-actions";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
@@ -25,6 +24,7 @@ import { DatePicker } from "@mui/lab";
 import FormControls from "../FormControls/FormControls";
 import Input from "../UI/Input/Input";
 import StyledButton from "../UI/StyledButton/StyledButton";
+import { uiActions } from "../../store/ui-slice";
 type Props = {};
 
 const NewInvoiceForm: React.FC<Props> = ({}) => {
@@ -133,7 +133,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
         color: theme.palette.mode === "dark" ? "white" : "black",
         fontSize: "1rem",
       }}
-      onClick={() => dispatch(invoicesActions.closeForm())}
+      onClick={() => dispatch(uiActions.closeForm())}
       startIcon={
         <KeyboardArrowDownIcon
           color="secondary"

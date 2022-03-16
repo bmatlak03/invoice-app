@@ -1,4 +1,5 @@
 import { invoicesActions } from "./invoices-slice";
+import { uiActions } from "./ui-slice";
 import { AppDispatch } from ".";
 export const sendInvoiceData = (invoiceData: any) => {
   return async (dispatch: AppDispatch) => {
@@ -61,6 +62,7 @@ export const sendInvoiceData = (invoiceData: any) => {
     try {
       await sendRequest();
       dispatch(invoicesActions.createNewInvoice(newInvoiceSchema));
+      dispatch(uiActions.closeForm());
       //dispatch success notification
     } catch (error) {
       //dispach error notification
