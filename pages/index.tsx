@@ -44,7 +44,7 @@ type FetchedInvoices = {
   };
 };
 const Home: NextPage<FetchedInvoices> = (props) => {
-  const { invoices } = useSelector((state: RootState) => state.invoices);
+  const { currentInvoices } = useSelector((state: RootState) => state.invoices);
   const { isFormOpen } = useSelector((state: RootState) => state.ui);
   const { fetchedInvoices } = props;
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const Home: NextPage<FetchedInvoices> = (props) => {
       </Typography>
     </Box>
   );
-  const renderedInvoices = invoices.map((invoice) => (
+  const renderedInvoices = currentInvoices.map((invoice) => (
     <Invoice
       key={invoice.id}
       id={invoice.id}
@@ -116,7 +116,7 @@ const Home: NextPage<FetchedInvoices> = (props) => {
   );
   const invoicesListStyles = { height: "80vh", overflowY: "scroll" };
   const displayedInvoices =
-    invoices.length !== 0 ? renderedInvoices : noInvoicesInfo;
+    currentInvoices.length !== 0 ? renderedInvoices : noInvoicesInfo;
   return (
     <>
       <Box padding={2}>

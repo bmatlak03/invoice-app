@@ -9,7 +9,7 @@ type Props = {};
 
 const InvoicesAction = ({}: Props) => {
   const invoicesLength = useSelector(
-    (state: RootState) => state.invoices.invoices.length
+    (state: RootState) => state.invoices.currentInvoices.length
   );
   const dispatch = useDispatch();
   const theme = useTheme();

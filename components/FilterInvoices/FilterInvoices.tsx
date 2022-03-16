@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/index";
+import { invoicesActions } from "../../store/invoices-slice";
+import { uiActions } from "../../store/ui-slice";
 import {
   FormControl,
   FormControlLabel,
@@ -15,17 +17,22 @@ type Props = {};
 
 const FilterInvoices: React.FC<Props> = ({}) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [selectedFilter, setSelectedFilter] = useState<string>("");
-  const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const invoicesLength = useSelector(
-    (state: RootState) => state.invoices.invoices.length
+    (state: RootState) => state.invoices.currentInvoices.length
   );
+  const { isFilterOpen } = useSelector((state: RootState) => state.ui);
   const changeStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) setSelectedFilter(e.target.value);
-    else setSelectedFilter("");
+    if (e.target.checked) {
+      setSelectedFilter(e.target.value);
+      dispatch(invoicesActions.filterInvoiceByStatus(e.target.value));
+    } else {
+      setSelectedFilter("");
+      dispatch(invoicesActions.filterInvoiceByStatus("any"));
+    }
   };
-  const toggleFilterHandler = () => setFilterOpen(!filterOpen);
   const filterBtnStyles = {
     textTransform: "capitalize",
     color: theme.palette.mode === "dark" ? "white" : "black",
@@ -33,7 +40,7 @@ const FilterInvoices: React.FC<Props> = ({}) => {
   };
   const filterBtnText = matches ? "Filter by status" : "Filter";
   const arrowIconStyles = {
-    transform: filterOpen ? "rotate(180deg)" : "",
+    transform: isFilterOpen ? "rotate(180deg)" : "",
     transition: "0.1s",
   };
   const formOptionsStyles = {
@@ -91,15 +98,14 @@ const FilterInvoices: React.FC<Props> = ({}) => {
     >
       <Button
         sx={filterBtnStyles}
-        onClick={toggleFilterHandler}
+        onClick={() => dispatch(uiActions.toggleFilter())}
         endIcon={
           <KeyboardArrowDownIcon color="secondary" sx={arrowIconStyles} />
         }
-        disabled={invoicesLength === 0}
       >
         {filterBtnText}
       </Button>
-      {filterOpen && filterOptions}
+      {isFilterOpen && filterOptions}
     </Box>
   );
 };
