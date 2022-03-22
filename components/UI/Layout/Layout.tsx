@@ -45,6 +45,7 @@ const Layout: React.FC = ({ children }) => {
               default: "#F8F8FB",
               header: "#7C5DFA",
             },
+
             divider: "#7E88C3",
             text: {
               secondary: "#7E88C3",
@@ -62,6 +63,7 @@ const Layout: React.FC = ({ children }) => {
             divider: "#7E88C3",
             background: {
               default: "#141625",
+              paper: "#252945",
             },
           }),
     },
