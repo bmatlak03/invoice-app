@@ -6,6 +6,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
 import InvoiceStatus from "../InvoiceStatus/InvoiceStatus";
 type Props = {
@@ -24,6 +25,7 @@ const Invoice: React.FC<Props> = ({
 }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const router = useRouter();
   const cardStyles: {} = {
     width: "100%",
     marginTop: 2,
@@ -51,7 +53,7 @@ const Invoice: React.FC<Props> = ({
     />
   );
   return (
-    <Card sx={cardStyles} onClick={() => console.log("invoice click")}>
+    <Card sx={cardStyles} onClick={() => router.push(`/${id}`)}>
       <CardActionArea>
         <CardContent sx={cardContentStyles}>
           <Typography
