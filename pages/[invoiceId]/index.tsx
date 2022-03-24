@@ -1,3 +1,6 @@
+import { MongoClient, ObjectId } from "mongodb";
+import { GetStaticProps, GetStaticPaths } from "next";
+import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -9,10 +12,53 @@ import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material"
 import InvoiceStatus from "../../components/InvoiceStatus/InvoiceStatus";
 import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
-import { useRouter } from "next/router";
-type Props = {};
+type Props = {
+  invoiceData: {
+    id: string;
+    status: string;
+    clientName: string;
+    clientEmail: string;
+    clientAddress: {
+      street: string;
+      city: string;
+      postCode: string;
+      country: string;
+    };
+    description: string;
+    senderAddress: {
+      street: string;
+      city: string;
+      postCode: string;
+      country: string;
+    };
+    createdAt: string;
+    paymentDue: string;
+    items: [
+      {
+        name: string;
+        quantity: number;
+        price: number;
+        total: number;
+      }
+    ];
+    total: number;
+  };
+};
 
-const InvoiceDetails = ({}: Props) => {
+const InvoiceDetails = (props: Props) => {
+  const {
+    id,
+    status,
+    clientName,
+    clientEmail,
+    clientAddress,
+    description,
+    senderAddress,
+    createdAt,
+    paymentDue,
+    items,
+    total,
+  } = props.invoiceData;
   const theme = useTheme();
   const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -52,7 +98,7 @@ const InvoiceDetails = ({}: Props) => {
       }}
     >
       <Typography>Status</Typography>
-      <InvoiceStatus status="paid" />
+      <InvoiceStatus status={status} />
       {!!matches && <InvoiceControls />}
     </Box>
   );
@@ -60,23 +106,23 @@ const InvoiceDetails = ({}: Props) => {
     <Typography color="text.secondary">
       #
       <Typography component="span" color="text.primary" fontWeight={600}>
-        XM9141
+        {id}
       </Typography>
     </Typography>
   );
   const streetAddressInfo = (
     <Box marginTop={!matches ? 2 : 0}>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        19 Union Terrace
+        {senderAddress.street}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        London
+        {senderAddress.city}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        E1 3EZ
+        {senderAddress.postCode}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        United Kingdom
+        {senderAddress.city}
       </Typography>
     </Box>
   );
@@ -87,7 +133,7 @@ const InvoiceDetails = ({}: Props) => {
           Invoice Date
         </Typography>
         <Typography component="span" color="text.primary" fontWeight={600}>
-          21 Aug 2022
+          {createdAt}
         </Typography>
       </Box>
       <Box marginTop={2}>
@@ -95,18 +141,18 @@ const InvoiceDetails = ({}: Props) => {
           PaymentDue
         </Typography>
         <Typography component="span" color="text.primary" fontWeight={600}>
-          20 Sep 2022
+          {paymentDue}
         </Typography>
       </Box>
     </Box>
   );
-  const clientEmail = (
+  const clientEmailBox = (
     <Box mt={2}>
       <Typography variant="subtitle2" color="text.secondary">
         Sent To
       </Typography>
       <Typography component="span" color="text.primary" fontWeight={600}>
-        alexgrim@mail.com
+        {clientEmail}
       </Typography>
     </Box>
   );
@@ -116,19 +162,19 @@ const InvoiceDetails = ({}: Props) => {
         Bill To
       </Typography>
       <Typography component="span" color="text.primary" fontWeight={600}>
-        Alex Grim
+        {clientName}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        84 Church Way
+        {clientAddress.street}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        Bradford
+        {clientAddress.city}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        BD1 9PB
+        {clientAddress.postCode}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        United Kingdom
+        {clientAddress.country}
       </Typography>
     </Box>
   );
@@ -142,7 +188,7 @@ const InvoiceDetails = ({}: Props) => {
     >
       {dateInfos}
       {clientDetails}
-      {clientEmail}
+      {clientEmailBox}
     </Box>
   );
   const invoiceOverview = (
@@ -164,13 +210,13 @@ const InvoiceDetails = ({}: Props) => {
         <Box>
           {invoiceId}
           <Typography variant="subtitle2" color="text.secondary">
-            Graphic Design
+            {description}
           </Typography>
         </Box>
         {streetAddressInfo}
       </Box>
       {details}
-      <ItemsList />
+      <ItemsList items={items} totalPrice={total} />
     </Box>
   );
   return (
@@ -190,5 +236,56 @@ const InvoiceDetails = ({}: Props) => {
       {!matches && <InvoiceControls />}
     </Box>
   );
+};
+export const getStaticPaths: GetStaticPaths = async () => {
+  const client = await MongoClient.connect(
+    `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
+  );
+  const db = client.db();
+
+  const invoicesCollection = db.collection("invoices");
+
+  const invoices = await invoicesCollection.find({}, { _id: 1 }).toArray();
+
+  client.close();
+
+  return {
+    fallback: "blocking",
+    paths: invoices.map((invoice) => ({
+      params: { invoiceId: invoice._id.toString() },
+    })),
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const meetupId = context?.params?.invoiceId;
+
+  const client = await MongoClient.connect(
+    `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
+  );
+  const db = client.db();
+  const invoicesCollection = db.collection("invoices");
+  const selectedInvoice = await invoicesCollection.findOne({
+    _id: ObjectId(meetupId),
+  });
+  client.close();
+
+  return {
+    props: {
+      invoiceData: {
+        id: selectedInvoice?._id.toString(),
+        status: selectedInvoice?.status,
+        description: selectedInvoice?.description,
+        createdAt: selectedInvoice?.createdAt,
+        paymentDue: selectedInvoice?.paymentDue,
+        clientName: selectedInvoice?.clientName,
+        clientEmail: selectedInvoice?.clientEmail,
+        senderAddress: selectedInvoice?.senderAddress,
+        clientAddress: selectedInvoice?.clientAddress,
+        items: selectedInvoice?.items,
+        total: selectedInvoice?.total,
+      },
+    },
+  };
 };
 export default InvoiceDetails;

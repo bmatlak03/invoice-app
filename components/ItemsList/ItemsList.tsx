@@ -1,8 +1,18 @@
 import { Box, Typography, Paper, useTheme, useMediaQuery } from "@mui/material";
 import InvoiceItem from "./InvoiceItem";
-type Props = {};
+type Props = {
+  items: [
+    {
+      name: string;
+      quantity: number;
+      price: number;
+      total: number;
+    }
+  ];
+  totalPrice: number;
+};
 
-const ItemsList = (props: Props) => {
+const ItemsList = ({ items, totalPrice }: Props) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -28,7 +38,7 @@ const ItemsList = (props: Props) => {
     <Box sx={itemsSummaryStyles}>
       Amount Due{" "}
       <Typography color="white" fontWeight={700} fontSize={30}>
-        $ 556.00
+        ${totalPrice.toFixed(2)}
       </Typography>
     </Box>
   );
@@ -42,12 +52,15 @@ const ItemsList = (props: Props) => {
       }}
     >
       {!!matches && itemsLabel}
-      <InvoiceItem
-        itemName="Banner Design"
-        itemQty={1}
-        itemPrice={156.0}
-        total={156.0}
-      />
+      {items.map((item) => (
+        <InvoiceItem
+          key={item.name}
+          itemName={item.name}
+          itemQty={item.quantity}
+          itemPrice={item.price}
+          total={item.total}
+        />
+      ))}
       {itemsSummary}
     </Paper>
   );
