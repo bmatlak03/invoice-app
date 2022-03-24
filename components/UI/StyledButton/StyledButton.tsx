@@ -1,7 +1,7 @@
 import { Button, Box, useTheme } from "@mui/material";
 import { Add } from "@mui/icons-material";
 type Props = {
-  type: string;
+  type?: string;
   onClick?: any;
   customStyles?: object;
   role?: any;
@@ -24,21 +24,27 @@ const StyledButton: React.FC<Props> = (props) => {
       </Box>
     ) : null;
 
-  const modifiedBackgroundColor =
-    type === "add"
-      ? theme.palette.secondary.main
-      : type === "discard"
-      ? "#252945"
-      : type === "draft"
-      ? theme.palette.primary.dark
-      : theme.palette.secondary.main;
+  const checkBackgroundColor = () => {
+    if (type === "add") {
+      return theme.palette.secondary.main;
+    } else if (type === "light") {
+      return "#F9FAFE";
+    } else if (type === "grey") {
+      return "#373B53";
+    } else if (type === "red") {
+      return "#EC5757";
+    } else {
+      return theme.palette.secondary.main;
+    }
+  };
+
   let buttonStyles: {} = {
     minWidth: "100px",
     padding: 1,
-    backgroundColor: modifiedBackgroundColor,
+    backgroundColor: checkBackgroundColor(),
     textTransform: "capitalize",
     fontWeight: "bold",
-    color: "white",
+    color: type === "light" ? "#7E88C3" : "white",
     border: "none",
     borderRadius: "50px",
     "&:hover": {

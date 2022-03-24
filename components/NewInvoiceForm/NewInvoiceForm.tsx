@@ -514,7 +514,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           </Box>
         ))}
         <StyledButton
-          type="discard"
+          type={theme.palette.mode === "dark" ? "grey" : "light"}
           customStyles={{ width: "100%" }}
           onClick={addNewItem}
         >

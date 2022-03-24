@@ -1,10 +1,11 @@
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
 type Props = {};
 
 const FormControls: React.FC<Props> = ({}) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const formControlsContainerStyles = {
     display: "flex",
@@ -13,19 +14,19 @@ const FormControls: React.FC<Props> = ({}) => {
     width: "100%",
     height: "80px",
     padding: "2%",
-    backgroundColor: "#1E2139",
+    backgroundColor: theme.palette.primary.light,
   };
   const buttonHeight = { height: "50px" };
   return (
     <Box sx={formControlsContainerStyles}>
       <StyledButton
-        type="discard"
+        type="light"
         customStyles={buttonHeight}
         onClick={() => dispatch(uiActions.closeForm())}
       >
         Discard
       </StyledButton>
-      <StyledButton type="draft" customStyles={buttonHeight}>
+      <StyledButton type="grey" customStyles={buttonHeight}>
         Save as draft
       </StyledButton>
       <StyledButton type="send" role="submit" customStyles={buttonHeight}>
