@@ -9,10 +9,12 @@ import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material"
 import InvoiceStatus from "../../components/InvoiceStatus/InvoiceStatus";
 import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
+import { useRouter } from "next/router";
 type Props = {};
 
 const InvoiceDetails = ({}: Props) => {
   const theme = useTheme();
+  const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const goBackBtn = (
     <Button
@@ -21,7 +23,7 @@ const InvoiceDetails = ({}: Props) => {
         color: theme.palette.mode === "dark" ? "white" : "black",
         fontSize: "1rem",
       }}
-      onClick={() => null}
+      onClick={() => router.push("/")}
       startIcon={
         <KeyboardArrowDownIcon
           color="secondary"
