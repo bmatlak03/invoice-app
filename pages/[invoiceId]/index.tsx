@@ -8,6 +8,7 @@ import {
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material";
 import InvoiceStatus from "../../components/InvoiceStatus/InvoiceStatus";
 import ItemsList from "../../components/ItemsList/ItemsList";
+import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
 type Props = {};
 
 const InvoiceDetails = ({}: Props) => {
@@ -44,12 +45,13 @@ const InvoiceDetails = ({}: Props) => {
       sx={{
         alignItems: "center",
         justifyContent: "space-between",
-        ...boxStyles,
         marginTop: 2,
+        ...boxStyles,
       }}
     >
       <Typography>Status</Typography>
       <InvoiceStatus status="paid" />
+      {!!matches && <InvoiceControls />}
     </Box>
   );
   const invoiceId = (
@@ -170,13 +172,21 @@ const InvoiceDetails = ({}: Props) => {
     </Box>
   );
   return (
-    <>
-      <Box padding={1}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "column",
+        height: "calc(100vh - 60px)",
+      }}
+    >
+      <Box padding={2}>
         {goBackBtn}
         {invoiceOptions}
         {invoiceOverview}
       </Box>
-    </>
+      {!matches && <InvoiceControls />}
+    </Box>
   );
 };
 export default InvoiceDetails;

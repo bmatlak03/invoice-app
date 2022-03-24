@@ -88,7 +88,7 @@ const Layout: React.FC = ({ children }) => {
           position: "relative",
         }}
       >
-        <main style={{ width: matches ? "60%" : "95%" }}>{children}</main>
+        <main style={{ width: matches ? "60%" : "100%" }}>{children}</main>
       </Box>
     </ThemeProvider>
   );

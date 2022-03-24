@@ -10,7 +10,9 @@ const ItemsList = (props: Props) => {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#000",
+    color: "white",
+    backgroundColor:
+      theme.palette.mode === "dark" ? "#000" : theme.palette.primary.main,
     padding: 2,
     borderRadius: "10px",
   };
@@ -25,7 +27,7 @@ const ItemsList = (props: Props) => {
   const itemsSummary = (
     <Box sx={itemsSummaryStyles}>
       Amount Due{" "}
-      <Typography color="text.primary" fontWeight={700} fontSize={24}>
+      <Typography color="white" fontWeight={700} fontSize={30}>
         $ 556.00
       </Typography>
     </Box>
@@ -35,6 +37,8 @@ const ItemsList = (props: Props) => {
       sx={{
         marginTop: 3,
         borderRadius: "10px",
+        backgroundColor:
+          theme.palette.mode === "dark" ? "transparent" : "#F9FAFE",
       }}
     >
       {!!matches && itemsLabel}
