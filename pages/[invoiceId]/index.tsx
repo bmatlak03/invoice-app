@@ -16,6 +16,7 @@ import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
 import ConfirmAlert from "../../components/UI/ConfirmAlert/ConfirmAlert";
 import { RootState } from "../../store";
+import { markInvoiceAsPaid } from "../../store/invoices-actions";
 type Props = {
   invoiceData: {
     id: string;
@@ -108,6 +109,7 @@ const InvoiceDetails = (props: Props) => {
       {!!matches && (
         <InvoiceControls
           onDelete={() => dispatch(uiActions.openDeleteConfirm())}
+          onStatusChange={() => dispatch(markInvoiceAsPaid(id))}
         />
       )}
     </Box>
@@ -246,6 +248,7 @@ const InvoiceDetails = (props: Props) => {
       {!matches && (
         <InvoiceControls
           onDelete={() => dispatch(uiActions.openDeleteConfirm())}
+          onStatusChange={() => dispatch(markInvoiceAsPaid(id))}
         />
       )}
       {!!open && <ConfirmAlert id={id} />}

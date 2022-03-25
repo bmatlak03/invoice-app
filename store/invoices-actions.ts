@@ -94,3 +94,25 @@ export const deleteInvoice = (id: string) => {
     }
   };
 };
+export const markInvoiceAsPaid = (id: string) => {
+  return async (dispatch: AppDispatch) => {
+    const sendRequest = async () => {
+      const response = await fetch("api/mark-as-paid-invoice", {
+        method: "PUT",
+        body: JSON.stringify(id),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Changing status failed.");
+      }
+    };
+    try {
+      await sendRequest();
+      dispatch(invoicesActions.changeInvoiceStatus(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

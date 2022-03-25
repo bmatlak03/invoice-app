@@ -61,6 +61,7 @@ const invoicesSlice = createSlice({
         (invoice) => invoice.id !== action.payload
       );
     },
+    changeInvoiceStatus(state, action) {},
     filterInvoiceByStatus(state, action) {
       switch (action.payload) {
         case "any":
