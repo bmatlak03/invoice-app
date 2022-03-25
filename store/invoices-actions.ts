@@ -1,6 +1,7 @@
 import { invoicesActions } from "./invoices-slice";
 import { uiActions } from "./ui-slice";
 import { AppDispatch } from ".";
+import Router from "next/router";
 export const sendInvoiceData = (invoiceData: any) => {
   return async (dispatch: AppDispatch) => {
     const {
@@ -56,7 +57,7 @@ export const sendInvoiceData = (invoiceData: any) => {
       const responseData: { id: string } = await response.json();
       newInvoiceSchema = { ...newInvoiceSchema, id: responseData.id };
       if (!response.ok) {
-        throw new Error("Sending cart data failed.");
+        throw new Error("Sending invoice data failed.");
       }
     };
     try {
@@ -66,6 +67,29 @@ export const sendInvoiceData = (invoiceData: any) => {
       //dispatch success notification
     } catch (error) {
       //dispach error notification
+      console.log(error);
+    }
+  };
+};
+export const deleteInvoice = (id: string) => {
+  return async (dispatch: AppDispatch) => {
+    const sendRequest = async () => {
+      const response = await fetch("api/delete-invoice", {
+        method: "DELETE",
+        body: JSON.stringify(id),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Deleting invoice failed.");
+      }
+    };
+    try {
+      await sendRequest();
+      dispatch(invoicesActions.deleteInvoice(id));
+      Router.push("/");
+    } catch (error) {
       console.log(error);
     }
   };

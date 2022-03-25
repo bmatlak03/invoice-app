@@ -47,10 +47,19 @@ const invoicesSlice = createSlice({
   reducers: {
     createNewInvoice(state, action) {
       state.invoices.push(action.payload);
+      state.currentInvoices.push(action.payload);
     },
     insertFetchedInvoices(state, action) {
       state.invoices = action.payload;
       state.currentInvoices = action.payload;
+    },
+    deleteInvoice(state, action) {
+      state.invoices = state.invoices.filter(
+        (invoice) => invoice.id !== action.payload
+      );
+      state.currentInvoices = state.invoices.filter(
+        (invoice) => invoice.id !== action.payload
+      );
     },
     filterInvoiceByStatus(state, action) {
       switch (action.payload) {

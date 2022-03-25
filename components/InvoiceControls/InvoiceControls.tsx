@@ -1,6 +1,8 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
-type Props = {};
+type Props = {
+  onDelete: () => void;
+};
 
 const InvoiceControls = (props: Props) => {
   const theme = useTheme();
@@ -18,7 +20,9 @@ const InvoiceControls = (props: Props) => {
       }}
     >
       <StyledButton type="grey">Edit</StyledButton>
-      <StyledButton type="red">Delete</StyledButton>
+      <StyledButton type="red" onClick={props.onDelete}>
+        Delete
+      </StyledButton>
       <StyledButton type="paid">Mark as paid</StyledButton>
     </Box>
   );

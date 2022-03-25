@@ -12,6 +12,8 @@ import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material"
 import InvoiceStatus from "../../components/InvoiceStatus/InvoiceStatus";
 import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
+import { useDispatch } from "react-redux";
+import { deleteInvoice } from "../../store/invoices-actions";
 type Props = {
   invoiceData: {
     id: string;
@@ -59,6 +61,7 @@ const InvoiceDetails = (props: Props) => {
     items,
     total,
   } = props.invoiceData;
+  const dispatch = useDispatch();
   const theme = useTheme();
   const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -99,7 +102,9 @@ const InvoiceDetails = (props: Props) => {
     >
       <Typography>Status</Typography>
       <InvoiceStatus status={status} />
-      {!!matches && <InvoiceControls />}
+      {!!matches && (
+        <InvoiceControls onDelete={() => dispatch(deleteInvoice(id))} />
+      )}
     </Box>
   );
   const invoiceId = (
@@ -233,7 +238,9 @@ const InvoiceDetails = (props: Props) => {
         {invoiceOptions}
         {invoiceOverview}
       </Box>
-      {!matches && <InvoiceControls />}
+      {!matches && (
+        <InvoiceControls onDelete={() => dispatch(deleteInvoice(id))} />
+      )}
     </Box>
   );
 };
@@ -258,7 +265,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const meetupId = context?.params?.invoiceId;
+  const meetupId: any = context?.params?.invoiceId;
 
   const client = await MongoClient.connect(
     `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
@@ -266,7 +273,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const db = client.db();
   const invoicesCollection = db.collection("invoices");
   const selectedInvoice = await invoicesCollection.findOne({
-    _id: ObjectId(meetupId),
+    _id: new ObjectId(meetupId),
   });
   client.close();
 
