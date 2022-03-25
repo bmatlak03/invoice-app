@@ -1,6 +1,8 @@
 import { MongoClient, ObjectId } from "mongodb";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "../../store/ui-slice";
 import {
   Box,
   Button,
@@ -12,8 +14,8 @@ import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material"
 import InvoiceStatus from "../../components/InvoiceStatus/InvoiceStatus";
 import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
-import { useDispatch } from "react-redux";
-import { deleteInvoice } from "../../store/invoices-actions";
+import ConfirmAlert from "../../components/UI/ConfirmAlert/ConfirmAlert";
+import { RootState } from "../../store";
 type Props = {
   invoiceData: {
     id: string;
@@ -62,6 +64,7 @@ const InvoiceDetails = (props: Props) => {
     total,
   } = props.invoiceData;
   const dispatch = useDispatch();
+  const open = useSelector((state: RootState) => state.ui.isDeleteConfirmOpen);
   const theme = useTheme();
   const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -103,7 +106,9 @@ const InvoiceDetails = (props: Props) => {
       <Typography>Status</Typography>
       <InvoiceStatus status={status} />
       {!!matches && (
-        <InvoiceControls onDelete={() => dispatch(deleteInvoice(id))} />
+        <InvoiceControls
+          onDelete={() => dispatch(uiActions.openDeleteConfirm())}
+        />
       )}
     </Box>
   );
@@ -239,8 +244,11 @@ const InvoiceDetails = (props: Props) => {
         {invoiceOverview}
       </Box>
       {!matches && (
-        <InvoiceControls onDelete={() => dispatch(deleteInvoice(id))} />
+        <InvoiceControls
+          onDelete={() => dispatch(uiActions.openDeleteConfirm())}
+        />
       )}
+      {!!open && <ConfirmAlert id={id} />}
     </Box>
   );
 };

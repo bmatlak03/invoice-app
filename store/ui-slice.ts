@@ -6,6 +6,7 @@ const uiSlice = createSlice({
     isFormOpen: false,
     isFilterOpen: false,
     notification: null,
+    isDeleteConfirmOpen: false,
   },
   reducers: {
     openForm(state) {
@@ -17,6 +18,12 @@ const uiSlice = createSlice({
     },
     toggleFilter(state) {
       state.isFilterOpen = !state.isFilterOpen;
+    },
+    openDeleteConfirm(state) {
+      state.isDeleteConfirmOpen = true;
+    },
+    closeDeleteConfirm(state) {
+      state.isDeleteConfirmOpen = false;
     },
   },
 });
