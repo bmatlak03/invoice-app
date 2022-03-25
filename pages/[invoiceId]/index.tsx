@@ -251,8 +251,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const db = client.db();
 
   const invoicesCollection = db.collection("invoices");
-
-  const invoices = await invoicesCollection.find({}, { _id: 1 }).toArray();
+  const id: any = { _id: 1 };
+  const invoices = await invoicesCollection.find({}, id).toArray();
 
   client.close();
 
