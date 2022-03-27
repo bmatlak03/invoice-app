@@ -26,20 +26,32 @@ const NewInvoiceForm = lazy(
 type FetchedInvoices = {
   fetchedInvoices: {
     id: string;
-    streetAddress: string;
-    city: string;
-    postCode: string;
-    clientName: string;
-    paymentDue: string;
     status: string;
+    clientName: string;
     clientEmail: string;
-    clientCity: string;
-    clientStreetAddres: string;
-    clientPostCode: string;
-    date: string;
-    paymentTerms: number;
-    projectDescription: string;
-    items: [];
+    clientAddress: {
+      street: string;
+      city: string;
+      postCode: string;
+      country: string;
+    };
+    description: string;
+    senderAddress: {
+      street: string;
+      city: string;
+      postCode: string;
+      country: string;
+    };
+    createdAt: string;
+    paymentDue: string;
+    items: [
+      {
+        name: string;
+        quantity: number;
+        price: number;
+        total: number;
+      }
+    ];
     total: number;
   };
 };

@@ -1,45 +1,57 @@
 import { createSlice } from "@reduxjs/toolkit";
-export type SliceState = {
-  invoices: {
-    id: string;
-    streetAddress: string;
+
+export interface InvoiceType {
+  id: any;
+  status: string;
+  clientName: string;
+  clientEmail: string;
+  clientAddress: {
+    street: string;
     city: string;
     postCode: string;
-    clientName: string;
-    paymentDue: string;
-    status: string;
-    clientEmail: string;
-    clientCity: string;
-    clientStreetAddres: string;
-    clientPostCode: string;
-    date: string;
-    paymentTerms: number;
-    projectDescription: string;
-    items: [];
-    total: number;
-  }[];
-  currentInvoices: {
-    id: string;
-    streetAddress: string;
+    country: string;
+  };
+  description: string;
+  senderAddress: {
+    street: string;
     city: string;
     postCode: string;
-    clientName: string;
-    paymentDue: string;
-    status: string;
-    clientEmail: string;
-    clientCity: string;
-    clientStreetAddres: string;
-    clientPostCode: string;
-    date: string;
-    paymentTerms: number;
-    projectDescription: string;
-    items: [];
-    total: number;
-  }[];
-};
+    country: string;
+  };
+  createdAt: string;
+  paymentDue: string;
+  items: [
+    {
+      name: string;
+      quantity: number;
+      price: number;
+      total: number;
+    }
+  ];
+  total: number;
+}
+
+export interface SliceState {
+  invoices: InvoiceType[];
+  currentInvoices: InvoiceType[];
+  fetchedInvoice: InvoiceType;
+}
 const initialState: SliceState = {
   invoices: [],
   currentInvoices: [],
+  fetchedInvoice: {
+    id: "",
+    status: "",
+    clientName: "",
+    clientEmail: "",
+    clientAddress: { street: "", city: "", postCode: "", country: "" },
+    description: "",
+    senderAddress: { street: "", city: "", postCode: "", country: "" },
+    createdAt: "",
+    paymentDue: "",
+    items: [{ name: "", quantity: 0, price: 0, total: 0 }],
+    total: 0,
+  },
 };
 const invoicesSlice = createSlice({
   name: "invoices",
@@ -53,6 +65,9 @@ const invoicesSlice = createSlice({
       state.invoices = action.payload;
       state.currentInvoices = action.payload;
     },
+    insertFetchedInvoice(state, action) {
+      state.fetchedInvoice = action.payload;
+    },
     deleteInvoice(state, action) {
       state.invoices = state.invoices.filter(
         (invoice) => invoice.id !== action.payload
@@ -61,7 +76,9 @@ const invoicesSlice = createSlice({
         (invoice) => invoice.id !== action.payload
       );
     },
-    changeInvoiceStatus(state, action) {},
+    changeInvoiceStatus(state) {
+      state.fetchedInvoice.status = "paid";
+    },
     filterInvoiceByStatus(state, action) {
       switch (action.payload) {
         case "any":

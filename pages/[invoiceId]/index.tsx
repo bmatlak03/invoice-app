@@ -17,40 +17,24 @@ import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
 import ConfirmAlert from "../../components/UI/ConfirmAlert/ConfirmAlert";
 import { RootState } from "../../store";
 import { markInvoiceAsPaid } from "../../store/invoices-actions";
+import { useEffect } from "react";
+import { invoicesActions } from "../../store/invoices-slice";
+import { InvoiceType } from "../../store/invoices-slice";
 type Props = {
-  invoiceData: {
-    id: string;
-    status: string;
-    clientName: string;
-    clientEmail: string;
-    clientAddress: {
-      street: string;
-      city: string;
-      postCode: string;
-      country: string;
-    };
-    description: string;
-    senderAddress: {
-      street: string;
-      city: string;
-      postCode: string;
-      country: string;
-    };
-    createdAt: string;
-    paymentDue: string;
-    items: [
-      {
-        name: string;
-        quantity: number;
-        price: number;
-        total: number;
-      }
-    ];
-    total: number;
-  };
+  invoiceData: InvoiceType;
 };
 
 const InvoiceDetails = (props: Props) => {
+  const dispatch = useDispatch();
+  const open = useSelector((state: RootState) => state.ui.isDeleteConfirmOpen);
+  const theme = useTheme();
+  const router = useRouter();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  useEffect(() => {
+    console.log(props.invoiceData);
+    dispatch(invoicesActions.insertFetchedInvoice(props.invoiceData));
+  }, [dispatch, props.invoiceData]);
+
   const {
     id,
     status,
@@ -63,12 +47,8 @@ const InvoiceDetails = (props: Props) => {
     paymentDue,
     items,
     total,
-  } = props.invoiceData;
-  const dispatch = useDispatch();
-  const open = useSelector((state: RootState) => state.ui.isDeleteConfirmOpen);
-  const theme = useTheme();
-  const router = useRouter();
-  const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  } = useSelector((state: any) => state.invoices.fetchedInvoice);
+
   const goBackBtn = (
     <Button
       sx={{
@@ -76,7 +56,7 @@ const InvoiceDetails = (props: Props) => {
         color: theme.palette.mode === "dark" ? "white" : "black",
         fontSize: "1rem",
       }}
-      onClick={() => router.push("/")}
+      onClick={() => router.back()}
       startIcon={
         <KeyboardArrowDownIcon
           color="secondary"
@@ -125,16 +105,16 @@ const InvoiceDetails = (props: Props) => {
   const streetAddressInfo = (
     <Box marginTop={!matches ? 2 : 0}>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {senderAddress.street}
+        {senderAddress?.street}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {senderAddress.city}
+        {senderAddress?.city}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {senderAddress.postCode}
+        {senderAddress?.postCode}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {senderAddress.city}
+        {senderAddress?.city}
       </Typography>
     </Box>
   );
@@ -177,16 +157,16 @@ const InvoiceDetails = (props: Props) => {
         {clientName}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {clientAddress.street}
+        {clientAddress?.street}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {clientAddress.city}
+        {clientAddress?.city}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {clientAddress.postCode}
+        {clientAddress?.postCode}
       </Typography>
       <Typography variant="body2" color="text.secondary" fontSize={12}>
-        {clientAddress.country}
+        {clientAddress?.country}
       </Typography>
     </Box>
   );

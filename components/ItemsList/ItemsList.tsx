@@ -38,7 +38,7 @@ const ItemsList = ({ items, totalPrice }: Props) => {
     <Box sx={itemsSummaryStyles}>
       Amount Due{" "}
       <Typography color="white" fontWeight={700} fontSize={30}>
-        ${totalPrice.toFixed(2)}
+        ${totalPrice?.toFixed(2)}
       </Typography>
     </Box>
   );
@@ -52,7 +52,7 @@ const ItemsList = ({ items, totalPrice }: Props) => {
       }}
     >
       {!!matches && itemsLabel}
-      {items.map((item) => (
+      {items?.map((item) => (
         <InvoiceItem
           key={item.name}
           itemName={item.name}

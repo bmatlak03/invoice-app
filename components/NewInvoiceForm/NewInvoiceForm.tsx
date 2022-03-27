@@ -47,8 +47,29 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           item.total = item.quantity * item.price;
           totalPrice += item.total;
         });
+        let paymentDueTransformed = new Date();
+        paymentDueTransformed.setDate(
+          values.date.getDate() + values.paymentTerms
+        );
         const newInvoiceData = {
-          ...values,
+          status: "pending",
+          clientName: values.clientName,
+          clientEmail: values.clientEmail,
+          clientAddress: {
+            street: values.clientStreetAddress,
+            city: values.clientCity,
+            postCode: values.clientPostCode,
+            country: values.clientCountry,
+          },
+          description: values.projectDescription,
+          senderAddress: {
+            street: values.streetAddress,
+            city: values.city,
+            postCode: values.postCode,
+            country: values.country,
+          },
+          createdAt: values.date.toLocaleDateString(),
+          paymentDue: paymentDueTransformed.toLocaleDateString(),
           id: "",
           items: itemsCopy,
           total: totalPrice,
