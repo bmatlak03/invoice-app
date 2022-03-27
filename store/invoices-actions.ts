@@ -1,8 +1,9 @@
 import { invoicesActions } from "./invoices-slice";
 import { uiActions } from "./ui-slice";
 import { AppDispatch } from ".";
+import { InvoiceType } from "./invoices-slice";
 import Router from "next/router";
-export const sendInvoiceData = (invoiceData: any) => {
+export const sendInvoiceData = (invoiceData: InvoiceType) => {
   let newInvoiceData = { ...invoiceData };
   return async (dispatch: AppDispatch) => {
     const sendRequest = async () => {

@@ -68,6 +68,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             postCode: values.postCode,
             country: values.country,
           },
+          paymentTerms: values.paymentTerms,
           createdAt: values.date.toLocaleDateString(),
           paymentDue: paymentDueTransformed.toLocaleDateString(),
           id: "",

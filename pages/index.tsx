@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { RootState } from "../store";
-import { invoicesActions } from "../store/invoices-slice";
+import { invoicesActions, InvoiceType } from "../store/invoices-slice";
 import Invoice from "../components/Invoice/Invoice";
 import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import EmptyInvoicesIMG from "../assets/illustration-empty.svg";
@@ -24,36 +24,7 @@ const NewInvoiceForm = lazy(
   () => import("../components/NewInvoiceForm/NewInvoiceForm")
 );
 type FetchedInvoices = {
-  fetchedInvoices: {
-    id: string;
-    status: string;
-    clientName: string;
-    clientEmail: string;
-    clientAddress: {
-      street: string;
-      city: string;
-      postCode: string;
-      country: string;
-    };
-    description: string;
-    senderAddress: {
-      street: string;
-      city: string;
-      postCode: string;
-      country: string;
-    };
-    createdAt: string;
-    paymentDue: string;
-    items: [
-      {
-        name: string;
-        quantity: number;
-        price: number;
-        total: number;
-      }
-    ];
-    total: number;
-  };
+  fetchedInvoices: InvoiceType;
 };
 const Home: NextPage<FetchedInvoices> = (props) => {
   const { currentInvoices } = useSelector((state: RootState) => state.invoices);
