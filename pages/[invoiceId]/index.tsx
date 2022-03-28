@@ -47,7 +47,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const meetupId: any = context?.params?.invoiceId;
+  const id: any = context?.params?.invoiceId;
 
   const client = await MongoClient.connect(
     `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
@@ -55,7 +55,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const db = client.db();
   const invoicesCollection = db.collection("invoices");
   const selectedInvoice = await invoicesCollection.findOne({
-    _id: new ObjectId(meetupId),
+    _id: new ObjectId(id),
   });
   client.close();
 
