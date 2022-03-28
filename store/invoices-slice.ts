@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 export interface InvoiceType {
-  id: any;
-  status: string;
+  id: string;
+  status: "paid" | "pending" | "draft";
   clientName: string;
   clientEmail: string;
   clientAddress: {
@@ -20,6 +19,7 @@ export interface InvoiceType {
   };
   createdAt: string;
   paymentDue: string;
+  paymentTerms: number;
   items: {
     name: string;
     quantity: number;
@@ -40,7 +40,7 @@ const initialState: SliceState = {
   currentInvoices: [],
   fetchedInvoice: {
     id: "",
-    status: "",
+    status: "pending",
     clientName: "",
     clientEmail: "",
     clientAddress: { street: "", city: "", postCode: "", country: "" },
@@ -48,6 +48,7 @@ const initialState: SliceState = {
     senderAddress: { street: "", city: "", postCode: "", country: "" },
     createdAt: "",
     paymentDue: "",
+    paymentTerms: 1,
     items: [{ name: "", quantity: 0, price: 0, total: 0 }],
     total: 0,
   },

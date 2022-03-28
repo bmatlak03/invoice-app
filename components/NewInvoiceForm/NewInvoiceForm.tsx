@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendInvoiceData } from "../../store/invoices-actions";
 import { useFormik } from "formik";
@@ -25,10 +25,17 @@ import FormControls from "../FormControls/FormControls";
 import Input from "../UI/Input/Input";
 import StyledButton from "../UI/StyledButton/StyledButton";
 import { uiActions } from "../../store/ui-slice";
+import { InvoiceType } from "../../store/invoices-slice";
 type Props = {};
-
+type Items = {
+  name: string;
+  quantity: number;
+  total: number;
+  price: number;
+  id: number;
+};
 const NewInvoiceForm: React.FC<Props> = ({}) => {
-  const [items, setItems] = useState([
+  const [items, setItems] = useState<Array<Items>>([
     { name: "", quantity: 1, total: 0, price: 0, id: 0 },
   ]);
   const dispatch = useDispatch();
@@ -51,7 +58,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
         paymentDueTransformed.setDate(
           values.date.getDate() + values.paymentTerms
         );
-        const newInvoiceData = {
+        const newInvoiceData: InvoiceType = {
           status: "pending",
           clientName: values.clientName,
           clientEmail: values.clientEmail,
