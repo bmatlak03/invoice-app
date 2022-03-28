@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendInvoiceData } from "../../store/invoices-actions";
+import { InvoiceType } from "../../store/invoices-slice";
+import { uiActions } from "../../store/ui-slice";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import {
   Box,
   Typography,
   useTheme,
-  Button,
   TextField,
   FormControl,
   InputLabel,
@@ -16,16 +17,12 @@ import {
   useMediaQuery,
   IconButton,
 } from "@mui/material";
-import {
-  KeyboardArrowDown as KeyboardArrowDownIcon,
-  Delete as DeleteIcon,
-} from "@mui/icons-material";
+import { Delete as DeleteIcon } from "@mui/icons-material";
 import { DatePicker } from "@mui/lab";
 import FormControls from "../FormControls/FormControls";
 import Input from "../UI/Input/Input";
 import StyledButton from "../UI/StyledButton/StyledButton";
-import { uiActions } from "../../store/ui-slice";
-import { InvoiceType } from "../../store/invoices-slice";
+import GoBackBtn from "../UI/GoBackBtn/GoBackBtn";
 type Props = {};
 type Items = {
   name: string;
@@ -155,31 +152,13 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     justifyContent: "space-between",
     marginBottom: 5,
   };
-  const goBackBtn = (
-    <Button
-      sx={{
-        textTransform: "capitalize",
-        color: theme.palette.mode === "dark" ? "white" : "black",
-        fontSize: "1rem",
-      }}
-      onClick={() => dispatch(uiActions.closeForm())}
-      startIcon={
-        <KeyboardArrowDownIcon
-          color="secondary"
-          sx={{
-            transform: "rotate(90deg)",
-          }}
-        />
-      }
-    >
-      Go back
-    </Button>
-  );
 
   return (
     <form onSubmit={formik.handleSubmit} style={formStyles}>
       <Box sx={{ padding: matches ? 4 : 2 }}>
-        {!matches && goBackBtn}
+        {!matches && (
+          <GoBackBtn click={() => dispatch(uiActions.closeForm())} />
+        )}
         <Typography mb={1} variant="h5" fontWeight="bold">
           New Invoice
         </Typography>

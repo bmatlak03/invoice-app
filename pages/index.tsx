@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import { GetStaticProps } from "next";
 import { MongoClient } from "mongodb";
 import { lazy, Suspense, useEffect } from "react";
@@ -39,12 +40,18 @@ const Home: NextPage<FetchedInvoices> = (props) => {
   );
 
   return (
-    <Box padding={2}>
-      <InvoicesAction />
-      <Invoices />
-      {newInvoiceFormComponent}
-      {backdrop}
-    </Box>
+    <>
+      <Head>
+        <title>Invoice App</title>
+        <meta name="description" content="Manage your invoices in one place!" />
+      </Head>
+      <Box padding={2}>
+        <InvoicesAction />
+        <Invoices />
+        {newInvoiceFormComponent}
+        {backdrop}
+      </Box>
+    </>
   );
 };
 export const getStaticProps: GetStaticProps = async () => {
