@@ -1,8 +1,10 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import EmptyInvoicesIMG from "../../..//assets/illustration-empty.svg";
 
 const NoInvoices = () => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const centeredBoxStyles = {
     display: "flex",
     width: "100%",
@@ -21,7 +23,7 @@ const NoInvoices = () => {
       <Typography color="text.secondary">
         Create an invoice by clicking the{" "}
         <Typography fontWeight="bold" component="span">
-          New
+          New {matches && "Invoice"}
         </Typography>{" "}
         button and get started
       </Typography>
