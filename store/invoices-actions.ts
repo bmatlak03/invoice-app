@@ -1,8 +1,9 @@
+import Router from "next/router";
+import { AppDispatch } from ".";
 import { invoicesActions } from "./invoices-slice";
 import { uiActions } from "./ui-slice";
-import { AppDispatch } from ".";
 import { InvoiceType } from "./invoices-slice";
-import Router from "next/router";
+const notificationTime = 4000;
 export const sendInvoiceData = (invoiceData: InvoiceType) => {
   let newInvoiceData = { ...invoiceData };
   return async (dispatch: AppDispatch) => {
@@ -24,9 +25,25 @@ export const sendInvoiceData = (invoiceData: InvoiceType) => {
       await sendRequest();
       dispatch(invoicesActions.createNewInvoice(newInvoiceData));
       dispatch(uiActions.closeForm());
-      //dispatch success notification
+      dispatch(
+        uiActions.showNotification({
+          message: "Invoice has been successfully sent!",
+          type: "success",
+        })
+      );
+      setTimeout(() => {
+        dispatch(uiActions.hideNotification());
+      }, notificationTime);
     } catch (error) {
-      //dispach error notification
+      dispatch(
+        uiActions.showNotification({
+          message: error,
+          type: "error",
+        })
+      );
+      setTimeout(() => {
+        dispatch(uiActions.hideNotification());
+      }, notificationTime);
       console.log(error);
     }
   };
@@ -48,9 +65,26 @@ export const deleteInvoice = (id: string) => {
     try {
       await sendRequest();
       dispatch(invoicesActions.deleteInvoice(id));
+      dispatch(
+        uiActions.showNotification({
+          message: "Invoice has been successfully deleted!",
+          type: "success",
+        })
+      );
       Router.push("/");
+      setTimeout(() => {
+        dispatch(uiActions.hideNotification());
+      }, notificationTime);
     } catch (error) {
-      console.log(error);
+      dispatch(
+        uiActions.showNotification({
+          message: error,
+          type: "error",
+        })
+      );
+      setTimeout(() => {
+        dispatch(uiActions.hideNotification());
+      }, notificationTime);
     }
   };
 };
@@ -71,8 +105,25 @@ export const markInvoiceAsPaid = (id: string) => {
     try {
       await sendRequest();
       dispatch(invoicesActions.changeInvoiceStatus());
+      dispatch(
+        uiActions.showNotification({
+          message: "Invoice has been successfully marked as paid!",
+          type: "success",
+        })
+      );
+      setTimeout(() => {
+        dispatch(uiActions.hideNotification());
+      }, notificationTime);
     } catch (error) {
-      console.log(error);
+      dispatch(
+        uiActions.showNotification({
+          message: error,
+          type: "error",
+        })
+      );
+      setTimeout(() => {
+        dispatch(uiActions.hideNotification());
+      }, notificationTime);
     }
   };
 };

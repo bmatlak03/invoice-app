@@ -5,7 +5,11 @@ const uiSlice = createSlice({
   initialState: {
     isFormOpen: false,
     isFilterOpen: false,
-    notification: null,
+    notification: {
+      isShow: false,
+      type: "",
+      message: "",
+    },
     isDeleteConfirmOpen: false,
   },
   reducers: {
@@ -24,6 +28,17 @@ const uiSlice = createSlice({
     },
     closeDeleteConfirm(state) {
       state.isDeleteConfirmOpen = false;
+    },
+    showNotification(state, action) {
+      console.log(action.payload);
+      state.notification = {
+        isShow: true,
+        type: action.payload.type,
+        message: action.payload.message,
+      };
+    },
+    hideNotification(state) {
+      state.notification.isShow = false;
     },
   },
 });

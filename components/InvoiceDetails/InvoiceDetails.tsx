@@ -1,19 +1,22 @@
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
+import { RootState } from "../../store";
+import { markInvoiceAsPaid } from "../../store/invoices-actions";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import InvoiceStatus from "../../components/InvoiceStatus/InvoiceStatus";
 import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
 import ConfirmAlert from "../../components/UI/ConfirmAlert/ConfirmAlert";
 import GoBackBtn from "../../components/UI/GoBackBtn/GoBackBtn";
-import { RootState } from "../../store";
-import { markInvoiceAsPaid } from "../../store/invoices-actions";
+import Notification from "../../components/UI/Notification/Notification";
 type Props = {};
 
 const InvoiceDetails = ({}: Props) => {
   const dispatch = useDispatch();
-  const open = useSelector((state: RootState) => state.ui.isDeleteConfirmOpen);
+  const { isDeleteConfirmOpen: open, notification } = useSelector(
+    (state: RootState) => state.ui
+  );
   const theme = useTheme();
   const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -184,6 +187,12 @@ const InvoiceDetails = ({}: Props) => {
       }}
     >
       <Box padding={2}>
+        {notification.isShow && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+          />
+        )}
         <GoBackBtn click={() => router.back()} />
         {invoiceOptions}
         {invoiceOverview}
