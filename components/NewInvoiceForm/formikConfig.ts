@@ -22,7 +22,10 @@ export const validationSchema = yup.object().shape({
   postCode: yup.string().required("Post code is required"),
   country: yup.string().required("Country is required"),
   clientName: yup.string().required("Client name is required"),
-  clientEmail: yup.string().required("Client email is required"),
+  clientEmail: yup
+    .string()
+    .required("Client email is required")
+    .email("Make sure you are passing valid email"),
   clientCity: yup.string().required("Client city code is required"),
   clientStreetAddress: yup
     .string()
@@ -30,6 +33,6 @@ export const validationSchema = yup.object().shape({
   clientPostCode: yup.string().required("Client post code is required"),
   clientCountry: yup.string().required("Client country is required"),
   projectDescription: yup.string().required("Project description is required"),
-  date: yup.date().nullable(),
+  date: yup.date().required("Date is required!").nullable(),
   items: yup.array(),
 });

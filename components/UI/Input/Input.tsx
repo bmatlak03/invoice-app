@@ -1,5 +1,5 @@
+import { memo } from "react";
 import { TextField } from "@mui/material";
-import React from "react";
 type Props = {
   styles?: object;
   label: string;
@@ -46,4 +46,4 @@ const Input = (props: Props) => {
     />
   );
 };
-export default Input;
+export default memo(Input);

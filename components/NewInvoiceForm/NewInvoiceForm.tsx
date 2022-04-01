@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendInvoiceData } from "../../store/invoices-actions";
 import { InvoiceType } from "../../store/invoices-slice";
@@ -152,7 +152,6 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     justifyContent: "space-between",
     marginBottom: 5,
   };
-
   return (
     <form onSubmit={formik.handleSubmit} style={formStyles}>
       <Box sx={{ padding: matches ? 4 : 2 }}>
@@ -165,245 +164,132 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill From
         </Typography>
-        {useMemo(
-          () => (
-            <Input
-              name="streetAddress"
-              label="Street Address"
-              fullWidth
-              error={
-                formik.touched.streetAddress &&
-                Boolean(formik.errors.streetAddress)
-              }
-              helperText={
-                formik.touched.streetAddress && formik.errors.streetAddress
-              }
-              value={formik.values.streetAddress}
-              change={formik.handleChange}
-            />
-          ),
-          [
-            formik.values.streetAddress,
-            formik.handleChange,
-            formik.touched.streetAddress,
-            formik.errors.streetAddress,
-          ]
-        )}
+        <Input
+          name="streetAddress"
+          label="Street Address"
+          fullWidth
+          error={
+            formik.touched.streetAddress && Boolean(formik.errors.streetAddress)
+          }
+          helperText={
+            formik.touched.streetAddress && formik.errors.streetAddress
+          }
+          value={formik.values.streetAddress}
+          change={formik.handleChange}
+        />
         <Box sx={inputsContainterStyles}>
-          {useMemo(
-            () => (
-              <Input
-                name="city"
-                label="City"
-                styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
-                fullWidth={false}
-                error={formik.touched.city && Boolean(formik.errors.city)}
-                helperText={formik.touched.city && formik.errors.city}
-                value={formik.values.city}
-                change={formik.handleChange}
-              />
-            ),
-            [
-              formik.values.city,
-              formik.handleChange,
-              matches,
-              formik.errors.city,
-              formik.touched.city,
-            ]
-          )}
-          {useMemo(
-            () => (
-              <Input
-                name="postCode"
-                label="Post Code"
-                styles={{ width: matches ? "30%" : "45%" }}
-                fullWidth={false}
-                error={
-                  formik.touched.postCode && Boolean(formik.errors.postCode)
-                }
-                helperText={formik.touched.postCode && formik.errors.postCode}
-                value={formik.values.postCode}
-                change={formik.handleChange}
-              />
-            ),
-            [
-              formik.values.postCode,
-              formik.handleChange,
-              matches,
-              formik.touched.postCode,
-              formik.errors.postCode,
-            ]
-          )}
-          {useMemo(
-            () => (
-              <Input
-                styles={{ width: matches ? "30%" : "100%" }}
-                name="country"
-                label="Country"
-                error={formik.touched.country && Boolean(formik.errors.country)}
-                helperText={formik.touched.country && formik.errors.country}
-                value={formik.values.country}
-                change={formik.handleChange}
-              />
-            ),
-            [
-              formik.values.country,
-              formik.handleChange,
-              matches,
-              formik.errors.country,
-              formik.touched.country,
-            ]
-          )}
+          <Input
+            name="city"
+            label="City"
+            styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
+            fullWidth={false}
+            error={formik.touched.city && Boolean(formik.errors.city)}
+            helperText={formik.touched.city && formik.errors.city}
+            value={formik.values.city}
+            change={formik.handleChange}
+          />
+          <Input
+            name="postCode"
+            label="Post Code"
+            styles={{ width: matches ? "30%" : "45%" }}
+            fullWidth={false}
+            error={formik.touched.postCode && Boolean(formik.errors.postCode)}
+            helperText={formik.touched.postCode && formik.errors.postCode}
+            value={formik.values.postCode}
+            change={formik.handleChange}
+          />
+          <Input
+            styles={{ width: matches ? "30%" : "100%" }}
+            name="country"
+            label="Country"
+            error={formik.touched.country && Boolean(formik.errors.country)}
+            helperText={formik.touched.country && formik.errors.country}
+            value={formik.values.country}
+            change={formik.handleChange}
+          />
         </Box>{" "}
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill To
         </Typography>
-        {useMemo(
-          () => (
-            <Input
-              name="clientName"
-              label="Client's Name"
-              fullWidth
-              error={
-                formik.touched.clientName && Boolean(formik.errors.clientName)
-              }
-              helperText={formik.touched.clientName && formik.errors.clientName}
-              value={formik.values.clientName}
-              change={formik.handleChange}
-            />
-          ),
-          [
-            formik.values.clientName,
-            formik.handleChange,
-            formik.touched.clientName,
-            formik.errors.clientName,
-          ]
-        )}
-        {useMemo(
-          () => (
-            <Input
-              name="clientEmail"
-              label="Client's Email"
-              fullWidth
-              error={
-                formik.touched.clientEmail && Boolean(formik.errors.clientEmail)
-              }
-              helperText={
-                formik.touched.clientEmail && formik.errors.clientEmail
-              }
-              value={formik.values.clientEmail}
-              change={formik.handleChange}
-            />
-          ),
-          [
-            formik.values.clientEmail,
-            formik.handleChange,
-            formik.touched.clientEmail,
-            formik.errors.clientEmail,
-          ]
-        )}
-        {useMemo(
-          () => (
-            <Input
-              name="clientStreetAddress"
-              label="Street Address"
-              fullWidth
-              error={
-                formik.touched.clientStreetAddress &&
-                Boolean(formik.errors.clientStreetAddress)
-              }
-              helperText={
-                formik.touched.clientStreetAddress &&
-                formik.errors.clientStreetAddress
-              }
-              value={formik.values.clientStreetAddress}
-              change={formik.handleChange}
-            />
-          ),
-          [
-            formik.values.clientStreetAddress,
-            formik.handleChange,
-            formik.touched.clientStreetAddress,
-            formik.errors.clientStreetAddress,
-          ]
-        )}
+        <Input
+          name="clientName"
+          label="Client's Name"
+          fullWidth
+          error={formik.touched.clientName && Boolean(formik.errors.clientName)}
+          helperText={formik.touched.clientName && formik.errors.clientName}
+          value={formik.values.clientName}
+          change={formik.handleChange}
+        />
+        <Input
+          name="clientEmail"
+          label="Client's Email"
+          fullWidth
+          error={
+            formik.touched.clientEmail && Boolean(formik.errors.clientEmail)
+          }
+          helperText={formik.touched.clientEmail && formik.errors.clientEmail}
+          value={formik.values.clientEmail}
+          change={formik.handleChange}
+        />
+        <Input
+          name="clientStreetAddress"
+          label="Street Address"
+          fullWidth
+          error={
+            formik.touched.clientStreetAddress &&
+            Boolean(formik.errors.clientStreetAddress)
+          }
+          helperText={
+            formik.touched.clientStreetAddress &&
+            formik.errors.clientStreetAddress
+          }
+          value={formik.values.clientStreetAddress}
+          change={formik.handleChange}
+        />
         <Box sx={inputsContainterStyles}>
-          {useMemo(
-            () => (
-              <Input
-                name="clientCity"
-                label="City"
-                styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
-                fullWidth={false}
-                error={
-                  formik.touched.clientCity && Boolean(formik.errors.clientCity)
-                }
-                helperText={
-                  formik.touched.clientCity && formik.errors.clientCity
-                }
-                value={formik.values.clientCity}
-                change={formik.handleChange}
-              />
-            ),
-            [
-              formik.values.clientCity,
-              formik.handleChange,
-              matches,
-              formik.touched.clientCity,
-              formik.errors.clientCity,
-            ]
-          )}
-          {useMemo(
-            () => (
-              <Input
-                name="clientPostCode"
-                label="Post Code"
-                styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
-                fullWidth={false}
-                error={
-                  formik.touched.clientPostCode &&
-                  Boolean(formik.errors.clientPostCode)
-                }
-                helperText={
-                  formik.touched.clientPostCode && formik.errors.clientPostCode
-                }
-                value={formik.values.clientPostCode}
-                change={formik.handleChange}
-              />
-            ),
-            [
-              formik.values.clientPostCode,
-              formik.handleChange,
-              matches,
-              formik.touched.clientPostCode,
-              formik.errors.clientPostCode,
-            ]
-          )}
-          {useMemo(
-            () => (
-              <Input
-                name="clientCountry"
-                label="Country"
-                styles={{ width: matches ? "30%" : "100%" }}
-                error={
-                  formik.touched.clientCountry &&
-                  Boolean(formik.errors.clientCountry)
-                }
-                helperText={
-                  formik.touched.clientCountry && formik.errors.clientCountry
-                }
-                value={formik.values.clientCountry}
-                change={formik.handleChange}
-              />
-            ),
-            [
-              formik.values.clientCountry,
-              formik.handleChange,
-              matches,
-              formik.touched.clientCountry,
-              formik.errors.clientCountry,
-            ]
-          )}
+          <Input
+            name="clientCity"
+            label="City"
+            styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
+            fullWidth={false}
+            error={
+              formik.touched.clientCity && Boolean(formik.errors.clientCity)
+            }
+            helperText={formik.touched.clientCity && formik.errors.clientCity}
+            value={formik.values.clientCity}
+            change={formik.handleChange}
+          />
+
+          <Input
+            name="clientPostCode"
+            label="Post Code"
+            styles={{ width: matches ? "30%" : "45%", marginBottom: 5 }}
+            fullWidth={false}
+            error={
+              formik.touched.clientPostCode &&
+              Boolean(formik.errors.clientPostCode)
+            }
+            helperText={
+              formik.touched.clientPostCode && formik.errors.clientPostCode
+            }
+            value={formik.values.clientPostCode}
+            change={formik.handleChange}
+          />
+
+          <Input
+            name="clientCountry"
+            label="Country"
+            styles={{ width: matches ? "30%" : "100%" }}
+            error={
+              formik.touched.clientCountry &&
+              Boolean(formik.errors.clientCountry)
+            }
+            helperText={
+              formik.touched.clientCountry && formik.errors.clientCountry
+            }
+            value={formik.values.clientCountry}
+            change={formik.handleChange}
+          />
         </Box>{" "}
         <Box sx={inputsContainterStyles}>
           <DatePicker
@@ -441,31 +327,21 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             </Select>
           </FormControl>
         </Box>
-        {useMemo(
-          () => (
-            <Input
-              name="projectDescription"
-              label="Project Description"
-              fullWidth
-              error={
-                formik.touched.projectDescription &&
-                Boolean(formik.errors.projectDescription)
-              }
-              helperText={
-                formik.touched.projectDescription &&
-                formik.errors.projectDescription
-              }
-              value={formik.values.projectDescription}
-              change={formik.handleChange}
-            />
-          ),
-          [
-            formik.values.projectDescription,
-            formik.handleChange,
-            formik.touched.projectDescription,
-            formik.errors.projectDescription,
-          ]
-        )}
+        <Input
+          name="projectDescription"
+          label="Project Description"
+          fullWidth
+          error={
+            formik.touched.projectDescription &&
+            Boolean(formik.errors.projectDescription)
+          }
+          helperText={
+            formik.touched.projectDescription &&
+            formik.errors.projectDescription
+          }
+          value={formik.values.projectDescription}
+          change={formik.handleChange}
+        />
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Item List
         </Typography>
