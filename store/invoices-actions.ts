@@ -31,6 +31,7 @@ export const sendInvoiceData = (invoiceData: InvoiceType) => {
           type: "success",
         })
       );
+      dispatch(invoicesActions.disableDraftMode());
       setTimeout(() => {
         dispatch(uiActions.hideNotification());
       }, notificationTime);
@@ -41,6 +42,7 @@ export const sendInvoiceData = (invoiceData: InvoiceType) => {
           type: "error",
         })
       );
+      dispatch(invoicesActions.disableDraftMode());
       setTimeout(() => {
         dispatch(uiActions.hideNotification());
       }, notificationTime);
@@ -72,6 +74,7 @@ export const deleteInvoice = (id: string) => {
         })
       );
       Router.push("/");
+      dispatch(uiActions.closeDeleteConfirm());
       setTimeout(() => {
         dispatch(uiActions.hideNotification());
       }, notificationTime);
@@ -82,6 +85,7 @@ export const deleteInvoice = (id: string) => {
           type: "error",
         })
       );
+      dispatch(uiActions.closeDeleteConfirm());
       setTimeout(() => {
         dispatch(uiActions.hideNotification());
       }, notificationTime);

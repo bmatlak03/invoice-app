@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { Box, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
+import { invoicesActions } from "../../store/invoices-slice";
 type Props = {};
 
 const FormControls: React.FC<Props> = ({}) => {
@@ -26,7 +27,12 @@ const FormControls: React.FC<Props> = ({}) => {
       >
         Discard
       </StyledButton>
-      <StyledButton type="grey" customStyles={buttonHeight}>
+      <StyledButton
+        type="grey"
+        role="submit"
+        onClick={() => dispatch(invoicesActions.saveAsDraft())}
+        customStyles={buttonHeight}
+      >
         Save as draft
       </StyledButton>
       <StyledButton type="send" role="submit" customStyles={buttonHeight}>

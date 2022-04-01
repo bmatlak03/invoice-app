@@ -34,6 +34,7 @@ export interface SliceState {
   invoices: InvoiceType[];
   currentInvoices: InvoiceType[];
   fetchedInvoice: InvoiceType;
+  isDraft: boolean;
 }
 const initialState: SliceState = {
   invoices: [],
@@ -52,6 +53,7 @@ const initialState: SliceState = {
     items: [{ name: "", quantity: 0, price: 0, total: 0 }],
     total: 0,
   },
+  isDraft: false,
 };
 const invoicesSlice = createSlice({
   name: "invoices",
@@ -75,6 +77,12 @@ const invoicesSlice = createSlice({
       state.currentInvoices = state.invoices.filter(
         (invoice) => invoice.id !== action.payload
       );
+    },
+    saveAsDraft(state) {
+      state.isDraft = true;
+    },
+    disableDraftMode(state) {
+      state.isDraft = false;
     },
     changeInvoiceStatus(state) {
       state.fetchedInvoice.status = "paid";

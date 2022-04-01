@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendInvoiceData } from "../../store/invoices-actions";
 import { InvoiceType } from "../../store/invoices-slice";
 import { uiActions } from "../../store/ui-slice";
@@ -23,6 +23,7 @@ import FormControls from "../FormControls/FormControls";
 import Input from "../UI/Input/Input";
 import StyledButton from "../UI/StyledButton/StyledButton";
 import GoBackBtn from "../UI/GoBackBtn/GoBackBtn";
+import { RootState } from "../../store";
 type Props = {};
 type Items = {
   name: string;
@@ -35,14 +36,15 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
   const [items, setItems] = useState<Array<Items>>([
     { name: "", quantity: 1, total: 0, price: 0, id: 0 },
   ]);
+  const { isDraft } = useSelector((state: RootState) => state.invoices);
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const formik = useFormik({
     initialValues: defaultValues,
-    validationSchema: validationSchema,
+    validationSchema: isDraft ? null : validationSchema,
     onSubmit: async (values) => {
-      if (items.length === 0) {
+      if (items.length === 0 && !isDraft) {
         return alert("You must add at least 1 item!");
       } else {
         let totalPrice = 0;
@@ -56,7 +58,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           values.date.getDate() + values.paymentTerms
         );
         const newInvoiceData: InvoiceType = {
-          status: "pending",
+          status: isDraft ? "draft" : "pending",
           clientName: values.clientName,
           clientEmail: values.clientEmail,
           clientAddress: {
@@ -83,7 +85,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           (item) => item.total <= 0 || item.name === ""
         );
 
-        if (isInputEmpty) {
+        if (isInputEmpty && !isDraft) {
           return alert("Item's input can't be empty");
         } else {
           dispatch(sendInvoiceData(newInvoiceData));
