@@ -3,7 +3,7 @@ import { AppDispatch } from ".";
 import { invoicesActions } from "./invoices-slice";
 import { uiActions } from "./ui-slice";
 import { InvoiceType } from "./invoices-slice";
-import { hideNotification } from "../utils/hideNotification";
+import { hideNotification } from "../helpers/hideNotification";
 
 export const sendInvoiceData = (invoiceData: InvoiceType) => {
   let newInvoiceData = { ...invoiceData };
