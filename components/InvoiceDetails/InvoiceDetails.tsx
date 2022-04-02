@@ -177,6 +177,9 @@ const InvoiceDetails = ({}: Props) => {
       <ItemsList items={items} totalPrice={total} />
     </Box>
   );
+  const displayedNotification = notification.isShow && (
+    <Notification type={notification.type} message={notification.message} />
+  );
   return (
     <Box
       sx={{
@@ -187,12 +190,7 @@ const InvoiceDetails = ({}: Props) => {
       }}
     >
       <Box padding={2}>
-        {notification.isShow && (
-          <Notification
-            type={notification.type}
-            message={notification.message}
-          />
-        )}
+        {displayedNotification}
         <GoBackBtn click={() => router.back()} />
         {invoiceOptions}
         {invoiceOverview}

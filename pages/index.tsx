@@ -41,6 +41,9 @@ const Home: NextPage<FetchedInvoices> = (props) => {
       <NewInvoiceForm />
     </Suspense>
   );
+  const displayedNotification = notification.isShow && (
+    <Notification type={notification.type} message={notification.message} />
+  );
 
   return (
     <>
@@ -49,12 +52,7 @@ const Home: NextPage<FetchedInvoices> = (props) => {
         <meta name="description" content="Manage your invoices in one place!" />
       </Head>
       <Box padding={2}>
-        {notification.isShow && (
-          <Notification
-            type={notification.type}
-            message={notification.message}
-          />
-        )}
+        {displayedNotification}
         <InvoicesAction />
         <Invoices />
         {newInvoiceFormComponent}
