@@ -3,7 +3,8 @@ import { AppDispatch } from ".";
 import { invoicesActions } from "./invoices-slice";
 import { uiActions } from "./ui-slice";
 import { InvoiceType } from "./invoices-slice";
-const notificationTime = 4000;
+import { hideNotification } from "../utils/hideNotification";
+
 export const sendInvoiceData = (invoiceData: InvoiceType) => {
   let newInvoiceData = { ...invoiceData };
   return async (dispatch: AppDispatch) => {
@@ -32,9 +33,7 @@ export const sendInvoiceData = (invoiceData: InvoiceType) => {
         })
       );
       dispatch(invoicesActions.disableDraftMode());
-      setTimeout(() => {
-        dispatch(uiActions.hideNotification());
-      }, notificationTime);
+      hideNotification(dispatch);
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -43,10 +42,7 @@ export const sendInvoiceData = (invoiceData: InvoiceType) => {
         })
       );
       dispatch(invoicesActions.disableDraftMode());
-      setTimeout(() => {
-        dispatch(uiActions.hideNotification());
-      }, notificationTime);
-      console.log(error);
+      hideNotification(dispatch);
     }
   };
 };
@@ -75,9 +71,7 @@ export const deleteInvoice = (id: string) => {
       );
       Router.push("/");
       dispatch(uiActions.closeDeleteConfirm());
-      setTimeout(() => {
-        dispatch(uiActions.hideNotification());
-      }, notificationTime);
+      hideNotification(dispatch);
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -86,9 +80,7 @@ export const deleteInvoice = (id: string) => {
         })
       );
       dispatch(uiActions.closeDeleteConfirm());
-      setTimeout(() => {
-        dispatch(uiActions.hideNotification());
-      }, notificationTime);
+      hideNotification(dispatch);
     }
   };
 };
@@ -115,9 +107,7 @@ export const markInvoiceAsPaid = (id: string) => {
           type: "success",
         })
       );
-      setTimeout(() => {
-        dispatch(uiActions.hideNotification());
-      }, notificationTime);
+      hideNotification(dispatch);
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -125,9 +115,7 @@ export const markInvoiceAsPaid = (id: string) => {
           type: "error",
         })
       );
-      setTimeout(() => {
-        dispatch(uiActions.hideNotification());
-      }, notificationTime);
+      hideNotification(dispatch);
     }
   };
 };
