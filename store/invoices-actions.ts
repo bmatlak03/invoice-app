@@ -37,10 +37,11 @@ export const sendInvoiceData = (invoiceData: InvoiceType) => {
     } catch (error) {
       dispatch(
         uiActions.showNotification({
-          message: error,
+          message: "Something went wrong! Try again later.",
           type: "error",
         })
       );
+      dispatch(uiActions.closeForm());
       dispatch(invoicesActions.disableDraftMode());
       hideNotification(dispatch);
     }
@@ -75,7 +76,7 @@ export const deleteInvoice = (id: string) => {
     } catch (error) {
       dispatch(
         uiActions.showNotification({
-          message: error,
+          message: "Something went wrong! Try again later.",
           type: "error",
         })
       );
@@ -111,7 +112,7 @@ export const markInvoiceAsPaid = (id: string) => {
     } catch (error) {
       dispatch(
         uiActions.showNotification({
-          message: error,
+          message: "Something went wrong! Try again later.",
           type: "error",
         })
       );
