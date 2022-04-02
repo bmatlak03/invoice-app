@@ -5,10 +5,11 @@ type Props = {
   onClick?: any;
   customStyles?: object;
   role?: any;
+  disabled?: boolean;
 };
 
 const StyledButton: React.FC<Props> = (props) => {
-  const { children, type, onClick, customStyles, role } = props;
+  const { children, type, onClick, customStyles, role, disabled } = props;
   const theme = useTheme();
   const StartIcon =
     type === "add" ? (
@@ -61,6 +62,7 @@ const StyledButton: React.FC<Props> = (props) => {
       sx={buttonStyles}
       startIcon={StartIcon}
       type={role ? role : "button"}
+      disabled={disabled}
     >
       {children}
     </Button>

@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/index";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
 type Props = {
@@ -8,6 +10,9 @@ type Props = {
 const InvoiceControls = (props: Props) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const { status } = useSelector(
+    (state: RootState) => state.invoices.fetchedInvoice
+  );
   return (
     <Box
       sx={{
@@ -24,7 +29,11 @@ const InvoiceControls = (props: Props) => {
       <StyledButton type="red" onClick={props.onDelete}>
         Delete
       </StyledButton>
-      <StyledButton type="paid" onClick={props.onStatusChange}>
+      <StyledButton
+        disabled={status === "paid"}
+        type="paid"
+        onClick={props.onStatusChange}
+      >
         Mark as paid
       </StyledButton>
     </Box>
