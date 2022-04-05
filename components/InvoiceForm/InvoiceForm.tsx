@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editInvoiceData, sendInvoiceData } from "../../store/invoices-actions";
-import { InvoiceType } from "../../store/invoices-slice";
+import { invoicesActions, InvoiceType } from "../../store/invoices-slice";
 import { uiActions } from "../../store/ui-slice";
 import { RootState } from "../../store";
 import {
@@ -158,6 +158,12 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
     const filteredItems = itemsCopy.filter((item) => item.id !== id);
     setItems(filteredItems);
   };
+  const handleCloseForm = () => {
+    dispatch(uiActions.closeForm());
+    if (isEditting) {
+      dispatch(invoicesActions.cancelEdit());
+    }
+  };
   const formStyles: {} = {
     display: "flex",
     flexDirection: "column",
@@ -181,9 +187,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
   return (
     <form onSubmit={formik.handleSubmit} style={formStyles}>
       <Box sx={{ padding: matches ? 4 : 2 }}>
-        {!matches && (
-          <GoBackBtn click={() => dispatch(uiActions.closeForm())} />
-        )}
+        {!matches && <GoBackBtn click={handleCloseForm} />}
         <Typography mb={1} variant="h5" fontWeight="bold">
           {isEditting ? `Edit #${editingInvoice?.id}` : "New Invoice"}
         </Typography>
