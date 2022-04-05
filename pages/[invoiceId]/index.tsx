@@ -14,7 +14,6 @@ type Props = {
 const InvoiceDetailsPage = (props: Props) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(props.invoiceData);
     dispatch(invoicesActions.insertFetchedInvoice(props.invoiceData));
   }, [dispatch, props.invoiceData]);
   return (
@@ -67,6 +66,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         description: selectedInvoice?.description,
         createdAt: selectedInvoice?.createdAt,
         paymentDue: selectedInvoice?.paymentDue,
+        paymentTerms: selectedInvoice?.paymentTerms,
         clientName: selectedInvoice?.clientName,
         clientEmail: selectedInvoice?.clientEmail,
         senderAddress: selectedInvoice?.senderAddress,

@@ -30,7 +30,6 @@ const uiSlice = createSlice({
       state.isDeleteConfirmOpen = false;
     },
     showNotification(state, action) {
-      console.log(action.payload);
       state.notification = {
         isShow: true,
         type: action.payload.type,

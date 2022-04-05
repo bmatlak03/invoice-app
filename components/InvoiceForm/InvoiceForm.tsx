@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendInvoiceData } from "../../store/invoices-actions";
+import { editInvoiceData, sendInvoiceData } from "../../store/invoices-actions";
 import { InvoiceType } from "../../store/invoices-slice";
 import { uiActions } from "../../store/ui-slice";
+import { RootState } from "../../store";
+import {
+  transformInvoiceItems,
+  transformInvoiceObject,
+} from "../../helpers/helpers";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import {
@@ -23,20 +28,23 @@ import FormControls from "../FormControls/FormControls";
 import Input from "../UI/Input/Input";
 import StyledButton from "../UI/StyledButton/StyledButton";
 import GoBackBtn from "../UI/GoBackBtn/GoBackBtn";
-import { RootState } from "../../store";
-type Props = {};
-type Items = {
+type Props = {
+  editingInvoice?: any;
+};
+export type Item = {
   name: string;
   quantity: number;
   total: number;
   price: number;
   id: number;
 };
-const NewInvoiceForm: React.FC<Props> = ({}) => {
-  const [items, setItems] = useState<Array<Items>>([
+const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
+  const [items, setItems] = useState<Array<Item>>([
     { name: "", quantity: 1, total: 0, price: 0, id: 0 },
   ]);
-  const { isDraft } = useSelector((state: RootState) => state.invoices);
+  const { isDraft, isEditting } = useSelector(
+    (state: RootState) => state.invoices
+  );
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -77,7 +85,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           paymentTerms: values.paymentTerms,
           createdAt: values.date.toLocaleDateString(),
           paymentDue: paymentDueTransformed.toLocaleDateString(),
-          id: "",
+          id: isEditting ? editingInvoice.id : "",
           items: itemsCopy,
           total: totalPrice,
         };
@@ -87,12 +95,28 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
 
         if (isInputEmpty && !isDraft) {
           return alert("Item's input can't be empty");
+        } else if (isEditting) {
+          dispatch(editInvoiceData(newInvoiceData));
         } else {
           dispatch(sendInvoiceData(newInvoiceData));
         }
       }
     },
   });
+  const { setFieldValue } = formik;
+
+  useEffect(() => {
+    if (isEditting) {
+      const transformedInvoice = transformInvoiceObject(editingInvoice);
+      if (transformedInvoice) {
+        for (const [field, value] of Object.entries(transformedInvoice)) {
+          setFieldValue(field, value);
+        }
+        const transformedItems = transformInvoiceItems(editingInvoice.items);
+        setItems(transformedItems);
+      }
+    }
+  }, [editingInvoice, isEditting, setFieldValue]);
   const addNewItem = () => {
     setItems((prevState) => [
       ...items,
@@ -161,7 +185,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
           <GoBackBtn click={() => dispatch(uiActions.closeForm())} />
         )}
         <Typography mb={1} variant="h5" fontWeight="bold">
-          New Invoice
+          {isEditting ? `Edit #${editingInvoice?.id}` : "New Invoice"}
         </Typography>
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill From
@@ -296,6 +320,7 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
         <Box sx={inputsContainterStyles}>
           <DatePicker
             label="Date"
+            disabled={isEditting}
             value={formik.values.date}
             onChange={(value) => formik.setFieldValue("date", value)}
             renderInput={(params) => (
@@ -311,15 +336,14 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
             )}
           />
           <FormControl fullWidth sx={{ width: matches ? "45%" : "100%" }}>
-            <InputLabel id="payment-terms">Payment Terms</InputLabel>
+            <InputLabel id="paymentTerms">Payment Terms</InputLabel>
             <Select
-              labelId="payment-terms"
-              id="payment-terms"
+              name="paymentTerms"
+              labelId="paymentTerms"
+              id="paymentTerms"
               value={formik.values.paymentTerms}
               label="Payment Terms"
-              onChange={(e) =>
-                formik.setFieldValue("paymentTerms", e.target.value)
-              }
+              onChange={formik.handleChange}
               color="secondary"
             >
               <MenuItem value={1}>Net 1 Day</MenuItem>
@@ -411,4 +435,4 @@ const NewInvoiceForm: React.FC<Props> = ({}) => {
     </form>
   );
 };
-export default NewInvoiceForm;
+export default InvoiceForm;

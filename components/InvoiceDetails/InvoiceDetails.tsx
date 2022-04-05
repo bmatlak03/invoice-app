@@ -1,15 +1,25 @@
 import { useRouter } from "next/router";
+import { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/ui-slice";
 import { RootState } from "../../store";
 import { markInvoiceAsPaid } from "../../store/invoices-actions";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Backdrop,
+} from "@mui/material";
 import InvoiceStatus from "../../components/InvoiceStatus/InvoiceStatus";
 import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
 import ConfirmAlert from "../../components/UI/ConfirmAlert/ConfirmAlert";
 import GoBackBtn from "../../components/UI/GoBackBtn/GoBackBtn";
 import Notification from "../../components/UI/Notification/Notification";
+import Spinner from "../UI/Spinner/Spinner";
+import { invoicesActions } from "../../store/invoices-slice";
+const InvoiceForm = lazy(() => import("../InvoiceForm/InvoiceForm"));
 type Props = {};
 
 const InvoiceDetails = ({}: Props) => {
@@ -21,6 +31,9 @@ const InvoiceDetails = ({}: Props) => {
   const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
+  const { fetchedInvoice, isEditting } = useSelector(
+    (state: any) => state.invoices
+  );
   const {
     id,
     status,
@@ -33,14 +46,15 @@ const InvoiceDetails = ({}: Props) => {
     paymentDue,
     items,
     total,
-  } = useSelector((state: any) => state.invoices.fetchedInvoice);
-
+  } = fetchedInvoice;
+  const { isFormOpen } = useSelector((state: RootState) => state.ui);
   const boxStyles = {
     display: "flex",
     backgroundColor: theme.palette.primary.light,
     padding: 3,
     borderRadius: "10px",
   };
+
   const invoiceOptions = (
     <Box
       sx={{
@@ -180,6 +194,17 @@ const InvoiceDetails = ({}: Props) => {
   const displayedNotification = notification.isShow && (
     <Notification type={notification.type} message={notification.message} />
   );
+  const invoiceFormComponent = isFormOpen && (
+    <Suspense fallback={<Spinner />}>
+      <InvoiceForm editingInvoice={fetchedInvoice} />
+    </Suspense>
+  );
+  const handleCloseForm = () => {
+    dispatch(uiActions.closeForm());
+    if (isEditting) {
+      dispatch(invoicesActions.cancelEdit());
+    }
+  };
   return (
     <Box
       sx={{
@@ -187,8 +212,15 @@ const InvoiceDetails = ({}: Props) => {
         justifyContent: "space-between",
         flexDirection: "column",
         height: "calc(100vh - 60px)",
+        overflowY: isFormOpen ? "hidden" : "auto",
       }}
     >
+      <Backdrop
+        sx={{ zIndex: 1 }}
+        open={isFormOpen}
+        onClick={handleCloseForm}
+      />
+      {invoiceFormComponent}
       <Box padding={2}>
         {displayedNotification}
         <GoBackBtn click={() => router.back()} />

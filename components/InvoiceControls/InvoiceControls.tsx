@@ -1,7 +1,9 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
+import { invoicesActions } from "../../store/invoices-slice";
+import { uiActions } from "../../store/ui-slice";
 type Props = {
   onDelete: () => void;
   onStatusChange: () => void;
@@ -9,10 +11,15 @@ type Props = {
 
 const InvoiceControls = (props: Props) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const { status } = useSelector(
     (state: RootState) => state.invoices.fetchedInvoice
   );
+  const editInvoiceHandler = () => {
+    dispatch(invoicesActions.editInvoice());
+    dispatch(uiActions.openForm());
+  };
   return (
     <Box
       sx={{
@@ -25,7 +32,9 @@ const InvoiceControls = (props: Props) => {
         backgroundColor: theme.palette.primary.light,
       }}
     >
-      <StyledButton type="grey">Edit</StyledButton>
+      <StyledButton type="grey" onClick={editInvoiceHandler}>
+        Edit
+      </StyledButton>
       <StyledButton type="red" onClick={props.onDelete}>
         Delete
       </StyledButton>

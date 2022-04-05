@@ -12,9 +12,7 @@ import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import Spinner from "../components/UI/Spinner/Spinner";
 import Invoices from "../components/Invoices/Invoices";
 import Notification from "../components/UI/Notification/Notification";
-const NewInvoiceForm = lazy(
-  () => import("../components/NewInvoiceForm/NewInvoiceForm")
-);
+const InvoiceForm = lazy(() => import("../components/InvoiceForm/InvoiceForm"));
 type FetchedInvoices = {
   fetchedInvoices: InvoiceType;
 };
@@ -36,9 +34,9 @@ const Home: NextPage<FetchedInvoices> = (props) => {
       onClick={() => dispatch(uiActions.closeForm())}
     />
   );
-  const newInvoiceFormComponent = isFormOpen && (
+  const invoiceFormComponent = isFormOpen && (
     <Suspense fallback={<Spinner />}>
-      <NewInvoiceForm />
+      <InvoiceForm />
     </Suspense>
   );
   const displayedNotification = notification.isShow && (
@@ -55,7 +53,7 @@ const Home: NextPage<FetchedInvoices> = (props) => {
         {displayedNotification}
         <InvoicesAction />
         <Invoices />
-        {newInvoiceFormComponent}
+        {invoiceFormComponent}
         {backdrop}
       </Box>
     </>

@@ -17,7 +17,6 @@ type Props = {
 
 const ConfirmAlert = ({ id }: Props) => {
   const open = useSelector((state: RootState) => state.ui.isDeleteConfirmOpen);
-  console.log(open);
   const dispatch = useDispatch();
 
   const handleClose = () => dispatch(uiActions.closeDeleteConfirm());
