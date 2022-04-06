@@ -5,6 +5,7 @@ import { invoicesActions, InvoiceType } from "../../store/invoices-slice";
 import { uiActions } from "../../store/ui-slice";
 import { RootState } from "../../store";
 import {
+  createInvoiceData,
   transformInvoiceItems,
   transformInvoiceObject,
 } from "../../helpers/helpers";
@@ -42,7 +43,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
   const [items, setItems] = useState<Array<Item>>([
     { name: "", quantity: 1, total: 0, price: 0, id: 0 },
   ]);
-  const { isDraft, isEditting } = useSelector(
+  const { isDraftMode, isEditMode } = useSelector(
     (state: RootState) => state.invoices
   );
   const dispatch = useDispatch();
@@ -50,55 +51,48 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const formik = useFormik({
     initialValues: defaultValues,
-    validationSchema: isDraft ? null : validationSchema,
+    validationSchema:
+      isDraftMode || editingInvoice?.status === "draft"
+        ? null
+        : validationSchema,
     onSubmit: async (values) => {
-      if (items.length === 0 && !isDraft) {
+      if (
+        items.length === 0 &&
+        !isDraftMode &&
+        editingInvoice?.status !== "draft"
+      ) {
         return alert("You must add at least 1 item!");
       } else {
-        let totalPrice = 0;
-        const itemsCopy = [...items];
-        itemsCopy.forEach((item) => {
-          item.total = item.quantity * item.price;
-          totalPrice += item.total;
+        const invoiceId = isEditMode ? editingInvoice.id : "";
+        const invoiceStatus = isDraftMode
+          ? "draft"
+          : !editingInvoice
+          ? "pending"
+          : editingInvoice.status;
+        const invoiceData = createInvoiceData(
+          values,
+          items,
+          invoiceStatus,
+          invoiceId
+        );
+        const isItemInvalid = invoiceData.items.some((item) => {
+          item.total <= 0 || item.name === "";
         });
-        let paymentDueTransformed = new Date();
-        paymentDueTransformed.setDate(
-          values.date.getDate() + values.paymentTerms
-        );
-        const newInvoiceData: InvoiceType = {
-          status: isDraft ? "draft" : "pending",
-          clientName: values.clientName,
-          clientEmail: values.clientEmail,
-          clientAddress: {
-            street: values.clientStreetAddress,
-            city: values.clientCity,
-            postCode: values.clientPostCode,
-            country: values.clientCountry,
-          },
-          description: values.projectDescription,
-          senderAddress: {
-            street: values.streetAddress,
-            city: values.city,
-            postCode: values.postCode,
-            country: values.country,
-          },
-          paymentTerms: values.paymentTerms,
-          createdAt: values.date.toLocaleDateString(),
-          paymentDue: paymentDueTransformed.toLocaleDateString(),
-          id: isEditting ? editingInvoice.id : "",
-          items: itemsCopy,
-          total: totalPrice,
-        };
-        const isInputEmpty = newInvoiceData.items.some(
-          (item) => item.total <= 0 || item.name === ""
-        );
-
-        if (isInputEmpty && !isDraft) {
+        let validate;
+        if (!editingInvoice) validate = isItemInvalid && !isDraftMode;
+        else if (editingInvoice) {
+          if (editingInvoice.status !== "draft") {
+            validate = isItemInvalid && !isDraftMode;
+          } else {
+            validate = false;
+          }
+        }
+        if (validate) {
           return alert("Item's input can't be empty");
-        } else if (isEditting) {
-          dispatch(editInvoiceData(newInvoiceData));
+        } else if (isEditMode) {
+          dispatch(editInvoiceData(invoiceData));
         } else {
-          dispatch(sendInvoiceData(newInvoiceData));
+          dispatch(sendInvoiceData(invoiceData));
         }
       }
     },
@@ -106,7 +100,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
   const { setFieldValue } = formik;
 
   useEffect(() => {
-    if (isEditting) {
+    if (isEditMode) {
       const transformedInvoice = transformInvoiceObject(editingInvoice);
       if (transformedInvoice) {
         for (const [field, value] of Object.entries(transformedInvoice)) {
@@ -116,7 +110,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
         setItems(transformedItems);
       }
     }
-  }, [editingInvoice, isEditting, setFieldValue]);
+  }, [editingInvoice, isEditMode, setFieldValue]);
   const addNewItem = () => {
     setItems((prevState) => [
       ...items,
@@ -160,7 +154,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
   };
   const handleCloseForm = () => {
     dispatch(uiActions.closeForm());
-    if (isEditting) {
+    if (isEditMode) {
       dispatch(invoicesActions.cancelEdit());
     }
   };
@@ -175,6 +169,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
     width: matches ? "500px" : "100%",
     height: "calc(100vh - 60px)",
     overflowY: "scroll",
+    overflowX: "hidden",
     borderRadiusBottom: "10px",
     backgroundColor: theme.palette.background.default,
   };
@@ -189,7 +184,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
       <Box sx={{ padding: matches ? 4 : 2 }}>
         {!matches && <GoBackBtn click={handleCloseForm} />}
         <Typography mb={1} variant="h5" fontWeight="bold">
-          {isEditting ? `Edit #${editingInvoice?.id}` : "New Invoice"}
+          {isEditMode ? `Edit #${editingInvoice?.id}` : "New Invoice"}
         </Typography>
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill From
@@ -324,7 +319,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
         <Box sx={inputsContainterStyles}>
           <DatePicker
             label="Date"
-            disabled={isEditting}
+            disabled={isEditMode}
             value={formik.values.date}
             onChange={(value) => formik.setFieldValue("date", value)}
             renderInput={(params) => (

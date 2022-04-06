@@ -31,7 +31,7 @@ const InvoiceDetails = ({}: Props) => {
   const router = useRouter();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const { fetchedInvoice, isEditting } = useSelector(
+  const { fetchedInvoice, isEditMode } = useSelector(
     (state: any) => state.invoices
   );
   const {
@@ -201,7 +201,7 @@ const InvoiceDetails = ({}: Props) => {
   );
   const handleCloseForm = () => {
     dispatch(uiActions.closeForm());
-    if (isEditting) {
+    if (isEditMode) {
       dispatch(invoicesActions.cancelEdit());
     }
   };

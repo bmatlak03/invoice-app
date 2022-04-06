@@ -17,7 +17,7 @@ export const defaultValues = {
 };
 
 export const validationSchema = yup.object().shape({
-  streetAddress: yup.string().required("Email is required"),
+  streetAddress: yup.string().required("Street address is required"),
   city: yup.string().required("City is required"),
   postCode: yup.string().required("Post code is required"),
   country: yup.string().required("Country is required"),

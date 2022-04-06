@@ -34,8 +34,8 @@ export interface SliceState {
   invoices: InvoiceType[];
   currentInvoices: InvoiceType[];
   fetchedInvoice: InvoiceType;
-  isDraft: boolean;
-  isEditting: boolean;
+  isDraftMode: boolean;
+  isEditMode: boolean;
 }
 const initialState: SliceState = {
   invoices: [],
@@ -54,8 +54,8 @@ const initialState: SliceState = {
     items: [{ name: "", quantity: 0, price: 0, total: 0 }],
     total: 0,
   },
-  isDraft: false,
-  isEditting: false,
+  isDraftMode: false,
+  isEditMode: false,
 };
 const invoicesSlice = createSlice({
   name: "invoices",
@@ -81,16 +81,16 @@ const invoicesSlice = createSlice({
       );
     },
     saveAsDraft(state) {
-      state.isDraft = true;
+      state.isDraftMode = true;
     },
     disableDraftMode(state) {
-      state.isDraft = false;
+      state.isDraftMode = false;
     },
     editInvoice(state) {
-      state.isEditting = true;
+      state.isEditMode = true;
     },
     cancelEdit(state) {
-      state.isEditting = false;
+      state.isEditMode = false;
     },
     changeInvoiceStatus(state) {
       state.fetchedInvoice.status = "paid";
