@@ -8,6 +8,7 @@ import {
   createInvoiceData,
   transformInvoiceItems,
   transformInvoiceObject,
+  truncateObjectId,
 } from "../../helpers/helpers";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
@@ -184,7 +185,9 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
       <Box sx={{ padding: matches ? 4 : 2 }}>
         {!matches && <GoBackBtn click={handleCloseForm} />}
         <Typography mb={1} variant="h5" fontWeight="bold">
-          {isEditMode ? `Edit #${editingInvoice?.id}` : "New Invoice"}
+          {isEditMode
+            ? `Edit #${truncateObjectId(editingInvoice?.id, 10)}`
+            : "New Invoice"}
         </Typography>
         <Typography mb={1} variant="h6" color="secondary" fontWeight={500}>
           Bill From
