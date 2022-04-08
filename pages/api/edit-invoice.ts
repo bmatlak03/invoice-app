@@ -5,7 +5,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PUT") {
     const data = req.body;
     const client = await MongoClient.connect(
-      `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
+      `${process.env.REACT_APP_MONGODB_URL}`
     );
     const db = client.db();
 
