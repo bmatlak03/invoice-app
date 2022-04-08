@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
-
+import { hash } from "bcryptjs";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { email, password } = req.body;
@@ -24,14 +24,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     const status = await db.collection("users").insertOne({
       email,
-      password: password,
+      password: await hash(password, 12),
     });
 
     res.status(201).json({ message: "User created", ...status });
-    //Close DB connection
     client.close();
   } else {
-    //Response for other than POST method
     res.status(500).json({ message: "Route not valid" });
   }
 }
