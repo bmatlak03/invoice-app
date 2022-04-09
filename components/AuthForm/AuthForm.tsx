@@ -78,6 +78,7 @@ const AuthForm = ({}) => {
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
         value={formik.values.password}
+        type="password"
         change={formik.handleChange}
       />
       <Typography variant="body1">
