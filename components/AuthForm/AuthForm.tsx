@@ -18,7 +18,7 @@ const AuthForm = ({}) => {
     initialValues: defaultValues,
     validationSchema: validationSchema,
     onSubmit: async ({ email, password }) => {
-      if (mode === "singin") {
+      if (mode === "signin") {
         const status = await signIn("credentials", {
           redirect: false,
           email: email,
@@ -53,16 +53,16 @@ const AuthForm = ({}) => {
     backgroundColor: theme.palette.primary.light,
   };
   const switchMode = () => {
-    if (mode === "singin") {
-      dispatch(authActions.singupMode());
+    if (mode === "signin") {
+      dispatch(authActions.signupMode());
     } else {
-      dispatch(authActions.singinMode());
+      dispatch(authActions.signinMode());
     }
   };
   return (
     <form onSubmit={formik.handleSubmit} style={formStyles}>
       <Typography variant="h3" textAlign="center" mb={3}>
-        {mode === "singin" ? "Sing in" : "Sing up"}
+        {mode === "signin" ? "Sign in" : "Sign up"}
       </Typography>
       <Input
         name="email"
@@ -81,15 +81,15 @@ const AuthForm = ({}) => {
         change={formik.handleChange}
       />
       <Typography variant="body1">
-        {mode === "singin"
+        {mode === "signin"
           ? "Don't have an account?"
           : "Already have an account?"}
       </Typography>
       <StyledButton type="grey" onClick={switchMode}>
-        {mode === "singin" ? "Create an account" : "Log in"}
+        {mode === "signin" ? "Create an account" : "Log in"}
       </StyledButton>
       <StyledButton role="submit">
-        {mode === "singin" ? "Sing in" : "Sing up"}
+        {mode === "signin" ? "Sign in" : "Sign up"}
       </StyledButton>
     </form>
   );

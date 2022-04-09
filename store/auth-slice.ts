@@ -3,15 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    mode: "singin",
+    mode: "signin",
     authenticated: false,
   },
   reducers: {
-    singupMode(state) {
-      state.mode = "singup";
+    signupMode(state) {
+      state.mode = "signup";
     },
-    singinMode(state) {
-      state.mode = "singin";
+    signinMode(state) {
+      state.mode = "signin";
     },
   },
 });
