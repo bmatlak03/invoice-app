@@ -1,13 +1,18 @@
 import { AppDispatch } from ".";
+import { uiActions } from "./ui-slice";
 const headers = {
   "Content-Type": "application/json",
 };
-export const singUpUser = (email: string, password: string) => {
+export const signUpUser = (email: string, password: string) => {
   return async (dispatch: AppDispatch) => {
     const sendRequest = async () => {
+      console.log("here");
+
       const response = await fetch("/api/auth/signup", {
         method: "POST",
-        headers: headers,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email: email,
           password: password,
@@ -19,8 +24,19 @@ export const singUpUser = (email: string, password: string) => {
     };
     try {
       await sendRequest();
+      dispatch(
+        uiActions.showNotification({
+          type: "success",
+          message: "Successfully signed up!",
+        })
+      );
     } catch (error) {
-      alert(error);
+      dispatch(
+        uiActions.showNotification({
+          type: "error",
+          message: "something went wrong",
+        })
+      );
     }
   };
 };

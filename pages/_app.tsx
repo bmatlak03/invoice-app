@@ -5,6 +5,7 @@ import store from "../store/index";
 import Layout from "../components/UI/Layout/Layout";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { SessionProvider } from "next-auth/react";
 import "../css/nprogress.css";
 import NProgress from "nprogress";
 
@@ -18,13 +19,15 @@ Router.events.on("routeChangeError", handleRouteComplete);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </LocalizationProvider>
-    </Provider>
+    <SessionProvider session={pageProps.session}>
+      <Provider store={store}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </LocalizationProvider>
+      </Provider>
+    </SessionProvider>
   );
 }
 

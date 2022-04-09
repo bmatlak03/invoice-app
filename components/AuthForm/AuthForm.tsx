@@ -1,21 +1,44 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { authActions } from "../../store/auth-slice";
+import { signIn } from "next-auth/react";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import { Typography, useTheme } from "@mui/material";
 import Input from "../../components/UI/Input/Input";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
+import { useRouter } from "next/router";
 
 const AuthForm = ({}) => {
   const theme = useTheme();
+  const router = useRouter();
   const { mode } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: defaultValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert("Credentials: " + JSON.stringify(values));
+    onSubmit: async ({ email, password }) => {
+      if (mode === "singin") {
+        const status = await signIn("credentials", {
+          redirect: false,
+          email: email,
+          password: password,
+        });
+        router.replace("/");
+        console.log(status);
+      } else {
+        const response = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        });
+        console.log(response);
+      }
     },
   });
   const formStyles: {} = {
