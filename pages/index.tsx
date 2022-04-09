@@ -1,12 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { GetStaticProps, GetServerSideProps } from "next";
 import { MongoClient } from "mongodb";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { invoicesActions, InvoiceType } from "../store/invoices-slice";
 import { uiActions } from "../store/ui-slice";
+import { getSession } from "next-auth/react";
 import { Box, Backdrop, useMediaQuery, useTheme } from "@mui/material";
 import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import Spinner from "../components/UI/Spinner/Spinner";
@@ -59,7 +60,9 @@ const Home: NextPage<FetchedInvoices> = (props) => {
     </>
   );
 };
-export const getStaticProps: GetStaticProps = async () => {
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
   const client = await MongoClient.connect(
     `${process.env.REACT_APP_MONGODB_URL}`
   );
@@ -69,6 +72,15 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const invoices = await invoicesCollection.find().toArray();
   client.close();
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       fetchedInvoices: invoices.map((invoice) => ({
@@ -86,7 +98,6 @@ export const getStaticProps: GetStaticProps = async () => {
         total: invoice.total,
       })),
     },
-    revalidate: 1,
   };
 };
 export default Home;

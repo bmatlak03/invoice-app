@@ -6,20 +6,29 @@ import { useDispatch } from "react-redux";
 import { invoicesActions } from "../../store/invoices-slice";
 import { InvoiceType } from "../../store/invoices-slice";
 import InvoiceDetails from "../../components/InvoiceDetails/InvoiceDetails";
+import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
 type Props = {
   invoiceData: InvoiceType;
 };
 
-const InvoiceDetailsPage = (props: Props) => {
+const InvoiceDetailsPage = ({ invoiceData }: Props) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   useEffect(() => {
-    dispatch(invoicesActions.insertFetchedInvoice(props.invoiceData));
-  }, [dispatch, props.invoiceData]);
+    getSession().then((session) => {
+      if (!session) {
+        router.replace("/auth");
+      } else {
+        dispatch(invoicesActions.insertFetchedInvoice(invoiceData));
+      }
+    });
+  }, [router, dispatch, invoiceData]);
   return (
     <>
       <Head>
-        <title>Invoice {props.invoiceData.id}</title>
+        <title>Invoice {invoiceData.id}</title>
       </Head>
       <InvoiceDetails />
     </>
