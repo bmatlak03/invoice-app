@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { GetStaticProps, GetServerSideProps } from "next";
+import { GetServerSideProps } from "next";
 import { MongoClient } from "mongodb";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,15 +63,6 @@ const Home: NextPage<FetchedInvoices> = (props) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req });
-  const client = await MongoClient.connect(
-    `${process.env.REACT_APP_MONGODB_URL}`
-  );
-  const db = client.db();
-
-  const invoicesCollection = db.collection("invoices");
-
-  const invoices = await invoicesCollection.find().toArray();
-  client.close();
   if (!session) {
     return {
       redirect: {
@@ -80,11 +71,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+  const client = await MongoClient.connect(
+    `${process.env.REACT_APP_MONGODB_URL}`
+  );
+  const db = client.db();
+
+  // const invoicesCollection = db.collection("invoices");
+
+  const user = await db
+    .collection("users")
+    .find({ email: session?.user?.email })
+    .toArray();
+  const invoices = user[0].invoices;
+  client.close();
 
   return {
     props: {
-      fetchedInvoices: invoices.map((invoice) => ({
-        id: invoice._id.toString(),
+      fetchedInvoices: invoices.map((invoice: InvoiceType) => ({
+        id: invoice.id,
         createdAt: invoice.createdAt,
         paymentDue: invoice.paymentDue,
         description: invoice.description,

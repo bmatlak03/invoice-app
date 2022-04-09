@@ -1,7 +1,10 @@
-import { MongoClient } from "mongodb";
+import { getSession } from "next-auth/react";
+import { MongoClient, ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getSession({ req });
+  console.log(session);
   if (req.method === "POST") {
     const data = req.body;
 
@@ -10,17 +13,21 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     );
     const db = client.db();
 
-    const invoicesCollection = db.collection("invoices");
+    const user = db.collection("users");
 
-    const result = await invoicesCollection.insertOne(data);
-
+    const result = await user.updateOne(
+      { email: session?.user?.email },
+      { $push: { invoices: data } }
+    );
     console.log(result);
+
+    // const result = await invoicesCollection.insertOne(data);
+
+    // console.log(result);
 
     client.close();
 
-    res
-      .status(201)
-      .json({ message: "invoice inserted!", id: result.insertedId });
+    res.status(201).json({ message: "invoice inserted!", id: req.body.id });
   }
 }
 

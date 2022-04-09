@@ -19,12 +19,14 @@ const AuthForm = ({}) => {
     validationSchema: validationSchema,
     onSubmit: async ({ email, password }) => {
       if (mode === "signin") {
-        const status = await signIn("credentials", {
+        const status: any = await signIn("credentials", {
           redirect: false,
           email: email,
           password: password,
         });
-        router.replace("/");
+        if (status.error === null) {
+          router.replace("/");
+        }
         console.log(status);
       } else {
         const response = await fetch("/api/auth/signup", {
