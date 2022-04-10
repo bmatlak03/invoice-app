@@ -21,7 +21,7 @@ const ProfilePage = ({}) => {
     borderRadius: "10px",
     alignItems: "center",
     justifyContent: "space-around",
-    width: matches ? "50%" : "90",
+    width: matches ? "50%" : "90%",
     height: "60%",
     padding: "2%",
     backgroundColor: theme.palette.primary.light,
