@@ -1,5 +1,5 @@
 import { Box, Divider, useTheme } from "@mui/material";
-import Account from "../Account/Account";
+import AvatarImg from "../Avatar/Avatar";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import Logo from "../UI/Logo/Logo";
 const Header: React.FC<{
@@ -27,7 +27,7 @@ const Header: React.FC<{
             flexItem
             sx={{ marginRight: 2, marginLeft: 2 }}
           />
-          <Account />
+          <AvatarImg />
         </Box>
       </Box>
     </header>
