@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Head from "next/head";
 import { useEffect } from "react";
@@ -8,7 +8,7 @@ import { InvoiceType } from "../../store/invoices-slice";
 import InvoiceDetails from "../../components/InvoiceDetails/InvoiceDetails";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
-
+import { connectToDatabase } from "../../lib/db";
 type Props = {
   invoiceData: InvoiceType;
 };
@@ -35,9 +35,7 @@ const InvoiceDetailsPage = ({ invoiceData }: Props) => {
   );
 };
 export const getStaticPaths: GetStaticPaths = async () => {
-  const client = await MongoClient.connect(
-    `${process.env.REACT_APP_MONGODB_URL}`
-  );
+  const client = await connectToDatabase();
   const db = client.db();
 
   const invoicesCollection = db.collection("invoices");
@@ -57,9 +55,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const id: any = context?.params?.invoiceId;
 
-  const client = await MongoClient.connect(
-    `${process.env.REACT_APP_MONGODB_URL}`
-  );
+  const client = await connectToDatabase();
   const db = client.db();
   const invoicesCollection = db.collection("invoices");
   const selectedInvoice = await invoicesCollection.findOne({

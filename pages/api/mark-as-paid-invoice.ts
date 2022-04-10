@@ -1,13 +1,12 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
+import { connectToDatabase } from "../../lib/db";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PUT") {
     const id = req.body;
 
-    const client = await MongoClient.connect(
-      `mongodb+srv://bartek:${process.env.REACT_APP_MONGODB_PASS}@cluster0.j0lnf.mongodb.net/invoicesDatabase?retryWrites=true&w=majority`
-    );
+    const client = await connectToDatabase();
     const db = client.db();
 
     const invoicesCollection = db.collection("invoices");

@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
-import { MongoClient, ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
+import { connectToDatabase } from "../../lib/db";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
@@ -8,9 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const data = req.body;
 
-    const client = await MongoClient.connect(
-      `${process.env.REACT_APP_MONGODB_URL}`
-    );
+    const client = await connectToDatabase();
     const db = client.db();
 
     const user = db.collection("users");
@@ -20,10 +18,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       { $push: { invoices: data } }
     );
     console.log(result);
-
-    // const result = await invoicesCollection.insertOne(data);
-
-    // console.log(result);
 
     client.close();
 

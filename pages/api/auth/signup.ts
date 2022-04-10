@@ -1,6 +1,6 @@
-import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import { hash } from "bcryptjs";
+import { connectToDatabase } from "../../../lib/db";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { email, password } = req.body;
@@ -8,9 +8,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(422).json({ message: "Invalid Data" });
       return;
     }
-    const client = await MongoClient.connect(
-      `${process.env.REACT_APP_MONGODB_URL}`
-    );
+    const client = await connectToDatabase();
     const db = client.db();
 
     const checkExisting = await db

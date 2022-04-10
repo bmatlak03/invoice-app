@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { MongoClient } from "mongodb";
 import { compare } from "bcryptjs";
 
 export default NextAuth({
@@ -11,9 +10,7 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        const client = await MongoClient.connect(
-          process.env.REACT_APP_MONGODB_URL
-        );
+        const client = await connectToDatabase();
 
         const usersCollection = client.db().collection("users");
 

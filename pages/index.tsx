@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import { MongoClient } from "mongodb";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -13,6 +12,7 @@ import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import Spinner from "../components/UI/Spinner/Spinner";
 import Invoices from "../components/Invoices/Invoices";
 import Notification from "../components/UI/Notification/Notification";
+import { connectToDatabase } from "../lib/db";
 const InvoiceForm = lazy(() => import("../components/InvoiceForm/InvoiceForm"));
 type FetchedInvoices = {
   fetchedInvoices: InvoiceType;
@@ -71,9 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-  const client = await MongoClient.connect(
-    `${process.env.REACT_APP_MONGODB_URL}`
-  );
+  const client = await connectToDatabase();
   const db = client.db();
 
   // const invoicesCollection = db.collection("invoices");
