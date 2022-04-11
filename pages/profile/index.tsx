@@ -3,6 +3,7 @@ import { signOut, getSession, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
 import AvatarImg from "../../components/Avatar/Avatar";
+
 const ProfilePage = ({}) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -26,6 +27,7 @@ const ProfilePage = ({}) => {
     padding: "2%",
     backgroundColor: theme.palette.primary.light,
   };
+
   return (
     <Box sx={centeredBox}>
       <Box sx={boxStyles}>

@@ -132,7 +132,6 @@ export const markInvoiceAsPaid = (id: string) => {
         body: JSON.stringify(id),
         headers,
       });
-      console.log(response);
       if (!response.ok) {
         throw new Error("Changing status failed.");
       }

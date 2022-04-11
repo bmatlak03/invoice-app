@@ -8,6 +8,7 @@ import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import Input from "../../components/UI/Input/Input";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
 import { useRouter } from "next/router";
+import { signInUser, signUpUser } from "../../store/auth-actions";
 
 const AuthForm = ({}) => {
   const theme = useTheme();
@@ -20,27 +21,9 @@ const AuthForm = ({}) => {
     validationSchema: validationSchema,
     onSubmit: async ({ email, password }) => {
       if (mode === "signin") {
-        const status: any = await signIn("credentials", {
-          redirect: false,
-          email: email,
-          password: password,
-        });
-        if (status.error === null) {
-          router.replace("/");
-        }
-        console.log(status);
+        dispatch(signInUser(email, password));
       } else {
-        const response = await fetch("/api/auth/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        });
-        console.log(response);
+        dispatch(signUpUser(email, password));
       }
     },
   });

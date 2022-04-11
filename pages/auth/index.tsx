@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { Box } from "@mui/material";
 import AuthForm from "../../components/AuthForm/AuthForm";
-type Props = {};
+import Notification from "../../components/UI/Notification/Notification";
 
-const AuthPage = (props: Props) => {
+const AuthPage = ({}) => {
   const router = useRouter();
+  const { notification } = useSelector((state: RootState) => state.ui);
+  console.log(notification);
   useEffect(() => {
     getSession().then((session) => {
       if (session) {
@@ -14,16 +18,26 @@ const AuthPage = (props: Props) => {
       }
     });
   }, [router]);
+  const wrapperStyles = {
+    height: "calc(100vh - 60px)",
+    padding: 2,
+  };
   const centeredBox = {
     display: "flex",
-    height: "calc(100vh - 60px)",
     justifyContent: "center",
     alignItems: "center",
+    height: "100%",
   };
+  const displayedNotification = notification.isShow && (
+    <Notification type={notification.type} message={notification.message} />
+  );
 
   return (
-    <Box sx={centeredBox}>
-      <AuthForm />
+    <Box sx={wrapperStyles}>
+      {displayedNotification}
+      <Box sx={centeredBox}>
+        <AuthForm />
+      </Box>
     </Box>
   );
 };
