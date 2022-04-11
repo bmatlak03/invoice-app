@@ -1,20 +1,20 @@
-import { ObjectId } from "mongodb";
+import { getSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../lib/db";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getSession({ req });
   if (req.method === "PUT") {
     const data = req.body;
     const client = await connectToDatabase();
     const db = client.db();
 
-    const invoicesCollection = db.collection("invoices");
-
-    const result = await invoicesCollection.updateOne(
-      { _id: new ObjectId(data.id) },
-      { $set: data }
+    const result = await db.collection("users").updateOne(
+      { email: session?.user?.email, "invoices.id": data.id },
+      {
+        $set: { "invoices.$": data },
+      }
     );
-
     console.log(result);
 
     client.close();
