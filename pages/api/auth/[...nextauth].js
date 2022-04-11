@@ -16,7 +16,6 @@ export default NextAuth({
         const user = await usersCollection.findOne({
           email: credentials.email,
         });
-        console.log(user);
         if (!user) {
           client.close();
           throw new Error("No user found with the email");

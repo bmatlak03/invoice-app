@@ -10,7 +10,6 @@ import Notification from "../../components/UI/Notification/Notification";
 const AuthPage = ({}) => {
   const router = useRouter();
   const { notification } = useSelector((state: RootState) => state.ui);
-  console.log(notification);
   useEffect(() => {
     getSession().then((session) => {
       if (session) {

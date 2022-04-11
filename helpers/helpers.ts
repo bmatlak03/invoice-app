@@ -34,7 +34,6 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
 };
 export const transformInvoiceItems = (items: []) => {
   let transformedItems: Array<Item> = [];
-  console.log(items.length);
   items.forEach((item: Item) => {
     let itemObject = {
       name: "",
@@ -75,7 +74,6 @@ export const createInvoiceData = (
   status: "paid" | "draft" | "pending",
   id: string
 ) => {
-  console.log(id);
   let totalPrice = 0;
   const itemsCopy = [...items];
   itemsCopy.forEach((item) => {
