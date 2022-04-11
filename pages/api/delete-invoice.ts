@@ -1,19 +1,23 @@
-import { ObjectId } from "mongodb";
+import { getSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../lib/db";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "DELETE") {
+    const session = await getSession({ req });
     const id = req.body;
 
     const client = await connectToDatabase();
     const db = client.db();
 
-    const invoicesCollection = db.collection("invoices");
+    const usersCollection = db.collection("users");
 
-    const result = await invoicesCollection.deleteOne({
-      _id: new ObjectId(id),
-    });
+    const result = await usersCollection.updateOne(
+      { email: session?.user?.email, "invoices.id": id },
+      {
+        $pull: { invoices: { id: id } },
+      }
+    );
 
     console.log(result);
 
