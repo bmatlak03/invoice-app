@@ -2,8 +2,8 @@ import { Item } from "./../components/InvoiceForm/InvoiceForm";
 import { InvoiceType } from "./../store/invoices-slice";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
-const notificationTime = 4000;
 export const hideNotification = (dispatch: AppDispatch) => {
+  const notificationTime = 3000;
   setTimeout(() => {
     dispatch(uiActions.hideNotification());
   }, notificationTime);
