@@ -4,7 +4,6 @@ import { connectToDatabase } from "../../lib/db";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
-  console.log(session);
   if (req.method === "POST") {
     const data = req.body;
 
