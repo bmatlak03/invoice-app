@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { signOut, getSession } from "next-auth/react";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
@@ -28,16 +29,21 @@ const ProfilePage = ({ session }: any) => {
   };
 
   return (
-    <Box sx={centeredBox}>
-      <Box sx={boxStyles}>
-        <Typography variant="h5">You are logged in as:</Typography>
-        <Typography variant="body1">{userEmail}</Typography>
-        <AvatarImg />
-        <StyledButton type="red" onClick={handleSignOut}>
-          Sign out
-        </StyledButton>
+    <>
+      <Head>
+        <title>Profile: {userEmail}</title>
+      </Head>
+      <Box sx={centeredBox}>
+        <Box sx={boxStyles}>
+          <Typography variant="h5">You are logged in as:</Typography>
+          <Typography variant="body1">{userEmail}</Typography>
+          <AvatarImg />
+          <StyledButton type="red" onClick={handleSignOut}>
+            Sign out
+          </StyledButton>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {

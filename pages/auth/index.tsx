@@ -6,6 +6,7 @@ import { RootState } from "../../store";
 import { Box } from "@mui/material";
 import AuthForm from "../../components/AuthForm/AuthForm";
 import Notification from "../../components/UI/Notification/Notification";
+import Head from "next/head";
 
 const AuthPage = ({}) => {
   const router = useRouter();
@@ -32,12 +33,17 @@ const AuthPage = ({}) => {
   );
 
   return (
-    <Box sx={wrapperStyles}>
-      {displayedNotification}
-      <Box sx={centeredBox}>
-        <AuthForm />
+    <>
+      <Head>
+        <title>Autenticate</title>
+      </Head>
+      <Box sx={wrapperStyles}>
+        {displayedNotification}
+        <Box sx={centeredBox}>
+          <AuthForm />
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 export default AuthPage;
