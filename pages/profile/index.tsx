@@ -1,14 +1,13 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { signOut, getSession, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
+import { signOut, getSession } from "next-auth/react";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
 import AvatarImg from "../../components/Avatar/Avatar";
 
-const ProfilePage = ({}) => {
+const ProfilePage = ({ session }: any) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const session = useSession();
-  const userEmail = session?.data?.user?.email;
+  const userEmail = session.user.email;
   const handleSignOut = () => signOut();
   const centeredBox = {
     display: "flex",

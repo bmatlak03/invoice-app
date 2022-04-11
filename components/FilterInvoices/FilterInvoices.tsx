@@ -13,16 +13,12 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
-type Props = {};
 
-const FilterInvoices: React.FC<Props> = ({}) => {
+const FilterInvoices: React.FC = ({}) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const [selectedFilter, setSelectedFilter] = useState<string>("");
-  const invoicesLength = useSelector(
-    (state: RootState) => state.invoices.currentInvoices.length
-  );
   const { isFilterOpen } = useSelector((state: RootState) => state.ui);
   const changeStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {

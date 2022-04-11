@@ -30,7 +30,7 @@ export interface InvoiceType {
   total: number;
 }
 
-export interface SliceState {
+interface SliceState {
   invoices: InvoiceType[];
   currentInvoices: InvoiceType[];
   fetchedInvoice: InvoiceType;

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { RootState } from "../../store";
 import { Box } from "@mui/material";
 import AuthForm from "../../components/AuthForm/AuthForm";
 import Notification from "../../components/UI/Notification/Notification";

@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { invoicesActions } from "../../store/invoices-slice";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import FilterInoices from "../FilterInvoices/FilterInvoices";
 import StyledButton from "../UI/StyledButton/StyledButton";
 import { uiActions } from "../../store/ui-slice";
-type Props = {};
 
-const InvoicesAction = ({}: Props) => {
+const InvoicesAction = ({}) => {
   const invoicesLength = useSelector(
     (state: RootState) => state.invoices.currentInvoices.length
   );

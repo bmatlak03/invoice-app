@@ -1,17 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
+import { uiActions } from "../../../store/ui-slice";
+import { deleteInvoice } from "../../../store/invoices-actions";
+import { truncateObjectId } from "../../../helpers/helpers";
 import {
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import { uiActions } from "../../../store/ui-slice";
 import StyledButton from "../StyledButton/StyledButton";
-import { deleteInvoice } from "../../../store/invoices-actions";
-import { truncateObjectId } from "../../../helpers/helpers";
 type Props = {
   id: string;
 };

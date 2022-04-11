@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { invoicesActions } from "../../store/invoices-slice";
 import { uiActions } from "../../store/ui-slice";
 import { RootState } from "../../store";
 import { markInvoiceAsPaid } from "../../store/invoices-actions";
@@ -18,11 +19,9 @@ import ConfirmAlert from "../../components/UI/ConfirmAlert/ConfirmAlert";
 import GoBackBtn from "../../components/UI/GoBackBtn/GoBackBtn";
 import Notification from "../../components/UI/Notification/Notification";
 import Spinner from "../UI/Spinner/Spinner";
-import { invoicesActions } from "../../store/invoices-slice";
 const InvoiceForm = lazy(() => import("../InvoiceForm/InvoiceForm"));
-type Props = {};
 
-const InvoiceDetails = ({}: Props) => {
+const InvoiceDetails = ({}) => {
   const dispatch = useDispatch();
   const { isDeleteConfirmOpen: open, notification } = useSelector(
     (state: RootState) => state.ui

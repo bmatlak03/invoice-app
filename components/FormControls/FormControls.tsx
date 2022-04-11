@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
+import { invoicesActions } from "../../store/invoices-slice";
+import { RootState } from "../../store";
 import { uiActions } from "../../store/ui-slice";
 import { Box, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
-import { invoicesActions } from "../../store/invoices-slice";
-import { RootState } from "../../store";
-type Props = {};
 
-const FormControls: React.FC<Props> = ({}) => {
+const FormControls: React.FC = ({}) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { isEditMode } = useSelector((state: RootState) => state.invoices);

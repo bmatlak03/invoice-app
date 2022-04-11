@@ -1,19 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { authActions } from "../../store/auth-slice";
-import { signIn } from "next-auth/react";
+import { signInUser, signUpUser } from "../../store/auth-actions";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import Input from "../../components/UI/Input/Input";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
-import { useRouter } from "next/router";
-import { signInUser, signUpUser } from "../../store/auth-actions";
 
 const AuthForm = ({}) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const router = useRouter();
   const { mode } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const formik = useFormik({

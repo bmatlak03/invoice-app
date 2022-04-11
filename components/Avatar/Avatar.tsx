@@ -1,7 +1,7 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Avatar } from "@mui/material";
 import ProfilePicture from "../../assets/image-avatar.jpg";
-import { useRouter } from "next/router";
 const AvatarImg: React.FC = () => {
   const router = useRouter();
   return (

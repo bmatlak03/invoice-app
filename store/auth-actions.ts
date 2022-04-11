@@ -1,8 +1,8 @@
 import Router from "next/router";
 import { signIn } from "next-auth/react";
-import { AppDispatch } from ".";
 import { hideNotification } from "../helpers/helpers";
 import { uiActions } from "./ui-slice";
+import { AppDispatch } from ".";
 const headers = {
   "Content-Type": "application/json",
 };

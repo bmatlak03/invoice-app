@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editInvoiceData, sendInvoiceData } from "../../store/invoices-actions";
-import { invoicesActions, InvoiceType } from "../../store/invoices-slice";
+import { invoicesActions } from "../../store/invoices-slice";
 import { uiActions } from "../../store/ui-slice";
 import { RootState } from "../../store";
 import {

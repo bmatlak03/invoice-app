@@ -4,9 +4,8 @@ import NoInvoices from "../UI/NoInvoices/NoInvoices";
 import { useSelector } from "react-redux";
 import classes from "../../css/scroll-disable.module.css";
 import Invoice from "./Invoice/Invoice";
-type Props = {};
 
-const Invoices = (props: Props) => {
+const Invoices = ({}) => {
   const { currentInvoices } = useSelector((state: RootState) => state.invoices);
   const renderedInvoices = currentInvoices.map((invoice) => (
     <Invoice
