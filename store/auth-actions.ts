@@ -14,8 +14,8 @@ export const signInUser = (email: string, password: string) => {
         email: email,
         password: password,
       });
-      if (status.error !== null) {
-        throw new Error("Something went wrong!");
+      if (status.error) {
+        throw new Error(status.error);
       }
     };
     try {
@@ -28,11 +28,11 @@ export const signInUser = (email: string, password: string) => {
       );
       Router.replace("/");
       hideNotification(dispatch);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(
         uiActions.showNotification({
           type: "error",
-          message: "something went wrong",
+          message: error.message,
         })
       );
       hideNotification(dispatch);
