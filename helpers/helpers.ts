@@ -22,6 +22,7 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
     clientPostCode: invoice.clientAddress.postCode,
     clientCountry: invoice.clientAddress.country,
   };
+  // const newDate = new Date);
   const transformedObject = {
     clientName: invoice.clientName,
     clientEmail: invoice.clientEmail,
@@ -101,8 +102,8 @@ export const createInvoiceData = (
       country: values.country,
     },
     paymentTerms: values.paymentTerms,
-    createdAt: values.date.toLocaleDateString(),
-    paymentDue: paymentDueTransformed.toLocaleDateString(),
+    createdAt: values.date.toDateString(),
+    paymentDue: paymentDueTransformed.toDateString(),
     id: id,
     items: itemsCopy,
     total: totalPrice,
