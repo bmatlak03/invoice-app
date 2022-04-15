@@ -1,4 +1,16 @@
-import { Box, Typography, Paper, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Paper,
+  useTheme,
+  useMediaQuery,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@mui/material";
 import InvoiceItem from "./InvoiceItem";
 type Props = {
   items: [
@@ -15,9 +27,14 @@ type Props = {
 const ItemsList = ({ items, totalPrice }: Props) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-
+  const tableStyles = {
+    marginTop: 3,
+    borderRadius: "10px",
+    backgroundColor: theme.palette.mode === "dark" ? "transparent" : "#F9FAFE",
+  };
   const itemsSummaryStyles = {
     display: "flex",
+    width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
     color: "white",
@@ -26,14 +43,6 @@ const ItemsList = ({ items, totalPrice }: Props) => {
     padding: 2,
     borderRadius: "10px",
   };
-  const itemsLabel = (
-    <Box sx={{ display: "flex", justifyContent: "space-between", padding: 2 }}>
-      <Typography>Item Name</Typography>
-      <Typography>QTY.</Typography>
-      <Typography>Price</Typography>
-      <Typography>Total</Typography>
-    </Box>
-  );
   const itemsSummary = (
     <Box sx={itemsSummaryStyles}>
       Amount Due{" "}
@@ -42,27 +51,34 @@ const ItemsList = ({ items, totalPrice }: Props) => {
       </Typography>
     </Box>
   );
+  const tableLabels = matches ? (
+    <TableHead>
+      <TableRow>
+        <TableCell>Item Name</TableCell>
+        <TableCell align="center">QTY.</TableCell>
+        <TableCell align="center">Price</TableCell>
+        <TableCell align="center">Total</TableCell>
+      </TableRow>
+    </TableHead>
+  ) : null;
   return (
-    <Paper
-      sx={{
-        marginTop: 3,
-        borderRadius: "10px",
-        backgroundColor:
-          theme.palette.mode === "dark" ? "transparent" : "#F9FAFE",
-      }}
-    >
-      {!!matches && itemsLabel}
-      {items?.map((item) => (
-        <InvoiceItem
-          key={item.name}
-          itemName={item.name}
-          itemQty={item.quantity}
-          itemPrice={item.price}
-          total={item.total}
-        />
-      ))}
+    <TableContainer component={Paper} sx={tableStyles}>
+      <Table>
+        {tableLabels}
+        <TableBody>
+          {items.map((item) => (
+            <InvoiceItem
+              key={item.name}
+              itemName={item.name}
+              itemPrice={item.price}
+              itemQty={item.quantity}
+              total={item.total}
+            />
+          ))}
+        </TableBody>
+      </Table>
       {itemsSummary}
-    </Paper>
+    </TableContainer>
   );
 };
 export default ItemsList;

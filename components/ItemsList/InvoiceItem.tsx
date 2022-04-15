@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { TableCell, TableRow, useMediaQuery, useTheme } from "@mui/material";
 type Props = {
   itemName: string;
   itemPrice: number;
@@ -10,35 +10,31 @@ const InvoiceItem = (props: Props) => {
   const { itemName, itemPrice, itemQty, total } = props;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-
+  const rowStyles = { display: "flex", flexWrap: "wrap" };
+  const cellStyles = {
+    fontWeight: 700,
+    border: "none",
+    // width: "20%",
+  };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 2,
-      }}
-    >
-      <Typography
-        color="text.primary"
-        fontWeight={600}
-        width={!matches ? "100%" : "auto"}
+    <TableRow sx={!matches ? rowStyles : {}} key={itemName}>
+      <TableCell
+        component="th"
+        scope="row"
+        sx={{ ...cellStyles, width: "100%" }}
       >
         {itemName}
-      </Typography>
-      <Typography variant="subtitle2" component="span" color="text.secondary">
-        {!matches ? `${itemQty}x ` : itemQty}
-      </Typography>
-      <Typography variant="subtitle2" component="span" color="text.secondary">
+      </TableCell>
+      <TableCell sx={cellStyles} align="center">
+        {matches ? itemQty : `${itemQty}x`}
+      </TableCell>
+      <TableCell sx={cellStyles} align="center">
         ${itemPrice.toFixed(2)}
-      </Typography>
-      <Typography color="text.primary" fontWeight={600}>
+      </TableCell>
+      <TableCell sx={cellStyles} align="center">
         ${total.toFixed(2)}
-      </Typography>
-    </Box>
+      </TableCell>
+    </TableRow>
   );
 };
 
