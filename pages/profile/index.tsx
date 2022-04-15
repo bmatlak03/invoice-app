@@ -1,13 +1,16 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { signOut, getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
 import AvatarImg from "../../components/Avatar/Avatar";
+import GoBackBtn from "../../components/UI/GoBackBtn/GoBackBtn";
 
 const ProfilePage = ({ session }: any) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const router = useRouter();
   const userEmail = session.user.email;
   const handleSignOut = () => signOut();
   const centeredBox = {
@@ -35,6 +38,7 @@ const ProfilePage = ({ session }: any) => {
       </Head>
       <Box sx={centeredBox}>
         <Box sx={boxStyles}>
+          <GoBackBtn click={() => router.back()} />
           <Typography variant="h5">You are logged in as:</Typography>
           <Typography variant="body1">{userEmail}</Typography>
           <AvatarImg />
