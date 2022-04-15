@@ -7,15 +7,13 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { SessionProvider } from "next-auth/react";
 import "../css/nprogress.css";
-import NProgress from "nprogress";
-
-NProgress.configure({ showSpinner: false });
-const handleRouteChange = () => NProgress.start();
-const handleRouteComplete = () => NProgress.done();
-
-Router.events.on("routeChangeStart", handleRouteChange);
-Router.events.on("routeChangeComplete", handleRouteComplete);
-Router.events.on("routeChangeError", handleRouteComplete);
+import dynamic from "next/dynamic";
+const TopProgressBar = dynamic(
+  () => {
+    return import("../components/UI/TopProgressBar/TopProgressBar");
+  },
+  { ssr: false }
+);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -23,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Layout>
+            <TopProgressBar />
             <Component {...pageProps} />
           </Layout>
         </LocalizationProvider>
