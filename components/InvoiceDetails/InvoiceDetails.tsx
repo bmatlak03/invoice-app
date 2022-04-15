@@ -17,13 +17,12 @@ import ItemsList from "../../components/ItemsList/ItemsList";
 import InvoiceControls from "../../components/InvoiceControls/InvoiceControls";
 import ConfirmAlert from "../../components/UI/ConfirmAlert/ConfirmAlert";
 import GoBackBtn from "../../components/UI/GoBackBtn/GoBackBtn";
-import Notification from "../../components/UI/Notification/Notification";
 import Spinner from "../UI/Spinner/Spinner";
 const InvoiceForm = lazy(() => import("../InvoiceForm/InvoiceForm"));
 
 const InvoiceDetails = ({}) => {
   const dispatch = useDispatch();
-  const { isDeleteConfirmOpen: open, notification } = useSelector(
+  const { isDeleteConfirmOpen: open } = useSelector(
     (state: RootState) => state.ui
   );
   const theme = useTheme();
@@ -190,9 +189,6 @@ const InvoiceDetails = ({}) => {
       <ItemsList items={items} totalPrice={total} />
     </Box>
   );
-  const displayedNotification = notification.isShow && (
-    <Notification type={notification.type} message={notification.message} />
-  );
   const invoiceFormComponent = isFormOpen && (
     <Suspense fallback={<Spinner />}>
       <InvoiceForm editingInvoice={fetchedInvoice} />
@@ -221,7 +217,6 @@ const InvoiceDetails = ({}) => {
       />
       {invoiceFormComponent}
       <Box padding={2}>
-        {displayedNotification}
         <GoBackBtn click={() => router.back()} />
         {invoiceOptions}
         {invoiceOverview}

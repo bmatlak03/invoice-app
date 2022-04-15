@@ -1,4 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 import {
   PaletteMode,
   createTheme,
@@ -8,13 +10,15 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Header from "../../Header/Header";
+import Notification from "../Notification/Notification";
 const Layout: React.FC = ({ children }) => {
-  const [themeMode, setThemeMode] = useState<string | null>("light");
+  const [themeMode, setThemeMode] = useState<PaletteMode>("light");
+  const { notification } = useSelector((state: RootState) => state.ui);
   useEffect(() => {
     if (!localStorage.getItem("theme")) {
       localStorage.setItem("theme", "light");
     }
-    const storageTheme = localStorage.getItem("theme");
+    const storageTheme = localStorage.getItem("theme") as PaletteMode;
     setThemeMode(storageTheme);
   }, [themeMode]);
 
@@ -27,7 +31,7 @@ const Layout: React.FC = ({ children }) => {
       setThemeMode("light");
     }
   };
-  const getDesignTokens: any = (mode: PaletteMode) => ({
+  const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
       mode,
       ...(mode === "light"
@@ -76,6 +80,11 @@ const Layout: React.FC = ({ children }) => {
     [themeMode]
   );
   const matches = useMediaQuery(theme.breakpoints.up("lg"));
+  const displayedNotification = notification.isShow && (
+    <Box padding={2} width="100%">
+      <Notification type={notification.type} message={notification.message} />
+    </Box>
+  );
   return (
     <ThemeProvider theme={theme}>
       <Header themeMode={themeMode} changeTheme={handleChangeTheme} />
@@ -88,6 +97,7 @@ const Layout: React.FC = ({ children }) => {
           position: "relative",
         }}
       >
+        {displayedNotification}
         <main style={{ width: matches ? "60%" : "100%" }}>{children}</main>
       </Box>
     </ThemeProvider>

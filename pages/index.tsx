@@ -11,16 +11,13 @@ import { Box, Backdrop, useMediaQuery, useTheme } from "@mui/material";
 import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import Spinner from "../components/UI/Spinner/Spinner";
 import Invoices from "../components/Invoices/Invoices";
-import Notification from "../components/UI/Notification/Notification";
 import { connectToDatabase } from "../lib/db";
 const InvoiceForm = lazy(() => import("../components/InvoiceForm/InvoiceForm"));
 type FetchedInvoices = {
   fetchedInvoices: InvoiceType;
 };
 const Home: NextPage<FetchedInvoices> = (props) => {
-  const { isFormOpen, notification } = useSelector(
-    (state: RootState) => state.ui
-  );
+  const { isFormOpen } = useSelector((state: RootState) => state.ui);
   const { fetchedInvoices } = props;
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -40,9 +37,6 @@ const Home: NextPage<FetchedInvoices> = (props) => {
       <InvoiceForm />
     </Suspense>
   );
-  const displayedNotification = notification.isShow && (
-    <Notification type={notification.type} message={notification.message} />
-  );
 
   return (
     <>
@@ -51,7 +45,6 @@ const Home: NextPage<FetchedInvoices> = (props) => {
         <meta name="description" content="Manage your invoices in one place!" />
       </Head>
       <Box padding={2}>
-        {displayedNotification}
         <InvoicesAction />
         <Invoices />
         {invoiceFormComponent}
