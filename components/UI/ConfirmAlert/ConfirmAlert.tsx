@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { uiActions } from "../../../store/ui-slice";
 import { deleteInvoice } from "../../../store/invoices-actions";
-import { truncateObjectId } from "../../../helpers/helpers";
 import {
   Dialog,
   DialogTitle,
@@ -27,8 +26,8 @@ const ConfirmAlert = ({ id }: Props) => {
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete invoice #{truncateObjectId(id, 10)}?
-            This Action cannot be undone.
+            Are you sure you want to delete invoice #{id}? This Action cannot be
+            undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

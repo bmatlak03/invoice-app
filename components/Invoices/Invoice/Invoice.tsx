@@ -9,7 +9,6 @@ import {
 import { useRouter } from "next/router";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
 import InvoiceStatus from "../../InvoiceStatus/InvoiceStatus";
-import { truncateObjectId } from "../../../helpers/helpers";
 type Props = {
   id: string;
   paymentDue: string;
@@ -65,7 +64,7 @@ const Invoice: React.FC<Props> = ({
           >
             #
             <Typography component="span" color="text.primary" fontWeight={600}>
-              {truncateObjectId(id, 7)}
+              {id}
             </Typography>
           </Typography>
           <Typography color="text.secondary">{clientName}</Typography>

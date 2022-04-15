@@ -109,9 +109,6 @@ export const createInvoiceData = (
   };
   return newInvoiceData;
 };
-export const truncateObjectId = (id: string, n: number) => {
-  return id.length > n ? id.slice(0, n - 1) + "..." : id;
-};
 export const createId = () => {
   const id = nanoid(5);
   return id;
