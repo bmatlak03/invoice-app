@@ -6,7 +6,7 @@ import { uiActions } from "../../store/ui-slice";
 import { RootState } from "../../store";
 import {
   createInvoiceData,
-  mongoObjectId,
+  createId,
   transformInvoiceItems,
   transformInvoiceObject,
   truncateObjectId,
@@ -65,7 +65,7 @@ const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
       ) {
         return alert("You must add at least 1 item!");
       } else {
-        const invoiceId = isEditMode ? editingInvoice.id : mongoObjectId();
+        const invoiceId = isEditMode ? editingInvoice.id : createId();
         const invoiceStatus = isDraftMode
           ? "draft"
           : !editingInvoice

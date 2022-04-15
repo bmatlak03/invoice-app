@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { InvoiceType } from "./../store/invoices-slice";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
@@ -111,14 +112,7 @@ export const createInvoiceData = (
 export const truncateObjectId = (id: string, n: number) => {
   return id.length > n ? id.slice(0, n - 1) + "..." : id;
 };
-export const mongoObjectId = function () {
-  const timestamp = ((new Date().getTime() / 1000) | 0).toString(16);
-  return (
-    timestamp +
-    "xxxxxxxxxxxxxxxx"
-      .replace(/[x]/g, function () {
-        return ((Math.random() * 16) | 0).toString(16);
-      })
-      .toLowerCase()
-  );
+export const createId = () => {
+  const id = nanoid(5);
+  return id;
 };
