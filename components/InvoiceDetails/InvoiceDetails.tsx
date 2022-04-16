@@ -30,7 +30,7 @@ const InvoiceDetails = ({}) => {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
   const { fetchedInvoice, isEditMode } = useSelector(
-    (state: any) => state.invoices
+    (state: RootState) => state.invoices
   );
   const {
     id,

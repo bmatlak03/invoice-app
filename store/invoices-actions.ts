@@ -1,6 +1,6 @@
 import Router from "next/router";
 import { invoicesActions } from "./invoices-slice";
-import { InvoiceType } from "./invoices-slice";
+import { InvoiceType } from "../types/types";
 import { uiActions } from "./ui-slice";
 import { hideNotification } from "../helpers/helpers";
 import { AppDispatch } from ".";

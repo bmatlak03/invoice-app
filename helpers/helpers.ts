@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { InvoiceType } from "./../store/invoices-slice";
+import { InvoiceType } from "./../types/types";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
 import { Item } from "./../components/InvoiceForm/InvoiceForm";

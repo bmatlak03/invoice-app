@@ -1,3 +1,4 @@
+import { ItemsType } from "../../types/types";
 import {
   Box,
   Typography,
@@ -13,14 +14,7 @@ import {
 } from "@mui/material";
 import InvoiceItem from "./InvoiceItem";
 type Props = {
-  items: [
-    {
-      name: string;
-      quantity: number;
-      price: number;
-      total: number;
-    }
-  ];
+  items: ItemsType[];
   totalPrice: number;
 };
 
@@ -68,10 +62,11 @@ const ItemsList = ({ items, totalPrice }: Props) => {
         <TableBody>
           {items.map((item) => (
             <InvoiceItem
-              key={item.name}
-              itemName={item.name}
-              itemPrice={item.price}
-              itemQty={item.quantity}
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              price={item.price}
+              quantity={item.quantity}
               total={item.total}
             />
           ))}

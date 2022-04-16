@@ -1,13 +1,8 @@
 import { TableCell, TableRow, useMediaQuery, useTheme } from "@mui/material";
-type Props = {
-  itemName: string;
-  itemPrice: number;
-  itemQty: number;
-  total: number;
-};
+import { ItemsType } from "../../types/types";
 
-const InvoiceItem = (props: Props) => {
-  const { itemName, itemPrice, itemQty, total } = props;
+const InvoiceItem = (props: ItemsType) => {
+  const { name, price, quantity, total, id } = props;
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const rowStyles = { display: "flex", flexWrap: "wrap" };
@@ -17,19 +12,19 @@ const InvoiceItem = (props: Props) => {
     // width: "20%",
   };
   return (
-    <TableRow sx={!matches ? rowStyles : {}} key={itemName}>
+    <TableRow sx={!matches ? rowStyles : {}} key={id}>
       <TableCell
         component="th"
         scope="row"
         sx={{ ...cellStyles, width: "100%" }}
       >
-        {itemName}
+        {name}
       </TableCell>
       <TableCell sx={cellStyles} align="center">
-        {matches ? itemQty : `${itemQty}x`}
+        {matches ? quantity : `${quantity}x`}
       </TableCell>
       <TableCell sx={cellStyles} align="center">
-        ${itemPrice.toFixed(2)}
+        ${price.toFixed(2)}
       </TableCell>
       <TableCell sx={cellStyles} align="center">
         ${total.toFixed(2)}

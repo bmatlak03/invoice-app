@@ -3,8 +3,8 @@ import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { invoicesActions } from "../../store/invoices-slice";
-import { InvoiceType } from "../../store/invoices-slice";
 import { getSession } from "next-auth/react";
+import { InvoiceType } from "../../types/types";
 import { connectToDatabase } from "../../lib/db";
 import InvoiceDetails from "../../components/InvoiceDetails/InvoiceDetails";
 type Props = {
