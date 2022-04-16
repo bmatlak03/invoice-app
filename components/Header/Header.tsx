@@ -1,4 +1,5 @@
 import { Box, Divider, useTheme } from "@mui/material";
+import { useSession } from "next-auth/react";
 import AvatarImg from "../Avatar/Avatar";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import Logo from "../UI/Logo/Logo";
@@ -7,6 +8,7 @@ const Header: React.FC<{
   changeTheme: () => void;
 }> = ({ themeMode, changeTheme }) => {
   const theme = useTheme();
+  const { status } = useSession();
   const headerStyles = {
     display: "flex",
     justifyContent: "space-between",
@@ -22,12 +24,16 @@ const Header: React.FC<{
         <Logo />
         <Box sx={{ display: "flex" }}>
           <ThemeSwitcher currentTheme={themeMode} changeTheme={changeTheme} />
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ marginRight: 2, marginLeft: 2 }}
-          />
-          <AvatarImg />
+          {status === "authenticated" && (
+            <>
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ marginRight: 2, marginLeft: 2 }}
+              />
+              <AvatarImg />
+            </>
+          )}
         </Box>
       </Box>
     </header>
