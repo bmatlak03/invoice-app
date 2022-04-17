@@ -16,16 +16,18 @@ import { connectToDatabase } from "../lib/db";
 const InvoiceForm = lazy(() => import("../components/InvoiceForm/InvoiceForm"));
 type FetchedInvoices = {
   fetchedInvoices: InvoiceType;
+  avatar: string;
 };
 const Home: NextPage<FetchedInvoices> = (props) => {
   const { isFormOpen } = useSelector((state: RootState) => state.ui);
-  const { fetchedInvoices } = props;
+  const { fetchedInvoices, avatar } = props;
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   useEffect(() => {
     dispatch(invoicesActions.insertFetchedInvoices(fetchedInvoices));
-  }, [dispatch, fetchedInvoices]);
+    dispatch(uiActions.setAvatar(avatar));
+  }, [dispatch, fetchedInvoices, avatar]);
 
   const backdrop = !!matches && (
     <Backdrop
@@ -67,14 +69,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const client = await connectToDatabase();
   const db = client.db();
-
-  // const invoicesCollection = db.collection("invoices");
-
   const user = await db
     .collection("users")
     .find({ email: session?.user?.email })
     .toArray();
   const invoices = user[0].invoices;
+  const avatar = user[0].avatar;
   client.close();
 
   return {
@@ -93,6 +93,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         items: invoice.items,
         total: invoice.total,
       })),
+      avatar: avatar,
     },
   };
 };
