@@ -1,8 +1,7 @@
 import { nanoid } from "nanoid";
-import { InvoiceType } from "./../types/types";
+import { InvoiceType, ItemsType } from "./../types/types";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
-import { Item } from "./../components/InvoiceForm/InvoiceForm";
 export const hideNotification = (dispatch: AppDispatch) => {
   const notificationTime = 3000;
   setTimeout(() => {
@@ -22,7 +21,6 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
     clientPostCode: invoice.clientAddress.postCode,
     clientCountry: invoice.clientAddress.country,
   };
-  // const newDate = new Date);
   const transformedObject = {
     clientName: invoice.clientName,
     clientEmail: invoice.clientEmail,
@@ -35,8 +33,8 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
   return transformedObject;
 };
 export const transformInvoiceItems = (items: []) => {
-  let transformedItems: Array<Item> = [];
-  items.forEach((item: Item) => {
+  let transformedItems: ItemsType[] = [];
+  items.forEach((item: ItemsType) => {
     let itemObject = {
       name: "",
       price: 0,
@@ -72,7 +70,7 @@ export const transformInvoiceItems = (items: []) => {
 };
 export const createInvoiceData = (
   values: any,
-  items: Item[],
+  items: ItemsType[],
   status: "paid" | "draft" | "pending",
   id: string
 ) => {

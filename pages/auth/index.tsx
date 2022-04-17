@@ -1,9 +1,9 @@
+import Head from "next/head";
 import { useEffect } from "react";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Box } from "@mui/material";
 import AuthForm from "../../components/AuthForm/AuthForm";
-import Head from "next/head";
 
 const AuthPage = ({}) => {
   const router = useRouter();

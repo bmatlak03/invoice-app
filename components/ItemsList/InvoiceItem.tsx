@@ -9,7 +9,6 @@ const InvoiceItem = (props: ItemsType) => {
   const cellStyles = {
     fontWeight: 700,
     border: "none",
-    // width: "20%",
   };
   return (
     <TableRow sx={!matches ? rowStyles : {}} key={id}>

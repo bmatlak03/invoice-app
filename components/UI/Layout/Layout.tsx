@@ -37,7 +37,6 @@ const Layout: React.FC = ({ children }) => {
       ...(mode === "light"
         ? {
             // palette values for light mode
-            // main: "#7C5DFA",
             primary: {
               main: "#373B53",
               light: "white",

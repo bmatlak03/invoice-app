@@ -2,7 +2,7 @@ import { Button, Box, useTheme } from "@mui/material";
 import { Add } from "@mui/icons-material";
 type Props = {
   type?: string;
-  onClick?: any;
+  onClick?: () => void;
   customStyles?: object;
   role?: any;
   disabled?: boolean;

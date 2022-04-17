@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import EmptyInvoicesIMG from "../../..//assets/illustration-empty.svg";
+import EmptyInvoicesIMG from "../../../assets/illustration-empty.svg";
 
 const NoInvoices = () => {
   const theme = useTheme();

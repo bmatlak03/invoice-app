@@ -1,16 +1,14 @@
-import { Avatar } from "@mui/material";
 import Image from "next/image";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { Avatar } from "@mui/material";
 
 type Props = {
   size?: "big" | "small";
   click: () => void;
-  img?: any;
 };
 
-const AvatarImg = ({ size = "small", click, img }: Props) => {
+const AvatarImg = ({ size = "small", click }: Props) => {
   const { avatar: imgSrc } = useSelector((state: RootState) => state.ui);
   const avatarStyles = {
     width: size === "big" ? 100 : 40,

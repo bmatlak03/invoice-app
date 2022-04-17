@@ -3,11 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 import { Box, Modal, Typography, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
-import { useDispatch } from "react-redux";
-import { uiActions } from "../../store/ui-slice";
 type Props = {
   file: any;
-  close: any;
+  close: () => void;
   onSubmit: any;
   crop: boolean;
   header: string;
@@ -20,12 +18,9 @@ const ImageUpload = ({
   header = "Send This Image?",
 }: Props) => {
   const [imageSrc, setImageSrc] = useState("");
-  const dispatch = useDispatch();
   const cropRef: any = useRef();
   const theme = useTheme();
 
-  // Use the File Reader API to
-  // read the file and set the source
   useEffect(() => {
     const fr: any = new FileReader();
     fr.onload = () => {

@@ -88,7 +88,7 @@ const ProfilePage = ({ session }: any) => {
         <Box sx={boxStyles}>
           <GoBackBtn click={() => router.back()} />
           <Typography variant="h5">You are logged in as:</Typography>
-          <AvatarImg click={handleChangeAvatar} size="big" img={image} />
+          <AvatarImg click={handleChangeAvatar} size="big" />
           <Typography variant="body2" color="text.secondary">
             ☝️ Change avatar by clicking icon above ☝️
           </Typography>

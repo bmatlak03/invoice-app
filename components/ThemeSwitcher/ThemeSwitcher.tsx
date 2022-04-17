@@ -1,9 +1,9 @@
-import { IconButton } from "@mui/material";
+import { IconButton, PaletteMode } from "@mui/material";
 import Image from "next/image";
 import LightThemeBtn from "../../assets/icon-sun.svg";
 import DarkThemeBtn from "../../assets/icon-moon.svg";
 const ThemeSwitcher: React.FC<{
-  currentTheme: string | null;
+  currentTheme: PaletteMode;
   changeTheme: () => void;
 }> = ({ currentTheme, changeTheme }) => {
   const themeIcon =

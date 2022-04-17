@@ -10,6 +10,7 @@ import {
   transformInvoiceItems,
   transformInvoiceObject,
 } from "../../helpers/helpers";
+import { ItemsType } from "../../types/types";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import {
@@ -33,15 +34,9 @@ import GoBackBtn from "../UI/GoBackBtn/GoBackBtn";
 type Props = {
   editingInvoice?: any;
 };
-export type Item = {
-  name: string;
-  quantity: number;
-  total: number;
-  price: number;
-  id: number;
-};
+
 const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
-  const [items, setItems] = useState<Array<Item>>([
+  const [items, setItems] = useState<Array<ItemsType>>([
     { name: "", quantity: 1, total: 0, price: 0, id: 0 },
   ]);
   const { isDraftMode, isEditMode } = useSelector(

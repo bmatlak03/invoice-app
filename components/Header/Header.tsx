@@ -1,11 +1,11 @@
-import { Box, Divider, useTheme } from "@mui/material";
+import { Box, Divider, PaletteMode, useTheme } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import AvatarImg from "../Avatar/Avatar";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import Logo from "../UI/Logo/Logo";
 const Header: React.FC<{
-  themeMode: string | null;
+  themeMode: PaletteMode;
   changeTheme: () => void;
 }> = ({ themeMode, changeTheme }) => {
   const theme = useTheme();
