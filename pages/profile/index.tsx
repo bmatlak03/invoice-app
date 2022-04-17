@@ -36,6 +36,7 @@ const ProfilePage = ({ session }: any) => {
       const base64data = fr.result;
       console.log("dispatching");
       dispatch(sendAvatar(base64data));
+      setImage(null);
     };
     fr.readAsDataURL(croppedImage);
   };
@@ -88,8 +89,8 @@ const ProfilePage = ({ session }: any) => {
           <GoBackBtn click={() => router.back()} />
           <Typography variant="h5">You are logged in as:</Typography>
           <AvatarImg click={handleChangeAvatar} size="big" img={image} />
-          <Typography variant="body2">
-            Change avatar by clicking icon above
+          <Typography variant="body2" color="text.secondary">
+            ☝️ Change avatar by clicking icon above ☝️
           </Typography>
           <Typography variant="body1">{userEmail}</Typography>
           <StyledButton type="red" onClick={handleSignOut}>
