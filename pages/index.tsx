@@ -12,7 +12,7 @@ import { Box, Backdrop, useMediaQuery, useTheme } from "@mui/material";
 import InvoicesAction from "../components/InvoicesAction/InvoicesAction";
 import Spinner from "../components/UI/Spinner/Spinner";
 import Invoices from "../components/Invoices/Invoices";
-import { connectToDatabase } from "../lib/db";
+import { connectToDatabase } from "../lib/libs";
 const InvoiceForm = lazy(() => import("../components/InvoiceForm/InvoiceForm"));
 type FetchedInvoices = {
   fetchedInvoices: InvoiceType;

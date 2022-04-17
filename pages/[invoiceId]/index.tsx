@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { invoicesActions } from "../../store/invoices-slice";
 import { getSession } from "next-auth/react";
 import { InvoiceType } from "../../types/types";
-import { connectToDatabase } from "../../lib/db";
+import { connectToDatabase } from "../../lib/libs";
 import InvoiceDetails from "../../components/InvoiceDetails/InvoiceDetails";
 type Props = {
   invoiceData: InvoiceType;

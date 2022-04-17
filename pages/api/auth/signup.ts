@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { hash } from "bcryptjs";
-import { connectToDatabase } from "../../../lib/db";
+import { connectToDatabase, hashPassword } from "../../../lib/libs";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { email, password } = req.body;
@@ -22,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     const status = await db.collection("users").insertOne({
       email,
-      password: await hash(password, 12),
+      password: hashPassword(password),
       invoices: [],
       avatar: "",
     });

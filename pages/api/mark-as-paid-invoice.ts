@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "../../lib/db";
+import { connectToDatabase } from "../../lib/libs";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });

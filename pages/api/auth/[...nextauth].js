@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
-import { connectToDatabase } from "../../../lib/db";
+import { connectToDatabase } from "../../../lib/libs";
 export default NextAuth({
   session: {
     strategy: "jwt",
