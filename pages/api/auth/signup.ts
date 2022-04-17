@@ -21,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     const status = await db.collection("users").insertOne({
       email,
-      password: hashPassword(password),
+      password: await hashPassword(password),
       invoices: [],
       avatar: "",
     });
