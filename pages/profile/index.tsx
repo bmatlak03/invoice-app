@@ -13,6 +13,9 @@ const ProfilePage = ({ session }: any) => {
   const router = useRouter();
   const userEmail = session.user.email;
   const handleSignOut = () => signOut();
+  const handleChangeAvatar = () => {
+    console.log("changing avatar");
+  };
   const centeredBox = {
     display: "flex",
     height: "calc(100vh - 60px)",
@@ -40,8 +43,8 @@ const ProfilePage = ({ session }: any) => {
         <Box sx={boxStyles}>
           <GoBackBtn click={() => router.back()} />
           <Typography variant="h5">You are logged in as:</Typography>
+          <AvatarImg click={handleChangeAvatar} size="big" />
           <Typography variant="body1">{userEmail}</Typography>
-          <AvatarImg />
           <StyledButton type="red" onClick={handleSignOut}>
             Sign out
           </StyledButton>

@@ -1,14 +1,17 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { Avatar } from "@mui/material";
-import ProfilePicture from "../../assets/image-avatar.jpg";
-const AvatarImg: React.FC = () => {
-  const router = useRouter();
-  return (
-    <Avatar sx={{ cursor: "pointer" }} onClick={() => router.push("/profile")}>
-      <Image src={ProfilePicture} alt="username" />
-    </Avatar>
-  );
+
+type Props = {
+  size?: "big" | "small";
+  click: () => void;
+};
+
+const AvatarImg = ({ size = "small", click }: Props) => {
+  const avatarStyles = {
+    width: size === "big" ? 100 : 40,
+    height: size === "big" ? 100 : 40,
+    cursor: "pointer",
+  };
+  return <Avatar sx={avatarStyles} onClick={click}></Avatar>;
 };
 
 export default AvatarImg;

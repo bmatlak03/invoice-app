@@ -1,5 +1,6 @@
 import { Box, Divider, useTheme } from "@mui/material";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import AvatarImg from "../Avatar/Avatar";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import Logo from "../UI/Logo/Logo";
@@ -9,6 +10,7 @@ const Header: React.FC<{
 }> = ({ themeMode, changeTheme }) => {
   const theme = useTheme();
   const { status } = useSession();
+  const router = useRouter();
   const headerStyles = {
     display: "flex",
     justifyContent: "space-between",
@@ -31,7 +33,7 @@ const Header: React.FC<{
                 flexItem
                 sx={{ marginRight: 2, marginLeft: 2 }}
               />
-              <AvatarImg />
+              <AvatarImg click={() => router.push("/profile")} size="small" />
             </>
           )}
         </Box>
