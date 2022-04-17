@@ -11,6 +11,7 @@ const uiSlice = createSlice({
       message: "",
     },
     isDeleteConfirmOpen: false,
+    avatar: "",
   },
   reducers: {
     openForm(state) {
@@ -38,6 +39,9 @@ const uiSlice = createSlice({
     },
     hideNotification(state) {
       state.notification.isShow = false;
+    },
+    setAvatar(state, action) {
+      state.avatar = action.payload;
     },
   },
 });
