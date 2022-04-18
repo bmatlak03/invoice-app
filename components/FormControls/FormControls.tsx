@@ -5,7 +5,7 @@ import { uiActions } from "../../store/ui-slice";
 import { Box, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
 
-const FormControls: React.FC = ({}) => {
+const FormControls = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { isEditMode } = useSelector((state: RootState) => state.invoices);

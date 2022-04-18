@@ -4,10 +4,11 @@ import { useRouter } from "next/router";
 import AvatarImg from "../Avatar/Avatar";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import Logo from "../UI/Logo/Logo";
-const Header: React.FC<{
+type Props = {
   themeMode: PaletteMode;
   changeTheme: () => void;
-}> = ({ themeMode, changeTheme }) => {
+};
+const Header = ({ themeMode, changeTheme }: Props) => {
   const theme = useTheme();
   const { status } = useSession();
   const router = useRouter();

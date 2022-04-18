@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Box, useTheme } from "@mui/material";
 import LogoIMG from "../../../assets/logo.svg";
-const Logo: React.FC = () => {
+const Logo = () => {
   const theme = useTheme();
   const router = useRouter();
   const boxLogoStyles = {

@@ -35,7 +35,7 @@ type Props = {
   editingInvoice?: any;
 };
 
-const InvoiceForm: React.FC<Props> = ({ editingInvoice }) => {
+const InvoiceForm = ({ editingInvoice }: Props) => {
   const [items, setItems] = useState<Array<ItemsType>>([
     { name: "", quantity: 1, total: 0, price: 0, id: 0 },
   ]);

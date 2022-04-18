@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
 
-const FilterInvoices: React.FC = ({}) => {
+const FilterInvoices = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));

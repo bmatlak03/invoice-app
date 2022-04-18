@@ -16,13 +16,7 @@ type Props = {
   status: string;
   total: number;
 };
-const Invoice: React.FC<Props> = ({
-  id,
-  paymentDue,
-  clientName,
-  status,
-  total,
-}) => {
+const Invoice = ({ id, paymentDue, clientName, status, total }: Props) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const router = useRouter();
