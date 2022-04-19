@@ -32,42 +32,6 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
   };
   return transformedObject;
 };
-export const transformInvoiceItems = (items: []) => {
-  let transformedItems: ItemsType[] = [];
-  items.forEach((item: ItemsType) => {
-    let itemObject = {
-      name: "",
-      price: 0,
-      quantity: 0,
-      id: 0,
-      total: 0,
-    };
-    Object.defineProperties(itemObject, {
-      name: {
-        value: item.name,
-        writable: true,
-      },
-      price: {
-        value: item.price,
-        writable: true,
-      },
-      quantity: {
-        value: item.quantity,
-        writable: true,
-      },
-      id: {
-        value: item.id,
-        writable: true,
-      },
-      total: {
-        value: item.total,
-        writable: true,
-      },
-    });
-    transformedItems.push(itemObject);
-  });
-  return transformedItems;
-};
 export const createInvoiceData = (
   values: any,
   items: ItemsType[],

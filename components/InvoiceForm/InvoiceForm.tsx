@@ -7,7 +7,6 @@ import { RootState } from "../../store";
 import {
   createInvoiceData,
   createId,
-  transformInvoiceItems,
   transformInvoiceObject,
 } from "../../helpers/helpers";
 import { ItemsType } from "../../types/types";
@@ -102,8 +101,8 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
         for (const [field, value] of Object.entries(transformedInvoice)) {
           setFieldValue(field, value);
         }
-        const transformedItems = transformInvoiceItems(editingInvoice.items);
-        setItems(transformedItems);
+        console.log(editingInvoice.items);
+        setItems(editingInvoice.items);
       }
     }
   }, [editingInvoice, isEditMode, setFieldValue]);
@@ -123,30 +122,34 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
     id: number,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const newItems = [...items];
-    newItems[id].name = e.target.value;
+    const newItems = items.map((item) => {
+      if (item.id === id) return { ...item, name: e.target.value };
+      return item;
+    });
     setItems(newItems);
   };
   const changeItemQty = (
     id: number,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const newItems = [...items];
-    newItems[id].quantity = +e.target.value;
+    const newItems = items.map((item) => {
+      if (item.id === id) return { ...item, quantity: +e.target.value };
+      return item;
+    });
     setItems(newItems);
   };
   const changeItemPrice = (
     id: number,
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const newItems = [...items];
-    newItems[id].price = +e.target.value;
+    const newItems = items.map((item) => {
+      if (item.id === id) return { ...item, price: +e.target.value };
+      return item;
+    });
     setItems(newItems);
   };
   const deleteItemHandler = (id: number) => {
-    const itemsCopy = [...items];
-    const filteredItems = itemsCopy.filter((item) => item.id !== id);
-    setItems(filteredItems);
+    setItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
   const handleCloseForm = () => {
     dispatch(uiActions.closeForm());
