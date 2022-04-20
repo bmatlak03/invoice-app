@@ -67,24 +67,12 @@ const invoicesSlice = createSlice({
       state.fetchedInvoice.status = "paid";
     },
     filterInvoiceByStatus(state, action) {
-      switch (action.payload) {
-        case "any":
-          state.currentInvoices = state.invoices;
-          break;
-        case "pending":
-          state.currentInvoices = state.invoices.filter(
-            (invoice) => invoice.status === action.payload
-          );
-          break;
-        case "paid":
-          state.currentInvoices = state.invoices.filter(
-            (invoice) => invoice.status === action.payload
-          );
-        default:
-          state.currentInvoices = state.invoices.filter(
-            (invoice) => invoice.status === action.payload
-          );
-          break;
+      if (action.payload !== "any") {
+        state.currentInvoices = state.invoices.filter(
+          (invoice) => invoice.status === action.payload
+        );
+      } else {
+        state.currentInvoices = state.invoices;
       }
     },
   },
