@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/index";
+import { RootState } from "../../../../store/index";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import StyledButton from "../UI/StyledButton/StyledButton";
-import { invoicesActions } from "../../store/invoices-slice";
-import { uiActions } from "../../store/ui-slice";
+import StyledButton from "../../../UI/StyledButton/StyledButton";
+import { invoicesActions } from "../../../../store/invoices-slice";
+import { uiActions } from "../../../../store/ui-slice";
 type Props = {
   onDelete: () => void;
   onStatusChange: () => void;

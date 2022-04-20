@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editInvoiceData, sendInvoiceData } from "../../store/invoices-actions";
-import { invoicesActions } from "../../store/invoices-slice";
-import { uiActions } from "../../store/ui-slice";
-import { RootState } from "../../store";
+import {
+  editInvoiceData,
+  sendInvoiceData,
+} from "../../../../store/invoices-actions";
+import { invoicesActions } from "../../../../store/invoices-slice";
+import { uiActions } from "../../../../store/ui-slice";
+import { RootState } from "../../../../store";
 import {
   createInvoiceData,
   createId,
   transformInvoiceObject,
-} from "../../helpers/helpers";
-import { InvoiceType, ItemsType } from "../../types/types";
+} from "../../../../helpers/helpers";
+import { InvoiceType, ItemsType } from "../../../../types/types";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import {
@@ -26,10 +29,10 @@ import {
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
 import { DatePicker } from "@mui/lab";
-import FormControls from "../FormControls/FormControls";
-import Input from "../UI/Input/Input";
-import StyledButton from "../UI/StyledButton/StyledButton";
-import GoBackBtn from "../UI/GoBackBtn/GoBackBtn";
+import FormControls from "../../../FormControls/FormControls";
+import Input from "../../../UI/Input/Input";
+import StyledButton from "../../../UI/StyledButton/StyledButton";
+import GoBackBtn from "../../../UI/GoBackBtn/GoBackBtn";
 type Props = {
   editingInvoice?: InvoiceType;
 };

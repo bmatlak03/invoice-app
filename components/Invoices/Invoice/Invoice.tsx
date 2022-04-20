@@ -8,7 +8,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
-import InvoiceStatus from "../../InvoiceStatus/InvoiceStatus";
+import InvoiceStatus from "./InvoiceStatus/InvoiceStatus";
 type Props = {
   id: string;
   paymentDue: string;

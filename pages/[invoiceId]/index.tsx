@@ -6,7 +6,7 @@ import { invoicesActions } from "../../store/invoices-slice";
 import { getSession } from "next-auth/react";
 import { InvoiceType } from "../../types/types";
 import { connectToDatabase } from "../../lib/libs";
-import InvoiceDetails from "../../components/InvoiceDetails/InvoiceDetails";
+import InvoiceDetails from "../../components/Invoices/Invoice/InvoiceDetails/InvoiceDetails";
 type Props = {
   invoiceData: InvoiceType;
 };

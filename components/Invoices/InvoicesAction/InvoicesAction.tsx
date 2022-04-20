@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "../../../store";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-import FilterInoices from "../FilterInvoices/FilterInvoices";
-import StyledButton from "../UI/StyledButton/StyledButton";
-import { uiActions } from "../../store/ui-slice";
+import FilterInoices from "../../FilterInvoices/FilterInvoices";
+import StyledButton from "../../UI/StyledButton/StyledButton";
+import { uiActions } from "../../../store/ui-slice";
 
 const InvoicesAction = ({}) => {
   const invoicesLength = useSelector(
