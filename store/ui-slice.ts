@@ -1,18 +1,32 @@
+import { AlertColor } from "@mui/material";
 import { createSlice } from "@reduxjs/toolkit";
 
+interface UiSlice {
+  isFormOpen: boolean;
+  isFilterOpen: boolean;
+  notification: {
+    isShow: boolean;
+    type: AlertColor;
+    message: string;
+  };
+  isDeleteConfirmOpen: boolean;
+  avatar: string;
+}
+
+const initialState: UiSlice = {
+  isFormOpen: false,
+  isFilterOpen: false,
+  notification: {
+    isShow: false,
+    type: "success",
+    message: "",
+  },
+  isDeleteConfirmOpen: false,
+  avatar: "",
+};
 const uiSlice = createSlice({
   name: "ui",
-  initialState: {
-    isFormOpen: false,
-    isFilterOpen: false,
-    notification: {
-      isShow: false,
-      type: "",
-      message: "",
-    },
-    isDeleteConfirmOpen: false,
-    avatar: "",
-  },
+  initialState,
   reducers: {
     openForm(state) {
       state.isFormOpen = true;
