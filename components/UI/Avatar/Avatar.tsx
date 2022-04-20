@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "../../../store";
 import { Avatar } from "@mui/material";
 
 type Props = {

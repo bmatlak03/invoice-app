@@ -6,7 +6,7 @@ import { signOut, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
-import AvatarImg from "../../components/Avatar/Avatar";
+import AvatarImg from "../../components/UI/Avatar/Avatar";
 import GoBackBtn from "../../components/UI/GoBackBtn/GoBackBtn";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import { useDispatch } from "react-redux";

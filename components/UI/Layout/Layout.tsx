@@ -9,7 +9,7 @@ import {
   Box,
   useMediaQuery,
 } from "@mui/material";
-import Header from "../../Header/Header";
+import Header from "../Header/Header";
 import Notification from "../Notification/Notification";
 const Layout: React.FC = ({ children }) => {
   const [themeMode, setThemeMode] = useState<PaletteMode>("light");

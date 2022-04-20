@@ -2,8 +2,8 @@ import { Box, Divider, PaletteMode, useTheme } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import AvatarImg from "../Avatar/Avatar";
-import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
-import Logo from "../UI/Logo/Logo";
+import ThemeSwitcher from "../../ThemeSwitcher/ThemeSwitcher";
+import Logo from "../Logo/Logo";
 type Props = {
   themeMode: PaletteMode;
   changeTheme: () => void;
