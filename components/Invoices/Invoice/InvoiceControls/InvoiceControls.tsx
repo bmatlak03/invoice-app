@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store/index";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
@@ -16,10 +17,10 @@ const InvoiceControls = (props: Props) => {
   const { status } = useSelector(
     (state: RootState) => state.invoices.fetchedInvoice
   );
-  const editInvoiceHandler = () => {
+  const editInvoiceHandler = useCallback(() => {
     dispatch(invoicesActions.editInvoice());
     dispatch(uiActions.openForm());
-  };
+  }, [dispatch]);
   return (
     <Box
       sx={{
