@@ -4,9 +4,9 @@ import AvatarEditor from "react-avatar-editor";
 import { Box, Modal, Typography, useTheme } from "@mui/material";
 import StyledButton from "../UI/StyledButton/StyledButton";
 type Props = {
-  file: any;
+  file: Blob;
   close: () => void;
-  onSubmit: any;
+  onSubmit: (...args: Blob[]) => Promise<void>;
   crop: boolean;
   header: string;
 };
@@ -18,23 +18,25 @@ const ImageUpload = ({
   header = "Send This Image?",
 }: Props) => {
   const [imageSrc, setImageSrc] = useState("");
-  const cropRef: any = useRef();
+  const cropRef = useRef<AvatarEditor>(null);
+  console.log(cropRef);
   const theme = useTheme();
 
   useEffect(() => {
-    const fr: any = new FileReader();
+    const fr: FileReader = new FileReader();
     fr.onload = () => {
-      const base64data = fr.result;
+      const base64data = fr.result as string;
       setImageSrc(base64data);
     };
     fr.readAsDataURL(file);
   }, [file]);
   const handleUpload = () => {
     if (crop && cropRef) {
-      const canvas = cropRef.current.getImageScaledToCanvas().toDataURL();
+      const canvas = cropRef?.current?.getImageScaledToCanvas().toDataURL();
+      if (!canvas) throw new Error("Adding avatar went wrong");
       fetch(canvas)
         .then((res) => res.blob())
-        .then((blob) => onSubmit(blob));
+        .then((blob: Blob) => onSubmit(blob));
     } else {
       onSubmit();
     }

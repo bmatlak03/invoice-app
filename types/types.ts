@@ -30,3 +30,18 @@ export interface InvoiceType {
 
   total: number;
 }
+export interface FormValues {
+  streetAddress: string;
+  city: string;
+  postCode: string;
+  country: string;
+  clientName: string;
+  clientEmail: string;
+  clientCity: string;
+  clientStreetAddress: string;
+  clientPostCode: string;
+  clientCountry: string;
+  date: Date;
+  paymentTerms: number;
+  projectDescription: string;
+}

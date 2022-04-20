@@ -1,6 +1,6 @@
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert, AlertColor, AlertTitle } from "@mui/material";
 type Props = {
-  type: any;
+  type: AlertColor;
   message: string;
 };
 

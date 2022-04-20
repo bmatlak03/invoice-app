@@ -1,5 +1,5 @@
 import Router from "next/router";
-import { signIn } from "next-auth/react";
+import { signIn, SignInResponse } from "next-auth/react";
 import { hideNotification } from "../helpers/helpers";
 import { uiActions } from "./ui-slice";
 import { AppDispatch } from ".";
@@ -9,13 +9,13 @@ const headers = {
 export const signInUser = (email: string, password: string) => {
   return async (dispatch: AppDispatch) => {
     const sendRequest = async () => {
-      const status: any = await signIn("credentials", {
+      const response: SignInResponse | undefined = await signIn("credentials", {
         redirect: false,
         email: email,
         password: password,
       });
-      if (status.error) {
-        throw new Error(status.error);
+      if (response!.error) {
+        throw new Error(response!.error);
       }
     };
     try {
@@ -28,11 +28,11 @@ export const signInUser = (email: string, password: string) => {
       );
       Router.replace("/");
       hideNotification(dispatch);
-    } catch (error: any) {
+    } catch ({ message }) {
       dispatch(
         uiActions.showNotification({
           type: "error",
-          message: error.message,
+          message: message,
         })
       );
       hideNotification(dispatch);

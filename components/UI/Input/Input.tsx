@@ -5,7 +5,7 @@ type Props = {
   label: string;
   fullWidth?: boolean;
   value: string | number;
-  change?: any;
+  change?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name?: string;
   type?: string;
   inputProps?: object;

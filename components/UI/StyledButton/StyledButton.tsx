@@ -1,15 +1,22 @@
-import { Button, Box, useTheme } from "@mui/material";
+import { Button, Box, useTheme, AlertColor } from "@mui/material";
 import { Add } from "@mui/icons-material";
 type Props = {
-  type?: string;
+  type?: string | AlertColor;
   onClick?: () => void;
   customStyles?: object;
-  role?: any;
+  role?: "submit" | "button";
   disabled?: boolean;
 };
 
 const StyledButton: React.FC<Props> = (props) => {
-  const { children, type, onClick, customStyles, role, disabled } = props;
+  const {
+    children,
+    type,
+    onClick,
+    customStyles,
+    role = "button",
+    disabled,
+  } = props;
   const theme = useTheme();
   const StartIcon =
     type === "add" ? (
@@ -61,7 +68,7 @@ const StyledButton: React.FC<Props> = (props) => {
       variant="outlined"
       sx={buttonStyles}
       startIcon={StartIcon}
-      type={role ? role : "button"}
+      type={role}
       disabled={disabled}
     >
       {children}

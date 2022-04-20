@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { useRef, useState } from "react";
+import { Session } from "next-auth";
 import { signOut, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
@@ -10,15 +11,17 @@ import GoBackBtn from "../../components/UI/GoBackBtn/GoBackBtn";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import { useDispatch } from "react-redux";
 import { sendAvatar } from "../../store/ui-actions";
-
-const ProfilePage = ({ session }: any) => {
-  const [image, setImage] = useState<any>();
+type Props = {
+  session: Session;
+};
+const ProfilePage = ({ session }: Props) => {
+  const [image, setImage] = useState<Blob | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const router = useRouter();
   const dispatch = useDispatch();
-  const userEmail = session.user.email;
+  const userEmail = session!.user!.email;
   const handleSignOut = () => signOut();
   const handleChangeAvatar = () => {
     const input = inputRef.current;
@@ -31,10 +34,9 @@ const ProfilePage = ({ session }: any) => {
     setImage(file);
   };
   const handleSubmitImage = async (croppedImage: Blob) => {
-    const fr: any = new FileReader();
+    const fr: FileReader = new FileReader();
     fr.onload = () => {
-      const base64data = fr.result;
-      console.log("dispatching");
+      const base64data = fr.result as string;
       dispatch(sendAvatar(base64data));
       setImage(null);
     };
@@ -46,7 +48,7 @@ const ProfilePage = ({ session }: any) => {
     justifyContent: "center",
     alignItems: "center",
   };
-  const boxStyles: {} = {
+  const boxStyles = {
     display: "flex",
     flexDirection: "column",
     borderRadius: "10px",

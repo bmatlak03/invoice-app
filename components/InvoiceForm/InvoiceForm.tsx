@@ -9,7 +9,7 @@ import {
   createId,
   transformInvoiceObject,
 } from "../../helpers/helpers";
-import { ItemsType } from "../../types/types";
+import { InvoiceType, ItemsType } from "../../types/types";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import {
@@ -31,7 +31,7 @@ import Input from "../UI/Input/Input";
 import StyledButton from "../UI/StyledButton/StyledButton";
 import GoBackBtn from "../UI/GoBackBtn/GoBackBtn";
 type Props = {
-  editingInvoice?: any;
+  editingInvoice?: InvoiceType;
 };
 
 const InvoiceForm = ({ editingInvoice }: Props) => {
@@ -58,7 +58,9 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
       ) {
         return alert("You must add at least 1 item!");
       } else {
-        const invoiceId = isEditMode ? editingInvoice.id : createId();
+        const invoiceId = (
+          isEditMode ? editingInvoice?.id : createId()
+        ) as string;
         const invoiceStatus = isDraftMode
           ? "draft"
           : !editingInvoice
@@ -95,13 +97,12 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
   const { setFieldValue } = formik;
 
   useEffect(() => {
-    if (isEditMode) {
+    if (isEditMode && editingInvoice) {
       const transformedInvoice = transformInvoiceObject(editingInvoice);
       if (transformedInvoice) {
         for (const [field, value] of Object.entries(transformedInvoice)) {
           setFieldValue(field, value);
         }
-        console.log(editingInvoice.items);
         setItems(editingInvoice.items);
       }
     }

@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { InvoiceType, ItemsType } from "./../types/types";
+import { FormValues, InvoiceType, ItemsType } from "./../types/types";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
 export const hideNotification = (dispatch: AppDispatch) => {
@@ -33,7 +33,7 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
   return transformedObject;
 };
 export const createInvoiceData = (
-  values: any,
+  values: FormValues,
   items: ItemsType[],
   status: "paid" | "draft" | "pending",
   id: string

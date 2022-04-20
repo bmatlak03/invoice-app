@@ -4,7 +4,7 @@ import { uiActions } from "./ui-slice";
 const headers = {
   "Content-Type": "application/json",
 };
-export const sendAvatar = (image: any) => {
+export const sendAvatar = (image: string) => {
   return async (dispatch: AppDispatch) => {
     const sendRequest = async () => {
       console.log("sending avatar");
@@ -27,11 +27,11 @@ export const sendAvatar = (image: any) => {
       );
       dispatch(uiActions.setAvatar(image));
       hideNotification(dispatch);
-    } catch (error: any) {
+    } catch ({ message }) {
       dispatch(
         uiActions.showNotification({
           type: "error",
-          message: error.message,
+          message,
         })
       );
       hideNotification(dispatch);
