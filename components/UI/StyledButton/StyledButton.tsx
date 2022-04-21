@@ -46,7 +46,7 @@ const StyledButton: React.FC<Props> = (props) => {
     }
   };
 
-  let buttonStyles: {} = {
+  const buttonStyles: {} = {
     minWidth: "100px",
     padding: 1,
     backgroundColor: checkBackgroundColor(),

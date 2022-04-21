@@ -44,7 +44,7 @@ export const createInvoiceData = (
     item.total = item.quantity * item.price;
     totalPrice += item.total;
   });
-  let paymentDueTransformed = new Date();
+  const paymentDueTransformed = new Date();
   paymentDueTransformed.setDate(values.date.getDate() + values.paymentTerms);
   const newInvoiceData: InvoiceType = {
     status: status,
