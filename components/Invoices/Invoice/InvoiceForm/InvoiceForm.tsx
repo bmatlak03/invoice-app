@@ -61,9 +61,10 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
       ) {
         return alert("You must add at least 1 item!");
       } else {
-        const invoiceId = (
-          isEditMode ? editingInvoice?.id : createId()
-        ) as string;
+        const invoiceId = isEditMode ? editingInvoice?.id : createId();
+        if (invoiceId === undefined) {
+          throw new Error("Something went wrong with invoice ID");
+        }
         const invoiceStatus = isDraftMode
           ? "draft"
           : !editingInvoice
