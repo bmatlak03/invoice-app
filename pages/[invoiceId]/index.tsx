@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
   const client = await connectToDatabase();
-  const id = context?.params?.invoiceId as string;
+  const id = context?.params?.invoiceId;
   const db = client.db();
 
   const user = await db
