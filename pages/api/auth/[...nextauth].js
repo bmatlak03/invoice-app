@@ -5,12 +5,17 @@ import { connectToDatabase } from "../../../lib/libs";
 export default NextAuth({
   session: {
     strategy: "jwt",
+    jwt: true,
   },
   jwt: {
     secret: process.env.SECRET,
   },
   providers: [
     CredentialsProvider({
+      pages: {
+        signIn: "/auth/credentials",
+        signUp: "/auth/signup",
+      },
       async authorize(credentials) {
         const client = await connectToDatabase();
 
