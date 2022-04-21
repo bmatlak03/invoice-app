@@ -2,9 +2,7 @@ import { MongoClient } from "mongodb";
 import { hash } from "bcryptjs";
 
 export const connectToDatabase = async () => {
-  const client = await MongoClient.connect(
-    `${process.env.REACT_APP_MONGODB_URL}`
-  );
+  const client = await MongoClient.connect(`${process.env.MONGODB_URL}`);
 
   return client;
 };

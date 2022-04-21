@@ -8,14 +8,11 @@ export default NextAuth({
     jwt: true,
   },
   jwt: {
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
   },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
-      pages: {
-        signIn: "/auth",
-        signUp: "/auth",
-      },
       async authorize(credentials) {
         const client = await connectToDatabase();
 
