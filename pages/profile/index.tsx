@@ -36,7 +36,10 @@ const ProfilePage = ({ session }: Props) => {
   const handleSubmitImage = async (croppedImage: Blob) => {
     const fr: FileReader = new FileReader();
     fr.onload = () => {
-      const base64data = fr.result as string;
+      const base64data = fr.result;
+      if (typeof base64data !== "string") {
+        throw new Error("Something went wrong with loading image");
+      }
       dispatch(sendAvatar(base64data));
       setImage(null);
     };

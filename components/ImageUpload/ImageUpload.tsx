@@ -25,7 +25,10 @@ const ImageUpload = ({
   useEffect(() => {
     const fr: FileReader = new FileReader();
     fr.onload = () => {
-      const base64data = fr.result as string;
+      const base64data = fr.result;
+      if (typeof base64data !== "string") {
+        throw new Error("Something went wrong with loading image");
+      }
       setImageSrc(base64data);
     };
     fr.readAsDataURL(file);
