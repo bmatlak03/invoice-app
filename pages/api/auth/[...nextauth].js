@@ -13,8 +13,8 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       pages: {
-        signIn: "/auth/credentials",
-        signUp: "/auth/signup",
+        signIn: "/auth",
+        signUp: "/auth",
       },
       async authorize(credentials) {
         const client = await connectToDatabase();
