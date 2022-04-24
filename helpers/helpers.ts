@@ -7,19 +7,16 @@ import {
 } from "./../types/types";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
+
 export const hideNotification = (dispatch: AppDispatch) => {
   const notificationTime = 3000;
   setTimeout(() => {
     dispatch(uiActions.hideNotification());
   }, notificationTime);
 };
+
 export const transformInvoiceObject = (invoice: InvoiceType) => {
-  const senderAddress = {
-    streetAddress: invoice.senderAddress.street,
-    city: invoice.senderAddress.city,
-    postCode: invoice.senderAddress.postCode,
-    country: invoice.senderAddress.country,
-  };
+  const { senderAddress } = invoice;
   const clientAddress = {
     clientCity: invoice.clientAddress.city,
     clientStreetAddress: invoice.clientAddress.street,
@@ -37,18 +34,17 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
   };
   return transformedObject;
 };
+
 export const createInvoiceData = (
   values: FormValues,
   items: ItemsType[],
   status: InvoiceStatusType,
   id: string
 ) => {
-  let totalPrice = 0;
-  const itemsCopy = [...items];
-  console.log(itemsCopy);
-  itemsCopy.forEach((item) => {
-    totalPrice += item.total;
-  });
+  const totalPrice = items.reduce(
+    (partialSum, currentValue) => partialSum + currentValue.total,
+    0
+  );
   const paymentDueTransformed = new Date();
   paymentDueTransformed.setDate(values.date.getDate() + values.paymentTerms);
   const newInvoiceData: InvoiceType = {
@@ -72,21 +68,24 @@ export const createInvoiceData = (
     createdAt: values.date.toDateString(),
     paymentDue: paymentDueTransformed.toDateString(),
     id: id,
-    items: itemsCopy,
+    items: items,
     total: totalPrice,
   };
   return newInvoiceData;
 };
+
 export const createId = () => {
   const id = nanoid(5);
   return id;
 };
+
 export const validateItems = (items: ItemsType[]) => {
   const isInvalid = items.some((item) => {
     item.total <= 0 || item.name === "";
   });
   return isInvalid;
 };
+
 export const checkInvoiceStatus = (
   status: InvoiceStatusType | undefined,
   draftMode: boolean
