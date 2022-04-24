@@ -81,20 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      fetchedInvoices: invoices.map((invoice: InvoiceType) => ({
-        id: invoice.id,
-        createdAt: invoice.createdAt,
-        paymentDue: invoice.paymentDue,
-        description: invoice.description,
-        paymentTerms: invoice.paymentTerms,
-        clientName: invoice.clientName,
-        clientEmail: invoice.clientEmail,
-        status: invoice.status,
-        senderAddress: invoice.senderAddress,
-        clientAddress: invoice.clientAddress,
-        items: invoice.items,
-        total: invoice.total,
-      })),
+      fetchedInvoices: invoices,
       avatar: avatar,
     },
   };
