@@ -45,8 +45,8 @@ export const createInvoiceData = (
 ) => {
   let totalPrice = 0;
   const itemsCopy = [...items];
+  console.log(itemsCopy);
   itemsCopy.forEach((item) => {
-    item.total = item.quantity * item.price;
     totalPrice += item.total;
   });
   const paymentDueTransformed = new Date();
