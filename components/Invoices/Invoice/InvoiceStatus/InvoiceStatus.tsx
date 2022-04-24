@@ -1,6 +1,7 @@
+import { InvoiceStatusType } from "../../../../types/types";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 type Props = {
-  status: string;
+  status: InvoiceStatusType;
 };
 
 const InvoiceStatus = ({ status }: Props) => {

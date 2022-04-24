@@ -11,8 +11,14 @@ import {
   createInvoiceData,
   createId,
   transformInvoiceObject,
+  validateItems,
+  checkInvoiceStatus,
 } from "../../../../helpers/helpers";
-import { InvoiceType, ItemsType } from "../../../../types/types";
+import {
+  InvoiceStatusType,
+  InvoiceType,
+  ItemsType,
+} from "../../../../types/types";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import {
@@ -60,41 +66,37 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
         editingInvoice?.status !== "draft"
       ) {
         return alert("You must add at least 1 item!");
-      } else {
-        const invoiceId = isEditMode ? editingInvoice?.id : createId();
-        if (!invoiceId) {
-          throw new Error("Something went wrong with invoice ID");
-        }
-        const invoiceStatus = isDraftMode
-          ? "draft"
-          : !editingInvoice
-          ? "pending"
-          : editingInvoice.status;
-        const invoiceData = createInvoiceData(
-          values,
-          items,
-          invoiceStatus,
-          invoiceId
-        );
-        const isItemInvalid = invoiceData.items.some((item) => {
-          item.total <= 0 || item.name === "";
-        });
-        let validate;
-        if (!editingInvoice) validate = isItemInvalid && !isDraftMode;
-        else if (editingInvoice) {
-          if (editingInvoice.status !== "draft") {
-            validate = isItemInvalid && !isDraftMode;
-          } else {
-            validate = false;
-          }
-        }
-        if (validate) {
-          return alert("Item's input can't be empty");
-        } else if (isEditMode) {
-          dispatch(editInvoiceData(invoiceData));
+      }
+      const invoiceId = isEditMode ? editingInvoice?.id : createId();
+      if (!invoiceId) {
+        throw new Error("Something went wrong with invoice ID");
+      }
+      const invoiceStatus = checkInvoiceStatus(
+        editingInvoice?.status,
+        isDraftMode
+      );
+      const invoiceData = createInvoiceData(
+        values,
+        items,
+        invoiceStatus,
+        invoiceId
+      );
+      const isItemInvalid = validateItems(invoiceData.items);
+      let validate;
+      if (!editingInvoice) validate = isItemInvalid && !isDraftMode;
+      else if (editingInvoice) {
+        if (editingInvoice.status !== "draft") {
+          validate = isItemInvalid && !isDraftMode;
         } else {
-          dispatch(sendInvoiceData(invoiceData));
+          validate = false;
         }
+      }
+      if (validate) {
+        return alert("Item's input can't be empty");
+      } else if (isEditMode) {
+        dispatch(editInvoiceData(invoiceData));
+      } else {
+        dispatch(sendInvoiceData(invoiceData));
       }
     },
   });

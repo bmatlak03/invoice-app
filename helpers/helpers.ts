@@ -1,5 +1,10 @@
 import { nanoid } from "nanoid";
-import { FormValues, InvoiceType, ItemsType } from "./../types/types";
+import {
+  FormValues,
+  InvoiceStatusType,
+  InvoiceType,
+  ItemsType,
+} from "./../types/types";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
 export const hideNotification = (dispatch: AppDispatch) => {
@@ -35,7 +40,7 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
 export const createInvoiceData = (
   values: FormValues,
   items: ItemsType[],
-  status: "paid" | "draft" | "pending",
+  status: InvoiceStatusType,
   id: string
 ) => {
   let totalPrice = 0;
@@ -75,4 +80,18 @@ export const createInvoiceData = (
 export const createId = () => {
   const id = nanoid(5);
   return id;
+};
+export const validateItems = (items: ItemsType[]) => {
+  const isInvalid = items.some((item) => {
+    item.total <= 0 || item.name === "";
+  });
+  return isInvalid;
+};
+export const checkInvoiceStatus = (
+  status: InvoiceStatusType | undefined,
+  draftMode: boolean
+) => {
+  if (draftMode) return "draft";
+  else if (!status) return "pending";
+  else return status;
 };

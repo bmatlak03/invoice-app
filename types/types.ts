@@ -5,9 +5,10 @@ export interface ItemsType {
   total: number;
   id: number;
 }
+export type InvoiceStatusType = "paid" | "pending" | "draft";
 export interface InvoiceType {
   id: string;
-  status: "paid" | "pending" | "draft";
+  status: InvoiceStatusType;
   clientName: string;
   clientEmail: string;
   clientAddress: {
