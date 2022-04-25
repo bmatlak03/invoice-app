@@ -140,7 +140,12 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newItems = items.map((item) => {
-      if (item.id === id) return { ...item, quantity: +e.target.value };
+      if (item.id === id)
+        return {
+          ...item,
+          quantity: +e.target.value,
+          total: item.price * +e.target.value,
+        };
       return item;
     });
     setItems(newItems);
@@ -150,7 +155,12 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newItems = items.map((item) => {
-      if (item.id === id) return { ...item, price: +e.target.value };
+      if (item.id === id)
+        return {
+          ...item,
+          price: +e.target.value,
+          total: item.quantity * +e.target.value,
+        };
       return item;
     });
     setItems(newItems);
