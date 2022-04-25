@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { InvoiceStatusType } from "../../../types/types";
 import {
   Card,
   CardActionArea,
@@ -13,7 +14,7 @@ type Props = {
   id: string;
   paymentDue: string;
   clientName: string;
-  status: string;
+  status: InvoiceStatusType;
   total: number;
 };
 const Invoice = ({ id, paymentDue, clientName, status, total }: Props) => {
