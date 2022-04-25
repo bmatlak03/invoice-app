@@ -19,7 +19,6 @@ const ImageUpload = ({
 }: Props) => {
   const [imageSrc, setImageSrc] = useState("");
   const cropRef = useRef<AvatarEditor>(null);
-  console.log(cropRef);
   const theme = useTheme();
 
   useEffect(() => {
