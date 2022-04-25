@@ -34,7 +34,9 @@ After successful installation:
 
 <img src="https://img001.prntscr.com/file/img001/St3-UG1uS6mNdLF0p91gFA.png" alt="InvoiceApp_Desktop" width="50%"> <img src="https://img001.prntscr.com/file/img001/Qi6qkwnNR3i3Bo0oMv_Y5g.png" alt="InvoiceApp_Desktop" width="50%">
 <img src="https://img001.prntscr.com/file/img001/3vsPESKmTvGiXOOj8kqtdw.png" alt="InvoiceApp_Desktop" width="50%">
+
 **Mobile**
+
 <img src="https://img001.prntscr.com/file/img001/VLw9dgtLT2monnwPXNmP6g.png" alt="InvoiceApp_Mobile" width="25%"> <img src="  
 https://img001.prntscr.com/file/img001/7Czreoj-Qpi8cJoGkR7t_w.png" alt="InvoiceApp_Mobile" width="25%"> <img src="https://img001.prntscr.com/file/img001/-NWep2uvS9Csm48iZ56ieg.png" alt="InvoiceApp_Mobile" width="25%">
 
