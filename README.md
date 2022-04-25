@@ -1,34 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧾 Invoice APP 🧾
 
-## Getting Started
+This application enables us to create and manage our invoices. I decided to use NextJS due to few useful features, which give us this framework. For example:
 
-First, run the development server:
+- easy communication with backend
+- automatic rounting
+- server-side rendering
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+I also decided to use Material UI, because in my opinion It's one of the most powerful React library for creating UI.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalation
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+To run this application you need to install [NodeJS](https://nodejs.org)
+After successful installation:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. [Download project as ZIP](https://github.com/bmatlak03/invoice-app/archive/refs/heads/main.zip) or if you want to clone the repository into a directory run command `git clone https://github.com/bmatlak03/invoice-app.git <folderName> `
+2. After that run command `npm install` to install necessary dependencies
+3. Run command `npm run dev`
+4. Go to https://localhost:3000
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Tech stack
 
-## Learn More
+<a href="https://nextjs.org/" title="Next.js"><img src="https://github.com/get-icon/geticon/raw/master/icons/nextjs-icon.svg" alt="Next.js" width="50px" height="50px"></a> <a href="https://reactjs.org/" title="React"><img src="https://github.com/get-icon/geticon/raw/master/icons/react.svg" alt="React" width="50px" height="50px"></a> <a href="https://www.typescriptlang.org/" title="Typescript"><img src="https://github.com/get-icon/geticon/raw/master/icons/typescript-icon.svg" alt="Typescript" width="50px" height="50px"></a> <a href="https://redux.js.org/" title="Redux"><img src="https://github.com/get-icon/geticon/raw/master/icons/redux.svg" alt="Redux" width="50px" height="50px"></a> <a href="https://material-ui.com/" title="Material UI"><img src="https://github.com/get-icon/geticon/raw/master/icons/material-ui.svg" alt="Material UI" width="50px" height="50px"></a>  
+**Database & Authentication**
+<a href="https://www.mongodb.org/" title="MongoDB"><img src="https://github.com/get-icon/geticon/raw/master/icons/mongodb-icon.svg" alt="MongoDB" width="50px" height="50px"></a> <a href="https://next-auth.js.org/" title="NextAuth"><img src="https://next-auth.js.org/img/logo/logo-sm.png" alt="NextAuth.js" width="50px" height="50px"></a>
 
-To learn more about Next.js, take a look at the following resources:
+## Live
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<a href="https://invoice-app-bmatlak03.vercel.app/" title="Live Vercel"><img src="https://cdn.worldvectorlogo.com/logos/vercel.svg" alt="Vercel" width="100px"></a>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Screenshots
 
-## Deploy on Vercel
+**Desktop**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<img src="https://img001.prntscr.com/file/img001/St3-UG1uS6mNdLF0p91gFA.png" alt="InvoiceApp_Desktop" width="50%"> <img src="https://img001.prntscr.com/file/img001/Qi6qkwnNR3i3Bo0oMv_Y5g.png" alt="InvoiceApp_Desktop" width="50%">
+<img src="https://img001.prntscr.com/file/img001/3vsPESKmTvGiXOOj8kqtdw.png" alt="InvoiceApp_Desktop" width="50%">
+**Mobile**
+<img src="https://img001.prntscr.com/file/img001/VLw9dgtLT2monnwPXNmP6g.png" alt="InvoiceApp_Mobile" width="25%"> <img src="  
+https://img001.prntscr.com/file/img001/7Czreoj-Qpi8cJoGkR7t_w.png" alt="InvoiceApp_Mobile" width="25%"> <img src="https://img001.prntscr.com/file/img001/-NWep2uvS9Csm48iZ56ieg.png" alt="InvoiceApp_Mobile" width="25%">
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Inspiration
+
+My inspiration was one of challange on [Frontend Mentor](https://www.frontendmentor.io/) [Invoice App](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl)
