@@ -41,6 +41,12 @@ After successful installation:
 
 <img src="https://img001.prntscr.com/file/img001/VLw9dgtLT2monnwPXNmP6g.png" alt="InvoiceApp_Mobile" width="25%"> <img src="https://img001.prntscr.com/file/img001/7Czreoj-Qpi8cJoGkR7t_w.png" alt="InvoiceApp_Mobile" width="25%"> <img src="https://img001.prntscr.com/file/img001/-NWep2uvS9Csm48iZ56ieg.png" alt="InvoiceApp_Mobile" width="25%">
 
+## Credentials 💳
+
+For testing purposes you can use following credentials:
+**Email**: guest@guest.com
+**Password**: guest123
+
 ## Inspiration
 
 My inspiration was one of challange on [Frontend Mentor](https://www.frontendmentor.io/) [Invoice App](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl)
