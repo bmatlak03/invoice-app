@@ -18,7 +18,7 @@ const FilterInvoices = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const [selectedFilter, setSelectedFilter] = useState<string>("");
+  const [selectedFilter, setSelectedFilter] = useState("");
   const { isFilterOpen } = useSelector((state: RootState) => state.ui);
   const changeStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
