@@ -23,10 +23,10 @@ const FilterInvoices = () => {
   const changeStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setSelectedFilter(e.target.value);
-      dispatch(invoicesActions.filterInvoiceByStatus(e.target.value));
+      dispatch(invoicesActions.setFilter(e.target.value));
     } else {
       setSelectedFilter("");
-      dispatch(invoicesActions.filterInvoiceByStatus("any"));
+      dispatch(invoicesActions.setFilter(""));
     }
   };
   const filterBtnStyles = {

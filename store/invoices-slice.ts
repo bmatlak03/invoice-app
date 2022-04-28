@@ -2,14 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { InvoiceType } from "../types/types";
 
 interface SliceState {
-  invoices: InvoiceType[];
   currentInvoices: InvoiceType[];
   fetchedInvoice: InvoiceType;
   isDraftMode: boolean;
   isEditMode: boolean;
+  filter: string;
 }
 const initialState: SliceState = {
-  invoices: [],
   currentInvoices: [],
   fetchedInvoice: {
     id: "",
@@ -27,27 +26,23 @@ const initialState: SliceState = {
   },
   isDraftMode: false,
   isEditMode: false,
+  filter: "",
 };
 const invoicesSlice = createSlice({
   name: "invoices",
   initialState,
   reducers: {
     createNewInvoice(state, action) {
-      state.invoices.push(action.payload);
       state.currentInvoices.push(action.payload);
     },
     insertFetchedInvoices(state, action) {
-      state.invoices = action.payload;
       state.currentInvoices = action.payload;
     },
     insertFetchedInvoice(state, action) {
       state.fetchedInvoice = action.payload;
     },
     deleteInvoice(state, action) {
-      state.invoices = state.invoices.filter(
-        (invoice) => invoice.id !== action.payload
-      );
-      state.currentInvoices = state.invoices.filter(
+      state.currentInvoices = state.currentInvoices.filter(
         (invoice) => invoice.id !== action.payload
       );
     },
@@ -66,14 +61,8 @@ const invoicesSlice = createSlice({
     changeInvoiceStatus(state) {
       state.fetchedInvoice.status = "paid";
     },
-    filterInvoiceByStatus(state, action) {
-      if (action.payload !== "any") {
-        state.currentInvoices = state.invoices.filter(
-          (invoice) => invoice.status === action.payload
-        );
-      } else {
-        state.currentInvoices = state.invoices;
-      }
+    setFilter(state, action) {
+      state.filter = action.payload;
     },
   },
 });
