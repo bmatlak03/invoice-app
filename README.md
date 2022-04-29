@@ -11,7 +11,8 @@ I also decided to use Material UI, because in my opinion It's one of the most po
 <details>
  <summary><b>What I have learned by making this project:</b></summary>
 <br>
- What I have learned:
+ 
+What I have learned:
  - Why we should use Typescript in our future projects
  - How to use types and interfaces
  - Why we shouldn't use "any" type
