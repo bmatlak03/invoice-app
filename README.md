@@ -8,6 +8,19 @@ This application enables us to create and manage our invoices. I decided to use 
 
 I also decided to use Material UI, because in my opinion It's one of the most powerful React library for creating UI.
 
+<details>
+ <summary><b>What I have learned by making this project:</b></summary>
+<br>
+ - Why we should use Typescript in our future projects
+ - How to use types and interfaces
+ - Why we shouldn't use "any" type
+ - Better understanding how front-end communicates with back-end
+ - [NextJS features](https://nextjs.org/docs/basic-features/pages)
+ - Why we shouldn't use MongoDB
+ - Better understanding of [Material UI](https://mui.com/)
+ - Better understanding of managing state via [Redux Toolkit](https://redux-toolkit.js.org/)
+</details>
+
 ## Instalation
 
 To run this application you need to install [NodeJS](https://nodejs.org)
