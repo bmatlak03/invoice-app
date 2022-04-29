@@ -11,14 +11,15 @@ I also decided to use Material UI, because in my opinion It's one of the most po
 <details>
  <summary><b>What I have learned by making this project:</b></summary>
 <br>
-  - Why we should use Typescript in our future projects
-  - How to use types and interfaces
-  - Why we shouldn't use "any" type
-  - Better understanding how front-end communicates with back-end
-  - [NextJS features](https://nextjs.org/docs/basic-features/pages)
-  - Why we shouldn't use MongoDB
-  - Better understanding of [Material UI](https://mui.com/)
-  - Better understanding of managing state via [Redux Toolkit](https://redux-toolkit.js.org/)
+ What I have learned:
+ - Why we should use Typescript in our future projects
+ - How to use types and interfaces
+ - Why we shouldn't use "any" type
+ - Better understanding how front-end communicates with back-end
+ - [NextJS features](https://nextjs.org/docs/basic-features/pages)
+ - Why we shouldn't use MongoDB
+ - Better understanding of [Material UI](https://mui.com/)
+ - Better understanding of managing state via [Redux Toolkit](https://redux-toolkit.js.org/)
 </details>
 
 ## Instalation
