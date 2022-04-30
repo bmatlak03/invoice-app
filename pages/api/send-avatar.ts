@@ -12,11 +12,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const user = db.collection("users");
 
-    const result = await user.updateOne(
+    await user.updateOne(
       { email: session?.user?.email },
       { $set: { avatar: data } }
     );
-    console.log(result);
 
     client.close();
 

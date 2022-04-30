@@ -11,13 +11,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const client = await connectToDatabase();
     const db = client.db();
 
-    const result = await db.collection("users").updateOne(
+    await db.collection("users").updateOne(
       { email: session?.user?.email, "invoices.id": id },
       {
         $set: { "invoices.$.status": "paid" },
       }
     );
-    console.log(result);
     client.close();
 
     res.status(201).json({ message: "Status changed!" });

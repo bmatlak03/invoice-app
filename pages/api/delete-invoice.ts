@@ -12,14 +12,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const usersCollection = db.collection("users");
 
-    const result = await usersCollection.updateOne(
+    await usersCollection.updateOne(
       { email: session?.user?.email, "invoices.id": id },
       {
         $pull: { invoices: { id: id } },
       }
     );
-
-    console.log(result);
 
     client.close();
 

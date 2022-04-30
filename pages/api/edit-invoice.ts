@@ -9,13 +9,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const client = await connectToDatabase();
     const db = client.db();
 
-    const result = await db.collection("users").updateOne(
+    await db.collection("users").updateOne(
       { email: session?.user?.email, "invoices.id": data.id },
       {
         $set: { "invoices.$": data },
       }
     );
-    console.log(result);
 
     client.close();
 
