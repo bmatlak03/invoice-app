@@ -7,7 +7,6 @@ const headers = {
 export const sendAvatar = (image: string) => {
   return async (dispatch: AppDispatch) => {
     const sendRequest = async () => {
-      console.log("sending avatar");
       const response = await fetch("api/send-avatar", {
         method: "PUT",
         body: JSON.stringify(image),
