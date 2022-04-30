@@ -59,7 +59,7 @@ export const createInvoiceData = (
     },
     description: values.projectDescription,
     senderAddress: {
-      street: values.streetAddress,
+      street: values.street,
       city: values.city,
       postCode: values.postCode,
       country: values.country,

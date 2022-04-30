@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const defaultValues = {
-  streetAddress: "",
+  street: "",
   city: "",
   postCode: "",
   country: "",
@@ -17,7 +17,7 @@ export const defaultValues = {
 };
 
 export const validationSchema = yup.object().shape({
-  streetAddress: yup.string().required("Street address is required"),
+  street: yup.string().required("Street address is required"),
   city: yup.string().required("City is required"),
   postCode: yup.string().required("Post code is required"),
   country: yup.string().required("Country is required"),

@@ -206,16 +206,12 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
           Bill From
         </Typography>
         <Input
-          name="streetAddress"
-          label="Street Address"
+          name="street"
+          label="Street street"
           fullWidth
-          error={
-            formik.touched.streetAddress && Boolean(formik.errors.streetAddress)
-          }
-          helperText={
-            formik.touched.streetAddress && formik.errors.streetAddress
-          }
-          value={formik.values.streetAddress}
+          error={formik.touched.street && Boolean(formik.errors.street)}
+          helperText={formik.touched.street && formik.errors.street}
+          value={formik.values.street}
           change={formik.handleChange}
         />
         <Box sx={inputsContainterStyles}>

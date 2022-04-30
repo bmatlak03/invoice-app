@@ -32,7 +32,7 @@ export interface InvoiceType {
   total: number;
 }
 export interface FormValues {
-  streetAddress: string;
+  street: string;
   city: string;
   postCode: string;
   country: string;
