@@ -332,7 +332,9 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
             label="Date"
             disabled={isEditMode}
             value={formik.values.date}
-            onChange={(value: Date) => formik.setFieldValue("date", value)}
+            onChange={(value: Date | null) =>
+              formik.setFieldValue("date", value)
+            }
             renderInput={(params: TextFieldProps) => (
               <TextField
                 name="date"
