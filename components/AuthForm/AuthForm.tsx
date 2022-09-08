@@ -7,6 +7,7 @@ import { defaultValues, validationSchema } from "./formikConfig";
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
 import Input from "../../components/UI/Input/Input";
 import StyledButton from "../../components/UI/StyledButton/StyledButton";
+import { AuthMethod } from "../../constants";
 
 const AuthForm = ({}) => {
   const theme = useTheme();
@@ -17,7 +18,7 @@ const AuthForm = ({}) => {
     initialValues: defaultValues,
     validationSchema: validationSchema,
     onSubmit: async ({ email, password }) => {
-      if (mode === "signin") {
+      if (mode === AuthMethod.SIGNIN) {
         dispatch(signInUser(email, password));
       } else {
         dispatch(signUpUser(email, password));
@@ -36,7 +37,7 @@ const AuthForm = ({}) => {
     backgroundColor: theme.palette.primary.light,
   };
   const switchMode = () => {
-    if (mode === "signin") {
+    if (mode === AuthMethod.SIGNIN) {
       dispatch(authActions.signupMode());
     } else {
       dispatch(authActions.signinMode());
@@ -45,7 +46,7 @@ const AuthForm = ({}) => {
   return (
     <form onSubmit={formik.handleSubmit} style={formStyles}>
       <Typography variant="h3" textAlign="center" mb={3}>
-        {mode === "signin" ? "Sign in" : "Sign up"}
+        {mode === AuthMethod.SIGNIN ? "Sign in" : "Sign up"}
       </Typography>
       <Input
         name="email"
@@ -65,15 +66,15 @@ const AuthForm = ({}) => {
         change={formik.handleChange}
       />
       <Typography variant="body1">
-        {mode === "signin"
+        {mode === AuthMethod.SIGNIN
           ? "Don't have an account?"
           : "Already have an account?"}
       </Typography>
       <StyledButton type="grey" onClick={switchMode}>
-        {mode === "signin" ? "Create an account" : "Switch to sign in"}
+        {mode === AuthMethod.SIGNIN ? "Create an account" : "Switch to sign in"}
       </StyledButton>
       <StyledButton role="submit">
-        {mode === "signin" ? "Sign in" : "Sign up"}
+        {mode === AuthMethod.SIGNIN ? "Sign in" : "Sign up"}
       </StyledButton>
     </form>
   );

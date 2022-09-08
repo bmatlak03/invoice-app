@@ -1,17 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { AuthMethod } from "../constants";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    mode: "signin",
+    mode: AuthMethod.SIGNIN,
     authenticated: false,
   },
   reducers: {
     signupMode(state) {
-      state.mode = "signup";
+      state.mode = AuthMethod.SIGNUP;
     },
     signinMode(state) {
-      state.mode = "signin";
+      state.mode = AuthMethod.SIGNIN;
     },
   },
 });
