@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { InvoiceStatusType } from "../../../types/types";
 import {
   Card,
   CardActionArea,
@@ -10,11 +9,12 @@ import {
 } from "@mui/material";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
 import InvoiceStatus from "./InvoiceStatus/InvoiceStatus";
+import { InvoiceStatus as InvoiceStatusEnum } from "../../../constants";
 type Props = {
   id: string;
   paymentDue: string;
   clientName: string;
-  status: InvoiceStatusType;
+  status: InvoiceStatusEnum;
   total: number;
 };
 const Invoice = ({ id, paymentDue, clientName, status, total }: Props) => {

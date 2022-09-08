@@ -28,6 +28,7 @@ import {
   MenuItem,
   useMediaQuery,
   IconButton,
+  TextFieldProps,
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
 import { DatePicker } from "@mui/lab";
@@ -331,8 +332,8 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
             label="Date"
             disabled={isEditMode}
             value={formik.values.date}
-            onChange={(value) => formik.setFieldValue("date", value)}
-            renderInput={(params) => (
+            onChange={(value: Date) => formik.setFieldValue("date", value)}
+            renderInput={(params: TextFieldProps) => (
               <TextField
                 name="date"
                 sx={{ marginBottom: 4, width: matches ? "45%" : "100%" }}

@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import { markInvoiceAsPaid } from "../../../../../store/invoices-actions";
-import { InvoiceStatusType } from "../../../../../types/types";
 import { uiActions } from "../../../../../store/ui-slice";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import InvoiceControls from "../../InvoiceControls/InvoiceControls";
 import InvoiceStatus from "../../InvoiceStatus/InvoiceStatus";
+import { InvoiceStatus as InvoiceStatusEnum } from "../../../../../constants";
 
 type Props = {
-  status: InvoiceStatusType;
+  status: InvoiceStatusEnum;
   id: string;
 };
 
