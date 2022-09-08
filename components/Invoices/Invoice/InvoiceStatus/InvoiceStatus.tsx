@@ -1,18 +1,18 @@
-import { InvoiceStatusType } from "../../../../types/types";
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
-type Props = {
-  status: InvoiceStatusType;
+import { InvoiceStatus as InvoiceStatusEnum } from "../../../../constants";
+type InvoiceStatusProps = {
+  status: InvoiceStatusEnum;
 };
 
-const InvoiceStatus = ({ status }: Props) => {
+const InvoiceStatus = ({ status }: InvoiceStatusProps) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   let bgColor;
   let fontColor;
-  if (status === "paid") {
+  if (status === InvoiceStatusEnum.Paid) {
     bgColor = "rgba(51, 214, 159, 0.1)";
     fontColor = "rgb(51, 214, 159)";
-  } else if (status === "pending") {
+  } else if (status === InvoiceStatusEnum.Pending) {
     bgColor = "rgba(255, 143, 0, 0.1)";
     fontColor = "rgb(255, 143, 0)";
   } else {

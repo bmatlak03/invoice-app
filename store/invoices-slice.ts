@@ -1,3 +1,4 @@
+import { InvoiceStatus } from "./../constants/InvoiceStatus";
 import { createSlice } from "@reduxjs/toolkit";
 import { InvoiceType } from "../types/types";
 
@@ -12,7 +13,7 @@ const initialState: SliceState = {
   currentInvoices: [],
   fetchedInvoice: {
     id: "",
-    status: "pending",
+    status: InvoiceStatus.Pending,
     clientName: "",
     clientEmail: "",
     clientAddress: { street: "", city: "", postCode: "", country: "" },
@@ -59,7 +60,7 @@ const invoicesSlice = createSlice({
       state.isEditMode = false;
     },
     changeInvoiceStatus(state) {
-      state.fetchedInvoice.status = "paid";
+      state.fetchedInvoice.status = InvoiceStatus.Paid;
     },
     setFilter(state, action) {
       state.filter = action.payload;

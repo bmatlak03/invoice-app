@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../lib/libs";
+import { InvoiceStatus } from "../../constants";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });
@@ -14,7 +15,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     await db.collection("users").updateOne(
       { email: session?.user?.email, "invoices.id": id },
       {
-        $set: { "invoices.$.status": "paid" },
+        $set: { "invoices.$.status": InvoiceStatus.Paid },
       }
     );
     client.close();

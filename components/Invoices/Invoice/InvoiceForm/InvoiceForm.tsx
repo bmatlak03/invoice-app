@@ -14,11 +14,7 @@ import {
   validateItems,
   checkInvoiceStatus,
 } from "../../../../helpers/helpers";
-import {
-  InvoiceStatusType,
-  InvoiceType,
-  ItemsType,
-} from "../../../../types/types";
+import { InvoiceType, ItemsType } from "../../../../types/types";
 import { useFormik } from "formik";
 import { defaultValues, validationSchema } from "./formikConfig";
 import {
@@ -39,6 +35,8 @@ import FormControls from "../../../FormControls/FormControls";
 import Input from "../../../UI/Input/Input";
 import StyledButton from "../../../UI/StyledButton/StyledButton";
 import GoBackBtn from "../../../UI/GoBackBtn/GoBackBtn";
+import { InvoiceStatus } from "../../../../constants";
+
 type Props = {
   editingInvoice?: InvoiceType;
 };
@@ -56,14 +54,14 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
   const formik = useFormik({
     initialValues: defaultValues,
     validationSchema:
-      isDraftMode || editingInvoice?.status === "draft"
+      isDraftMode || editingInvoice?.status === InvoiceStatus.Draft
         ? null
         : validationSchema,
     onSubmit: async (values) => {
       if (
         items.length === 0 &&
         !isDraftMode &&
-        editingInvoice?.status !== "draft"
+        editingInvoice?.status !== InvoiceStatus.Draft
       ) {
         return alert("You must add at least 1 item!");
       }
@@ -85,7 +83,7 @@ const InvoiceForm = ({ editingInvoice }: Props) => {
       let validate;
       if (!editingInvoice) validate = isItemInvalid && !isDraftMode;
       else if (editingInvoice) {
-        if (editingInvoice.status !== "draft") {
+        if (editingInvoice.status !== InvoiceStatus.Draft) {
           validate = isItemInvalid && !isDraftMode;
         } else {
           validate = false;

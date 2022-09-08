@@ -1,12 +1,8 @@
 import { nanoid } from "nanoid";
-import {
-  FormValues,
-  InvoiceStatusType,
-  InvoiceType,
-  ItemsType,
-} from "./../types/types";
+import { FormValues, InvoiceType, ItemsType } from "./../types/types";
 import { AppDispatch } from "../store";
 import { uiActions } from "../store/ui-slice";
+import { InvoiceStatus } from "../constants";
 
 export const hideNotification = (dispatch: AppDispatch) => {
   const notificationTime = 3000;
@@ -38,7 +34,7 @@ export const transformInvoiceObject = (invoice: InvoiceType) => {
 export const createInvoiceData = (
   values: FormValues,
   items: ItemsType[],
-  status: InvoiceStatusType,
+  status: InvoiceStatus,
   id: string
 ) => {
   const totalPrice = items.reduce(
@@ -87,10 +83,10 @@ export const validateItems = (items: ItemsType[]) => {
 };
 
 export const checkInvoiceStatus = (
-  status: InvoiceStatusType | undefined,
+  status: InvoiceStatus | undefined,
   draftMode: boolean
 ) => {
-  if (draftMode) return "draft";
-  else if (!status) return "pending";
+  if (draftMode) return InvoiceStatus.Draft;
+  else if (!status) return InvoiceStatus.Pending;
   else return status;
 };

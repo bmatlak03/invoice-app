@@ -1,3 +1,5 @@
+import { InvoiceStatus } from "../constants";
+
 export interface ItemsType {
   name: string;
   quantity: number;
@@ -5,10 +7,9 @@ export interface ItemsType {
   total: number;
   id: number;
 }
-export type InvoiceStatusType = "paid" | "pending" | "draft";
 export interface InvoiceType {
   id: string;
-  status: InvoiceStatusType;
+  status: InvoiceStatus;
   clientName: string;
   clientEmail: string;
   clientAddress: {

@@ -13,6 +13,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { KeyboardArrowDown as KeyboardArrowDownIcon } from "@mui/icons-material/";
+import { InvoiceStatus } from "../../constants";
 
 const FilterInvoices = () => {
   const theme = useTheme();
@@ -52,34 +53,34 @@ const FilterInvoices = () => {
   const filterOptions = (
     <FormControl onChange={changeStatusHandler} sx={formOptionsStyles}>
       <FormControlLabel
-        value="draft"
+        value={InvoiceStatus.Draft}
         control={
           <Checkbox
             size="small"
             color="secondary"
-            checked={selectedFilter === "draft"}
+            checked={selectedFilter === InvoiceStatus.Draft}
           />
         }
         label="Draft"
       />
       <FormControlLabel
-        value="pending"
+        value={InvoiceStatus.Pending}
         control={
           <Checkbox
             size="small"
             color="secondary"
-            checked={selectedFilter === "pending"}
+            checked={selectedFilter === InvoiceStatus.Pending}
           />
         }
-        label="Pending"
+        label={InvoiceStatus.Pending}
       />
       <FormControlLabel
-        value="paid"
+        value={InvoiceStatus.Paid}
         control={
           <Checkbox
             size="small"
             color="secondary"
-            checked={selectedFilter === "paid"}
+            checked={selectedFilter === InvoiceStatus.Paid}
           />
         }
         label="Paid"
